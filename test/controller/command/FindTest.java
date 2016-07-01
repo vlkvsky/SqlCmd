@@ -32,7 +32,6 @@ public class FindTest {
         command = new Find(manager, view);
     }
 
-
     @Test
     public void testPrintTableData(){
         //given
@@ -74,7 +73,6 @@ public class FindTest {
 
     @Test
     public void TestCanProcessFindWithParametersString(){
-
         // when
         boolean canProcess = command.canProcess("find|t1");
 
@@ -84,7 +82,6 @@ public class FindTest {
 
     @Test
     public void TestCantProcessWithoutParametersString(){
-
         // when
         boolean canProcess = command.canProcess("find");
 
@@ -96,7 +93,6 @@ public class FindTest {
     public void TestCantProcessFindQweString(){
         // when
         boolean canProcess = command.canProcess("qwe|t1");
-
         // then
         assertFalse(canProcess);
     }
@@ -107,19 +103,45 @@ public class FindTest {
         when(manager.getTableColumns("t1"))
                 .thenReturn(new String[] {"id", "name", "password"});
 
-
         DataSet[] data = new DataSet[0];
         when(manager.getTableData("t1"))
                 .thenReturn(data);
-
         //when
         command.process("find|t1");
 
         //then
         shouldPrint(
-                "[------------------, " +
-                "|id|name|password|, " +
+                        "[------------------, " +
+                        "|id|name|password|, " +
+                        "------------------, " +
+                        "------------------]");
+    }
+
+    @Test
+    public void testPrintTableWithOneColumn(){
+        //given
+        when(manager.getTableColumns("testTable"))
+                .thenReturn(new String[] {"name"});
+
+        DataSet user1 = new DataSet();
+        user1.put("name", "Vadym");
+
+        DataSet user2 = new DataSet();
+        user2.put("name", "Nastya");
+
+        DataSet[] data = new DataSet[] {user1, user2};
+        when(manager.getTableData("testTable"))
+                .thenReturn(data);
+
+        //when
+        command.process("find|testTable");
+
+        //then
+        shouldPrint("[------------------, " +
+                "|name|, " +
                 "------------------, " +
+                "|Vadym|, " +
+                "|Nastya|, " +
                 "------------------]");
     }
 
