@@ -194,7 +194,7 @@ public class IntegrationTest {
                 "See you later!\r\n", getData());
     }
 
-
+    @Ignore
     @Test
     public void testFindAfterConnect() {
         // given
