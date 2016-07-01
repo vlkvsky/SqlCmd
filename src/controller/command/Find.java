@@ -26,24 +26,14 @@ public class Find implements Command {
 
     @Override
     public void process(String command) {
-        String[] data = command.split("[|]");
-        String tableName = data[1];
-        try {
-            String[] tableNames = manager.getTableNames();
+        String[] data = command.split("\\|");
+        String tableName = data[1]; // TODO to add validation
 
-            if (!Arrays.asList(tableNames).contains(tableName)) { // TODO if tableName = null;
-                throw new IllegalArgumentException("Not found: " + "'"+ tableName+"'");
-            }
+        String[] tableColumns = manager.getTableColumns(tableName);
+        printHeader(tableColumns);
 
-            DataSet[] tableData = manager.getTableData(tableName);
-            String[] tableColumns = manager.getTableColumns(tableName);
-
-            printHeader(tableColumns);
-            printTable(tableData);
-
-        } catch (Exception e) {
-            printError(e);
-        }
+        DataSet[] tableData = manager.getTableData(tableName);
+        printTable(tableData);
     }
 
 
@@ -74,13 +64,6 @@ public class Find implements Command {
         view.write(result);
         view.write("------------------");
     }
-    private void printError(Exception e) {
-        String message = e.getMessage();
-        if (e.getCause() != null){
-            message += " " +e.getCause().getMessage();
-        }
-        view.write("Can't perform the action! Problem: " + message);
-        view.write("Repeat one more time:");
-    }
+
 }
 

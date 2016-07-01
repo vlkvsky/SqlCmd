@@ -30,6 +30,16 @@ public class IntegrationTest {
     }
 
 
+    public String getData() {
+        try {
+            String result = new String(out.toByteArray(), "UTF-8");
+            out.reset();
+            return result;
+        } catch (UnsupportedEncodingException e) {
+            return e.getMessage();
+        }
+    }
+
     @Test
     public void testHelp() {
         // given
@@ -59,16 +69,6 @@ public class IntegrationTest {
                 "\t\t Close the connection\r\n" +
                 "Enter the command or 'help'\r\n" +
                 "See you later!\r\n", getData());
-    }
-
-    public String getData() {
-        try {
-            String result = new String(out.toByteArray(), "UTF-8");
-            out.reset();
-            return result;
-        } catch (UnsupportedEncodingException e) {
-            return e.getMessage();
-        }
     }
 
     @Test
@@ -194,7 +194,6 @@ public class IntegrationTest {
                 "See you later!\r\n", getData());
     }
 
-    @Ignore
     @Test
     public void testFindAfterConnect() {
         // given
@@ -222,10 +221,12 @@ public class IntegrationTest {
     }
 
     @Test
-    public void testFindWithErrorAfterConnect() {
+    public void testConnectAfterConnect() {
         // given
         in.add("connect|sqlcmd|vlkvsky|0990");
-        in.add("find|nonExist");
+        in.add("list");
+        in.add("connect|sqlcmd2|vlkvsky|0990");
+        in.add("list");
         in.add("exit");
 
         // when
@@ -234,14 +235,19 @@ public class IntegrationTest {
         // then
         assertEquals("Hello user!\r\n" +
                 "Enter DB name, login, password in the format: connect|sqlcmd|vlkvsky|0990\r\n" +
-                //connect|sqlcmd|vlkvsky|0990
+                // connect|sqlcmd|vlkvsky|0990
                 "Connection successful!\r\n" +
                 "Enter the command or 'help'\r\n" +
-                //nonExist
-                "Can't perform the action! Problem: Not found: 'nonExist'\r\n" +
-                "Repeat one more time:\r\n" +
+                //list
+                "[t1]\r\n" +
                 "Enter the command or 'help'\r\n" +
-                //exit
+                //connect|sqlcmd2|vlkvsky|0990
+                "Connection successful!\r\n" +
+                "Enter the command or 'help'\r\n" +
+                // list
+                "[t2]\r\n" +
+                "Enter the command or 'help'\r\n" +
+                // exit
                 "See you later!\r\n", getData());
     }
 
