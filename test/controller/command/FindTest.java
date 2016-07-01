@@ -57,22 +57,23 @@ public class FindTest {
         command.process("find|t1");
 
         //then
-        ArgumentCaptor <String> captor = ArgumentCaptor.forClass(String.class);
+        shouldPrint("[------------------, " +
+                    "|id|name|password|, " +
+                    "------------------, " +
+                    "|12|Vadym|*****|, " +
+                    "|13|Nastya|+++++|, " +
+                    "------------------]");
+    }
+
+    private void shouldPrint(String expected) {
+        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
         verify(view, atLeastOnce()).write(captor.capture());
-        assertEquals("" +
-                "[------------------, " +
-                "|id|name|password|, " +
-                "------------------, " +
-                "|12|Vadym|*****|, " +
-                "|13|Nastya|+++++|, " +
-                "------------------]",
+        assertEquals(expected,
                 captor.getAllValues().toString());
     }
 
     @Test
     public void TestCanProcessFindWithParametersString(){
-        // given
-        Command command = new Find(manager, view);
 
         // when
         boolean canProcess = command.canProcess("find|t1");
@@ -83,8 +84,6 @@ public class FindTest {
 
     @Test
     public void TestCantProcessWithoutParametersString(){
-        // given
-        Command command = new Find(manager, view);
 
         // when
         boolean canProcess = command.canProcess("find");
@@ -95,9 +94,6 @@ public class FindTest {
 
     @Test
     public void TestCantProcessFindQweString(){
-        // given
-        Command command = new Find(manager, view);
-
         // when
         boolean canProcess = command.canProcess("qwe|t1");
 
@@ -120,14 +116,11 @@ public class FindTest {
         command.process("find|t1");
 
         //then
-        ArgumentCaptor <String> captor = ArgumentCaptor.forClass(String.class);
-        verify(view, atLeastOnce()).write(captor.capture());
-        assertEquals("" +
-                        "[------------------, " +
-                        "|id|name|password|, " +
-                        "------------------, " +
-                        "------------------]",
-                captor.getAllValues().toString());
+        shouldPrint(
+                "[------------------, " +
+                "|id|name|password|, " +
+                "------------------, " +
+                "------------------]");
     }
 
 }
