@@ -4,9 +4,7 @@ package test.integration;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import src.controller.Main;
-
-import test.integration.ConfigurableInputStream;
+import src.Main;
 
 import java.io.*;
 

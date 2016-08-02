@@ -1,5 +1,6 @@
-package src.controller;
+package src;
 
+import src.controller.MainController;
 import src.model.DatabaseManager;
 import src.model.JDBCDatabaseManager;
 import src.view.Console;
