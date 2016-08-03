@@ -4,7 +4,8 @@ import src.model.DatabaseManager;
 import src.model.TableConstructor;
 import src.view.View;
 
-import java.util.*;
+import java.util.Map;
+import java.util.Set;
 
 
 public class ContentTable extends Command {

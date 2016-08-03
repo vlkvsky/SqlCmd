@@ -3,9 +3,6 @@ package src.controller.command;
 import src.model.DatabaseManager;
 import src.view.View;
 
-/**
- * Created by Вадим Сергеевич on 03.06.2016.
- */
 public class Connect extends Command {
 
     public Connect(DatabaseManager manager, View view) {
@@ -21,7 +18,7 @@ public class Connect extends Command {
         String password = data[3];
 
         manager.connect(databaseName, userName, password);
-        view.write("Connection successful!");
+        view.write("Connection successful. To see the available commands, type <help>");
     }
     @Override
     public String commandFormat() {

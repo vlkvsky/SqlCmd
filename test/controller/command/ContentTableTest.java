@@ -6,13 +6,7 @@ import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
 import org.mockito.ArgumentCaptor;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.*;
 import src.controller.command.Command;
 import src.controller.command.ContentTable;
 import src.model.DatabaseManager;
@@ -20,12 +14,11 @@ import src.view.View;
 
 import java.util.*;
 
-import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.*;
 
 
-/**
- * Created by Вадим Сергеевич on 01.07.2016.
- */
 public class ContentTableTest {
     private DatabaseManager manager;
     private View view;

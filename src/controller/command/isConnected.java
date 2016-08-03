@@ -3,9 +3,6 @@ package src.controller.command;
 import src.model.DatabaseManager;
 import src.view.View;
 
-/**
- * Created by Вадим Сергеевич on 03.06.2016.
- */
 public class isConnected extends Command {
     private DatabaseManager manager;
     private View view;
@@ -22,7 +19,7 @@ public class isConnected extends Command {
 
     @Override
     public void process(String command) {
-        view.write(String.format("Command '%s' isn't allow. " +
+        view.write(String.format("Command '%s' is not available. " +
                 "You must connect! ",command));
     }
 

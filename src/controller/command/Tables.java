@@ -3,12 +3,8 @@ package src.controller.command;
 import src.model.DatabaseManager;
 import src.view.View;
 
-import java.util.Arrays;
 import java.util.Set;
 
-/**
- * Created by Вадим Сергеевич on 03.06.2016.
- */
 public class Tables extends Command {
 
     public Tables(DatabaseManager manager, View view) {

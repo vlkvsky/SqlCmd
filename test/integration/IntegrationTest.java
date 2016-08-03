@@ -2,17 +2,15 @@ package test.integration;
 
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import src.Main;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by Вадим Сергеевич on 03.06.2016.
- */
 public class IntegrationTest {
 
     private ConfigurableInputStream in;

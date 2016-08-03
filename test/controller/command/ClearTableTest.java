@@ -7,15 +7,11 @@ import src.controller.command.Command;
 import src.model.DatabaseManager;
 import src.view.View;
 
-import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
-
-/**
- * Created by Вадим Сергеевич on 01.07.2016.
- */
 public class ClearTableTest {
     private DatabaseManager manager;
     private View view;

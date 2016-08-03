@@ -20,6 +20,8 @@ public class MainController {
     public MainController(View view, DatabaseManager manager ){
         this.view = view;
         this.commands = new ArrayList<>(Arrays.asList(
+                new Exit.ex(view),            // выход
+                new Exit(view),                 // выход
                 new Connect(manager,view),      // подключение
                 new isConnected(manager,view),  // проверка подключения
 
@@ -28,15 +30,13 @@ public class MainController {
                 new Tables(manager,view),       // вывод существующих таблиц
                 new ContentTable(manager,view), // содержимое таблицы
                 new CreateTable(manager,view),  // создать таблицу
-                new CreateDB(manager,view),     // создать Базу данных
+                new CreateDB(manager,view),     // создать базу данных
                 new DeleteTable(manager,view),  // удалить таблицу
                 new DeleteDB(manager,view),     // удалить базу данных
                 new Insert(manager, view),      // вставить данный в таблицу
                 new ClearTable(manager,view),   // очистить таблицу
 
 
-                new Exit(view),                 // выход
-//                new Exit.ex(view),              // выход
                 new UnsupportedCommand(view)    // несуществующая комманда
         ));
     }
@@ -70,7 +70,8 @@ public class MainController {
                     break;
                 }
             }
-            view.write("Enter the command or 'help'");
+            view.write("-----------------" +
+                     "\nEnter the command:");
         }
     }
 
@@ -80,7 +81,7 @@ public class MainController {
             message += ". " + e.getCause().getMessage();
         }
         view.write("Can't perform the action! Problem: " + message);
-        view.write("Repeat one more time:");
+        view.write("Repeat one more time.");
     }
 }
 
