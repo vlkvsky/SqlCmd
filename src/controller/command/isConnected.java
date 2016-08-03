@@ -6,7 +6,7 @@ import src.view.View;
 /**
  * Created by Вадим Сергеевич on 03.06.2016.
  */
-public class isConnected implements Command {
+public class isConnected extends Command {
     private DatabaseManager manager;
     private View view;
 
@@ -24,5 +24,15 @@ public class isConnected implements Command {
     public void process(String command) {
         view.write(String.format("Command '%s' isn't allow. " +
                 "You must connect! ",command));
+    }
+
+    @Override
+    public String commandFormat() {
+        return null;
+    }
+
+    @Override
+    public String description() {
+        return null;
     }
 }

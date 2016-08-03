@@ -6,44 +6,31 @@ import src.view.View;
 /**
  * Created by Вадим Сергеевич on 03.06.2016.
  */
-public class Connect implements Command {
-    private static String SAMPLE_COMMAND = "connect|sqlcmd|vlkvsky|0990";
-    private DatabaseManager manager;
-    private View view;
+public class Connect extends Command {
 
     public Connect(DatabaseManager manager, View view) {
-
-        this.manager = manager;
-        this.view = view;
+        super(manager, view);
     }
 
     @Override
-    public boolean canProcess(String command) {
-        return command.startsWith("connect|");
+    public void process(String input) {
+        validationParameters(input);
+        String[] data = input.split("\\|");
+        String databaseName = data[1];
+        String userName = data[2];
+        String password = data[3];
+
+        manager.connect(databaseName, userName, password);
+        view.write("Connection successful!");
+    }
+    @Override
+    public String commandFormat() {
+        return "connect|databaseName|userName|password";
     }
 
     @Override
-    public void process(String command) {
-
-            String[] data = command.split("[|]");
-            if(data.length != count()) {
-                throw new IllegalArgumentException(String.format("Wrong number of separating characters '|'. " +
-                        "Expected '%s', but actual %",
-                        count(),data.length));
-            }
-            String databaseName = data[1];
-            String userName = data[2];
-            String password = data[3];
-
-            manager.connect(databaseName, userName, password);
-            view.write("Connection successful!");
-
+    public String description() {
+        return "Connect to DB";
     }
 
-    private int count() {
-        return SAMPLE_COMMAND.split("[|]").length;
-    }
-
-
-    //ПОКА РАБОТАЕТ
 }

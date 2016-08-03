@@ -5,17 +5,10 @@ import src.view.View;
 /**
  * Created by Вадим Сергеевич on 03.06.2016.
  */
-public class Exit implements Command {
-
-    private View view;
+public class Exit extends Command {
 
     public Exit(View view) {
-        this.view = view;
-    }
-
-    @Override
-    public boolean canProcess(String command) {
-        return command.equals("exit");
+        super(view);
     }
 
     @Override
@@ -23,5 +16,14 @@ public class Exit implements Command {
         view.write("See you later!");
         throw new ExitException();
     }
-}
 
+    @Override
+    public String description() {
+        return "Close application";
+    }
+
+    @Override
+    public String commandFormat() {
+        return "exit";
+    }
+}

@@ -1,100 +1,168 @@
 package test.model;
 
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
-import src.model.DataSet;
 import src.model.DatabaseManager;
-import java.util.Arrays;
+import src.model.PostgresManager;
+import test.BeforeTestsChangeNameAndPass;
+import test.Support;
+
+import java.util.*;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public abstract class DatabaseManagerTest {
+public class DatabaseManagerTest {
 
-    private DatabaseManager manager;
-    public static final String TABLE_NAME = "t1";
-    public static final String DB_NAME = "sqlcmd";
-    public static final String LOGIN = "vlkvsky";
-    public static final String PASSWORD = "0990";
+    private static DatabaseManager manager;
+    private static final String DATABASE = BeforeTestsChangeNameAndPass.DATABASE;
+    private static final String USER = BeforeTestsChangeNameAndPass.USER;
+    private static final String PASSWORD = BeforeTestsChangeNameAndPass.PASSWORD;
 
-    public abstract DatabaseManager getDataBaseManager();
+    @BeforeClass
+    public static void setup() {
+        manager = new PostgresManager();
+        Support.setupData(manager);
+    }
 
-    @Before
-    public void setup() {
-        manager = getDataBaseManager();
-        manager.connect(DB_NAME, LOGIN, PASSWORD);
+    @AfterClass
+    public static void dropDatabase() {
+        Support.dropData(manager);
     }
 
     @Test
-    public void testGetAllTablesNames() {
-        String[] tablesNames = manager.getTableNames();
-        assertEquals("[" + TABLE_NAME + "]", Arrays.toString(tablesNames));
+    public void testGetAllTableNames() {
+        Set<String> tableNames = manager.getTableNames();
+        assertEquals("[users, users2, test1]", tableNames.toString());
     }
 
     @Test
     public void testGetTableData() {
         // given
-        manager.clear(TABLE_NAME);
+        manager.clear("users");
+        // when
+        Map<String, Object> input = new LinkedHashMap<>();
+        input.put("name", "Stiven");
+        input.put("password", "****");
+        input.put("id", 11);
+        manager.insert("users", input);
+        // then
+        List<Map<String, Object>> users = manager.getTableData("users");
+        assertEquals(1, users.size());
 
-        //when
-        DataSet input = new DataSet();
-        input.put("name", "Vadym");
-        input.put("password", "pass");
-        input.put("id", 13);
-        manager.create(TABLE_NAME, input);
+        Map<String, Object> user = users.get(0);
+        assertEquals("[Stiven, ****, 11]", user.values().toString());
+        assertEquals("[name, password, id]", user.keySet().toString());
+    }
 
-        //then
-        DataSet[] users = manager.getTableData(TABLE_NAME);
-        assertEquals(1, users.length);
+    @Test
+    public void testGetTableData2() {
+        // given
+        manager.clear("users");
+        // when
+        Map<String, Object> input = new LinkedHashMap<>();
+        input.put("name", "Stiven");
+        input.put("password", "****");
+        input.put("id", 11);
+        manager.insert("users", input);
 
+        Map<String, Object> input2 = new LinkedHashMap<>();
+        input2.put("name", "Stiven2");
+        input2.put("password", "*****");
+        input2.put("id", 12);
+        manager.insert("users", input2);
+        // then
+        List<Map<String, Object>> users = manager.getTableData("users");
+        assertEquals(2, users.size());
 
-        DataSet user = users[0];
-        assertEquals("[name, password, id]", Arrays.toString(user.getNames()));
-        assertEquals("[Vadym, pass, 13]", Arrays.toString(user.getValues()));
+        Map<String, Object> user = users.get(0);
+        assertEquals("[Stiven, ****, 11]", user.values().toString());
+        assertEquals("[name, password, id]", user.keySet().toString());
+
+        Map<String, Object> user2 = users.get(1);
+        assertEquals("[Stiven2, *****, 12]", user2.values().toString());
+        assertEquals("[name, password, id]", user2.keySet().toString());
     }
 
     @Test
     public void testUpdateTableData() {
         // given
-        manager.clear(TABLE_NAME);
+        manager.clear("users");
 
-        DataSet input = new DataSet();
-        input.put("name", "Vadym");
+        Map<String, Object> input = new LinkedHashMap<>();
+        input.put("name", "Stiven");
         input.put("password", "pass");
-        input.put("id", 13);
-        manager.create(TABLE_NAME, input);
-
-        //when
-        DataSet newValue = new DataSet();
+        input.put("id", 15);
+        manager.insert("users", input);
+        // when
+        Map<String, Object> newValue = new LinkedHashMap<>();
         newValue.put("password", "pass2");
-        newValue.put("name", "Nastya");
-        manager.update(TABLE_NAME, 13, newValue);
+        newValue.put("name", "Pup");
+        manager.update("users", 15, newValue);
+        // then
+        List<Map<String, Object>> users = manager.getTableData("users");
+        assertEquals(1, users.size());
 
-        //then
-        DataSet[] users = manager.getTableData(TABLE_NAME);
-        assertEquals(1, users.length);
-
-
-        DataSet user = users[0];
-        assertEquals("[name, password, id]", Arrays.toString(user.getNames()));
-        assertEquals("[Nastya, pass2, 13]", Arrays.toString(user.getValues()));
-
+        Map<String, Object> user = users.get(0);
+        assertEquals("[name, password, id]", user.keySet().toString());
+        assertEquals("[Pup, pass2, 15]", user.values().toString());
     }
 
     @Test
-    public void testGetColumnsNames() {
-        // given
-        manager.clear(TABLE_NAME);
-        //when
-        String[] columNames = manager.getTableColumns(TABLE_NAME);
+    public void testGetColumnNames() {
+        // when
+        Set<String> columnNames = manager.getTableColumns("users");
+        // then
+        assertEquals("[name, password, id]", columnNames.toString());
+    }
 
-        //then
+    @Test
+    public void getTableSize() {
+        int size = manager.getTableSize("users");
+        assertEquals(1, size);
+    }
 
-        assertEquals("[name, password, id]", Arrays.toString(columNames));
-    }@Test
-    public void tesIsConnected() {
+    @Test
+    public void clearTable() {
         // given
-        //when
-        //then
-       assertTrue(manager.isConnected());
+        Map<String, Object> input = new LinkedHashMap<>();
+        input.put("name", "Stiven");
+        input.put("password", "pass");
+        input.put("id", 17);
+        manager.insert("users", input);
+        // when
+        manager.clear("users");
+        // then
+        List<Map<String, Object>> users = manager.getTableData("users");
+        assertEquals(0, users.size());
+    }
+
+    @Test
+    public void testisConnected() {
+        assertTrue(manager.isConnected());
+    }
+
+    @Test
+    public void tablesList() {
+        Set<String> tables = manager.getTableNames();
+        assertEquals("[users, test1, users2]", tables.toString());
+    }
+
+    @Test
+    public void dropTable() {
+        manager.dropTable("test1");
+        Set<String> tables = manager.getTableNames();
+        assertEquals("[users, users2]", tables.toString());
+        manager.createTable("test1(id SERIAL NOT NULL PRIMARY KEY,username varchar(225) NOT NULL UNIQUE, password varchar(225))");
+    }
+
+    @Test
+    public void getters() {
+        assertEquals(DATABASE, manager.getDatabaseName());
+        assertEquals(USER, manager.getPassword());
+        assertEquals(PASSWORD, manager.getUser());
+
     }
 }

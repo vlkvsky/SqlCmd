@@ -1,28 +1,47 @@
 package src.model;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * Created by Вадим Сергеевич on 02.06.2016.
  */
 public interface DatabaseManager {
 
-    String TABLE_NAME = "t1";
-    String DB_NAME = "sqlcmd";
-    String LOGIN = "vlkvsky";
-    String PASSWORD = "0990";
+    List<Map<String, Object>> getTableData(String tableName);
 
-    DataSet[] getTableData(String tableName);
+    Set<String> getDatabases();
 
-    String[] getTableNames();
+    Set<String> getTableNames();
 
     void connect(String database, String userName, String password);
 
     void clear(String tableName);
 
-    void create(String tableName, DataSet input);
+    void createDatabase(String databaseName);
 
-    void update(String tableName, int id, DataSet newValue);
+    void dropDatabase(String databaseName);
 
-    String[] getTableColumns(String tableName);
+    void createTable(String query);
+
+    void dropTable(String query);
+
+    void insert(String tableName, Map<String, Object> input);
+
+    void update(String tableName, int id, Map<String, Object> newValue);
+
+    Set<String> getTableColumns(String tableName);
 
     boolean isConnected();
+
+    String getUser();
+
+    String getPassword();
+
+    String getDatabaseName();
+
+    int getTableSize(String tableName);
+
+
 }

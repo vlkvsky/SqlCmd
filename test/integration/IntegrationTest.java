@@ -62,7 +62,7 @@ public class IntegrationTest {
                 "\t clear|tableName\r\n" +
                 "\t\t Delete all values of 'tableName'\r\n" +
                 "\t create|tableName|column1|value1|column2|value2|...|columnN|valueN\r\n" +
-                "\t\t Create values to 'tableName'\r\n" +
+                "\t\t CreateTable values to 'tableName'\r\n" +
                 "\t exit\r\n" +
                 "\t\t Close the connection\r\n" +
                 "Enter the command or 'help'\r\n" +

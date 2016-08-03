@@ -2,11 +2,8 @@ package test.controller.command;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.ArgumentCaptor;
-import src.controller.command.Clear;
+import src.controller.command.ClearTable;
 import src.controller.command.Command;
-import src.controller.command.Find;
-import src.model.DataSet;
 import src.model.DatabaseManager;
 import src.view.View;
 
@@ -19,7 +16,7 @@ import static org.mockito.Mockito.*;
 /**
  * Created by Вадим Сергеевич on 01.07.2016.
  */
-public class ClearTest {
+public class ClearTableTest {
     private DatabaseManager manager;
     private View view;
     private Command command;
@@ -28,7 +25,7 @@ public class ClearTest {
     public void setup(){
         manager = mock(DatabaseManager.class);
         view = mock(View.class);
-        command = new Clear(manager, view);
+        command = new ClearTable(manager, view);
     }
 
     @Test
