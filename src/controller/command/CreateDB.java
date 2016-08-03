@@ -16,7 +16,7 @@ public class CreateDB extends Command {
         String databaseName = input.split("\\|")[1];
         checkNameStartWithLetter(databaseName, "базы");
 
-        manager.createDatabase(databaseName);
+        manager.createDB(databaseName);
         view.write(String.format("DB '%s' created.", databaseName));
     }
 

@@ -47,7 +47,7 @@ public class IntegrationTest {
 
     @AfterClass
     public static void dropDatabase() {
-        Support.dropData(manager);
+        Support.deleteData(manager);
     }
 
     @Test

@@ -45,7 +45,7 @@ public class DeleteDBTest {
         command.process("dropDB|db");
 
         verify(view).write("Are you sure you want to delete 'db'? Y/N");
-        verify(manager).deleteDatabase("db");
+        verify(manager).deleteDB("db");
         verify(view).write("DB 'db' successfully deleted");
     }
 
@@ -55,7 +55,7 @@ public class DeleteDBTest {
         command.process("deleteDB|db");
 
         verify(view).write("Are you sure you want to delete 'db'? Y/N");
-        verify(manager).deleteDatabase("db");
+        verify(manager).deleteDB("db");
         verify(view).write("DB 'db' successfully deleted");
     }
 

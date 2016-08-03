@@ -19,9 +19,9 @@ public interface DatabaseManager {
 
     void clear(String tableName);
 
-    void createDatabase(String databaseName);
+    void createDB(String databaseName);
 
-    void deleteDatabase(String databaseName);
+    void deleteDB(String databaseName);
 
     void createTable(String query);
 

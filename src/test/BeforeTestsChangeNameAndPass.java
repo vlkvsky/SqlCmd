@@ -1,8 +1,6 @@
 package src.test;
 
-/**
- * Created by serzh on 5/16/16.
- */
+
 public class BeforeTestsChangeNameAndPass {
 
     public static String DATABASE = "sqlcmd5hope5never5exist"; // не менять имя базы!!! :)

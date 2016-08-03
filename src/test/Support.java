@@ -13,20 +13,20 @@ public class Support {
 
     public static void setupData(DatabaseManager manager) {
         try {
-            manager.connect("", USER, PASSWORD);
+            manager.connect("sqlcmd", USER, PASSWORD);
         } catch (RuntimeException e) {
             throw new RuntimeException("Для работы тестов измените имя и пароль в классе BeforeTestsChangeNameAndPass."
                     + "\n" + e.getCause());
         }
-        manager.createDatabase(DATABASE);
+        manager.createDB(DATABASE);
         manager.connect(DATABASE, USER, PASSWORD);
         createTablesWithData(manager);
     }
 
-    public static void dropData(DatabaseManager manager) {
+    public static void deleteData(DatabaseManager manager) {
         try {
-            manager.connect("", USER, PASSWORD);
-            manager.deleteDatabase(DATABASE);
+            manager.connect("sqlcmd", USER, PASSWORD);
+            manager.deleteDB(DATABASE);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

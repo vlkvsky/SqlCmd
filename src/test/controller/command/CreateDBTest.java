@@ -41,7 +41,7 @@ public class CreateDBTest {
     @Test
     public void testProcess() throws Exception {
         command.process("createDB|databaseName");
-        verify(manager).createDatabase("databaseName");
+        verify(manager).createDB("databaseName");
         verify(view).write("DB 'databaseName' created.");
     }
 

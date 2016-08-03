@@ -23,7 +23,7 @@ public class DeleteDB extends Command {
             return;
         }
 
-        manager.deleteDatabase(databaseName);
+        manager.deleteDB(databaseName);
         view.write(String.format("DB '%s' successfully deleted", databaseName));
     }
 
