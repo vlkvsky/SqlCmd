@@ -1,22 +1,23 @@
 package src.controller.command;
 
+import src.model.TableConstructor;
 import src.view.View;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Help extends Command {
 
     private View view;
     private List<Command> commands;
 
+
     public Help(View view) {
         this.view = view;
+        String[] strs = { "abc","123","zzz" };
+        List<String> list = Arrays.asList( strs );
         commands = new ArrayList<>(Arrays.asList(
                 this,
 //                new Connect(manager, view),
-
                 // TODO delete DB
                 new Tables(manager,view),
                 new CreateTable(manager,view),
@@ -24,7 +25,6 @@ public class Help extends Command {
                 new ContentTable(manager,view),
                 new Insert(manager, view),
                 new ClearTable(manager, view),
-
                 new Exit(view)
         ));
     }
@@ -34,8 +34,8 @@ public class Help extends Command {
         view.write("Available commands:");
 
         for (Command command : commands) {
-            view.write("\t • " + command.commandFormat() + "\t\t" + command.description());
-//            view.write("\t\t" + command.description());
+                    view.write("\t • " + command.commandFormat() + "\t\t\t\t" + command.description() +
+                    "\n\t═════════════════════════════════");
         }
     }
 
