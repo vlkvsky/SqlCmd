@@ -34,6 +34,6 @@ public class Tables extends Command {
 
     @Override
     public String description() {
-        return "Get all tables of DB";
+        return "\t\tGet all tables of DB";
     }
 }

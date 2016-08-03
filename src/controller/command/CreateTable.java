@@ -28,8 +28,8 @@ public class CreateTable extends Command {
             manager.createTable(query);
             String table = query.split("\\(")[0];
             view.write(String.format("Table %s created.", table));
-            Command find = new ContentTable(manager, view);
-            find.process("find|" + table); // красивый вывод новосозданной таблички
+            Command create = new ContentTable(manager, view);
+            create.process("create|" + table); // красивый вывод новосозданной таблички
         } else {
             view.write("Main menu:");
         }
@@ -115,7 +115,8 @@ public class CreateTable extends Command {
 
     public boolean checkNameStartWithLetterB(String input) {
         char fistChar = input.charAt(0);
-        if (!(fistChar >= 'a' && fistChar <= 'z') && !(fistChar >= 'A' && fistChar <= 'Z')) {
+        if (!(fistChar >= 'a' && fistChar <= 'z') && !(fistChar >= 'A' && fistChar <= 'Z') &&
+         (!(fistChar >= 'а' && fistChar <= 'я') && !(fistChar >= 'А' && fistChar <= 'Я'))) {
             view.write(String.format("The name must begin with a letter, but not with: '%s'", fistChar));
             return false;
         }
@@ -129,6 +130,6 @@ public class CreateTable extends Command {
 
     @Override
     public String description() {
-        return "Create table step-by-step";
+        return "\t\tCreate table step-by-step";
     }
 }

@@ -25,7 +25,7 @@ public class Connect extends Command {
     }
     @Override
     public String commandFormat() {
-        return "connect|databaseName|userName|password";
+        return "connect|DB|user|password";
     }
 
     @Override

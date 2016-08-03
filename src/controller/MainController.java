@@ -29,6 +29,7 @@ public class MainController {
                 new Tables(manager,view),       // вывод существующих таблиц
                 new ContentTable(manager,view), // содержимое таблицы
                 new CreateTable(manager,view),  // создать таблицу
+                new DeleteTable(manager,view),  // удалить таблицу
                 new Insert(manager, view),      // вставить данный в таблицу
                 new ClearTable(manager,view),   // очистить таблицу
 

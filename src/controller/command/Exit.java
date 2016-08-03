@@ -18,12 +18,12 @@ public class Exit extends Command {
     }
 
     @Override
-    public String description() {
-        return "Close application";
+    public String commandFormat() {
+        return "exit";
     }
 
     @Override
-    public String commandFormat() {
-        return "exit";
+    public String description() {
+        return "\t\t\tClose application";
     }
 }

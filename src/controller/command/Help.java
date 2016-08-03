@@ -17,12 +17,12 @@ public class Help extends Command {
         this.view = view;
         commands = new ArrayList<>(Arrays.asList(
                 this,
-                new Connect(manager, view),
+//                new Connect(manager, view),
 
                 // TODO delete DB
                 new Tables(manager,view),
-                // TODO delete table
                 new CreateTable(manager,view),
+                new DeleteTable(manager,view),
                 new ContentTable(manager,view),
                 new Insert(manager, view),
                 new ClearTable(manager, view),
@@ -48,7 +48,7 @@ public class Help extends Command {
 
     @Override
     public String description() {
-        return "Get available commands";
+        return "\t\t\tGet available commands";
     }
 }
 
