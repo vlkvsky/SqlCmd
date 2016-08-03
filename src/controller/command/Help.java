@@ -1,6 +1,5 @@
 package src.controller.command;
 
-import src.model.TableConstructor;
 import src.view.View;
 
 import java.util.*;
@@ -18,8 +17,9 @@ public class Help extends Command {
         commands = new ArrayList<>(Arrays.asList(
                 this,
 //                new Connect(manager, view),
-                // TODO delete DB
+                new DBs(manager,view),
                 new Tables(manager,view),
+                new CreateDB(manager,view),
                 new CreateTable(manager,view),
                 new Insert(manager, view),
                 new ContentTable(manager,view),

@@ -4,9 +4,6 @@ package src.controller.command;
 import src.model.DatabaseManager;
 import src.view.View;
 
-/**
- * Created by serzh on 5/11/16.
- */
 public class DeleteDB extends Command {
 
     public DeleteDB(DatabaseManager manager, View view) {
@@ -21,7 +18,7 @@ public class DeleteDB extends Command {
 
         String databaseNameConnect = manager.getDatabaseName();
         if (databaseName.equals(databaseNameConnect)) {
-            view.write("DB is connected. Not allow to delete!");
+            view.write("User is connected to DB. Not allow now!");
             view.write("Reconnect to another DB.");
             return;
         }

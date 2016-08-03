@@ -1,7 +1,6 @@
 package test.model;
 
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import src.model.DatabaseManager;
@@ -152,7 +151,7 @@ public class DatabaseManagerTest {
 
     @Test
     public void dropTable() {
-        manager.dropTable("test1");
+        manager.deleteTable("test1");
         Set<String> tables = manager.getTableNames();
         assertEquals("[users, users2]", tables.toString());
         manager.createTable("test1(id SERIAL NOT NULL PRIMARY KEY,username varchar(225) NOT NULL UNIQUE, password varchar(225))");

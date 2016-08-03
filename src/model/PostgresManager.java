@@ -144,7 +144,7 @@ public class PostgresManager implements DatabaseManager {
     }
 
     @Override
-    public void dropTable(String table_name) {
+    public void deleteTable(String table_name) {
         try (Statement statement = connection.createStatement()) {
 //            statement.executeUpdate("DROP TABLE IF EXISTS " + table_name + " CASCADE");
             statement.executeUpdate("DROP TABLE " + table_name);

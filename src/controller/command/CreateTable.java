@@ -31,7 +31,7 @@ public class CreateTable extends Command {
             Command create = new ContentTable(manager, view);
             create.process("create|" + table); // красивый вывод новосозданной таблички
         } else {
-            view.write("Main menu:");
+            view.write(" ");
         }
 
     }

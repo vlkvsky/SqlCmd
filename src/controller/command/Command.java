@@ -37,7 +37,7 @@ public abstract class Command {
     }
 
     public boolean deleteConfirmation(String name) {
-        view.write(String.format("Are you sure you want to delete %s? Y/N", name));
+        view.write(String.format("Are you sure you want to delete '%s'? Y/N", name));
         if (view.read().toUpperCase().equals("Y")) {
             return true;
         }

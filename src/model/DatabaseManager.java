@@ -25,7 +25,7 @@ public interface DatabaseManager {
 
     void createTable(String query);
 
-    void dropTable(String query);
+    void deleteTable(String query);
 
     void insert(String tableName, Map<String, Object> input);
 

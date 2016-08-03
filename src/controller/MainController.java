@@ -24,9 +24,11 @@ public class MainController {
                 new isConnected(manager,view),  // проверка подключения
 
                 new Help(view),                 // возможные комманды
+                new DBs(manager,view),          // вывод существующих баз данных
                 new Tables(manager,view),       // вывод существующих таблиц
                 new ContentTable(manager,view), // содержимое таблицы
                 new CreateTable(manager,view),  // создать таблицу
+                new CreateDB(manager,view),     // создать Базу данных
                 new DeleteTable(manager,view),  // удалить таблицу
                 new DeleteDB(manager,view),     // удалить базу данных
                 new Insert(manager, view),      // вставить данный в таблицу
@@ -34,7 +36,7 @@ public class MainController {
 
 
                 new Exit(view),                 // выход
-                new Exit.ex(view),              // выход
+//                new Exit.ex(view),              // выход
                 new UnsupportedCommand(view)    // несуществующая комманда
         ));
     }
