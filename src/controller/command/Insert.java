@@ -73,12 +73,12 @@ public class Insert extends Command {
 
     @Override
     public String commandFormat() {
-        return "insert|tableName";
+        return "insert|<>";
     }
 
     @Override
     public String description() {
-        return "Add data to 'tableName'";
+        return "\tAdd data to <table>";
     }
 
 }

@@ -10,9 +10,7 @@ import java.util.List;
 
 
 
-/**
- * Created by Вадим Сергеевич on 02.06.2016.
- */
+
 public class MainController {
 
 

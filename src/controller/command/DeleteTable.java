@@ -22,11 +22,11 @@ public class DeleteTable extends Command {
 
     @Override
     public String commandFormat() {
-        return "deleteTable|tableName";
+        return "deleteTable|<>";
     }
 
     @Override
     public String description() {
-        return "\t\t\tDelete 'tableName'";
+        return "Delete <table>";
     }
 }

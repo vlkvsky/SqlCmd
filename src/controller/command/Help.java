@@ -5,9 +5,7 @@ import src.view.View;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-/**
- * Created by Вадим Сергеевич on 03.06.2016.
- */
+
 public class Help extends Command {
 
     private View view;
@@ -36,7 +34,7 @@ public class Help extends Command {
         view.write("Available commands:");
 
         for (Command command : commands) {
-            view.write("\t ✖" + command.commandFormat() + "\t\t" + command.description());
+            view.write("\t • " + command.commandFormat() + "\t\t" + command.description());
 //            view.write("\t\t" + command.description());
         }
     }

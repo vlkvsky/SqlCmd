@@ -3,9 +3,7 @@ package src.controller.command;
 import src.model.DatabaseManager;
 import src.view.View;
 
-/**
- * Created by Вадим Сергеевич on 03.06.2016.
- */
+
 public class ClearTable extends Command {
 
     private DatabaseManager manager;
@@ -25,7 +23,7 @@ public class ClearTable extends Command {
     public void process(String command) {
         String[] data = command.split("\\|");
         if (data.length != 2) {
-            throw new IllegalArgumentException("Expected format is 'clear|tableName'. But actual '" + command +"'");
+            throw new IllegalArgumentException("Expected format is 'clear|<table>'. But actual '" + command +"'");
         }
         manager.clear(data[1]);
         view.write(String.format("Table '%s' cleared",data[1]));
@@ -33,12 +31,12 @@ public class ClearTable extends Command {
 
     @Override
     public String commandFormat() {
-        return "clear|tableName";
+        return "clear|<>";
     }
 
     @Override
     public String description() {
-        return "ClearTable data of the table";
+        return "\t\tClear data of <table>";
     }
 }
 

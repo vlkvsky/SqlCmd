@@ -6,9 +6,7 @@ import src.view.View;
 
 import java.util.*;
 
-/**
- * Created by Вадим Сергеевич on 03.06.2016.
- */
+
 public class ContentTable extends Command {
 
     public ContentTable(DatabaseManager manager, View view) {
@@ -33,11 +31,11 @@ public class ContentTable extends Command {
 
     @Override
     public String commandFormat() {
-        return "content|tableName";
+        return "content|<>";
     }
 
     @Override
     public String description() {
-        return "Get content of 'tableName'";
+        return "\tGet content of <table>";
     }
 }
