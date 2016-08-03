@@ -1,12 +1,12 @@
-package test.model;
+package src.test.model;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import src.model.DatabaseManager;
 import src.model.PostgresManager;
-import test.BeforeTestsChangeNameAndPass;
-import test.Support;
+import src.test.BeforeTestsChangeNameAndPass;
+import src.test.Support;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -16,6 +16,9 @@ import java.util.Set;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+/**
+ * Created by serzh on 5/11/16.
+ */
 public class DatabaseManagerTest {
 
     private static DatabaseManager manager;

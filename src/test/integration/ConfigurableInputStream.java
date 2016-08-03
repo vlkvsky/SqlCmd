@@ -1,13 +1,10 @@
-package test.integration;
+package src.test.integration;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-/**
- * Created by Вадим Сергеевич on 03.06.2016.
- */
-public class ConfigurableInputStream extends InputStream {
 
+public class ConfigurableInputStream extends InputStream {
     private String line;
     private boolean endLine = false;
 
@@ -28,15 +25,13 @@ public class ConfigurableInputStream extends InputStream {
         if (ch == '\n') {
             endLine = true;
         }
-
-        return (int)ch;
+        return (int) ch;
     }
-
     public void add(String line) {
         if (this.line == null) {
             this.line = line;
         } else {
-            this.line += "\r\n" + line;
+            this.line += "\n" + line;
         }
     }
 

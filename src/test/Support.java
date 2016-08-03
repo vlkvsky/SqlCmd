@@ -1,14 +1,10 @@
-package test;
+package src.test;
 
-
-import src.model.DatabaseManager;
+import src.model.*;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-/**
- * Created by serzh on 04.06.16.
- */
 public class Support {
 
     private static final String DATABASE = BeforeTestsChangeNameAndPass.DATABASE;
