@@ -30,7 +30,7 @@ public class Support {
     public static void dropData(DatabaseManager manager) {
         try {
             manager.connect("", USER, PASSWORD);
-            manager.dropDatabase(DATABASE);
+            manager.deleteDatabase(DATABASE);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

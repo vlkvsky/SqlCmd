@@ -21,10 +21,11 @@ public class Help extends Command {
                 // TODO delete DB
                 new Tables(manager,view),
                 new CreateTable(manager,view),
-                new DeleteTable(manager,view),
-                new ContentTable(manager,view),
                 new Insert(manager, view),
+                new ContentTable(manager,view),
                 new ClearTable(manager, view),
+                new DeleteTable(manager,view),
+                new DeleteDB(manager,view),
                 new Exit(view)
         ));
     }

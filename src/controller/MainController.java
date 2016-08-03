@@ -28,11 +28,13 @@ public class MainController {
                 new ContentTable(manager,view), // содержимое таблицы
                 new CreateTable(manager,view),  // создать таблицу
                 new DeleteTable(manager,view),  // удалить таблицу
+                new DeleteDB(manager,view),     // удалить базу данных
                 new Insert(manager, view),      // вставить данный в таблицу
                 new ClearTable(manager,view),   // очистить таблицу
 
 
                 new Exit(view),                 // выход
+                new Exit.ex(view),              // выход
                 new UnsupportedCommand(view)    // несуществующая комманда
         ));
     }

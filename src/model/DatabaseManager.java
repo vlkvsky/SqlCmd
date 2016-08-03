@@ -21,7 +21,7 @@ public interface DatabaseManager {
 
     void createDatabase(String databaseName);
 
-    void dropDatabase(String databaseName);
+    void deleteDatabase(String databaseName);
 
     void createTable(String query);
 
