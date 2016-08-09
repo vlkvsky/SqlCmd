@@ -53,19 +53,11 @@ public abstract class Command {
         }
     }
 
-    public void validationPairParameters(String input) {
-        int inputLength = parametersLength(input);
-        if (inputLength % 2 != 0) {
-            throw new IllegalArgumentException(String.format("Must be an even number of parameters, " +
-                    "format '%s', but expected: '%s'", commandFormat(), input));
-        }
-    }
-
     public void checkNameStartWithLetter(String input, String name) {
         char fistChar = input.charAt(0);
         if (!(fistChar >= 'a' && fistChar <= 'z') && !(fistChar >= 'A' && fistChar <= 'Z')) {
             throw new IllegalArgumentException(String.format(
-                    "Name %s must start with a letter, but expected '%s'", name, fistChar));
+                    "Name of DB must start with a letter, but expected '%s'", fistChar));
         }
     }
 

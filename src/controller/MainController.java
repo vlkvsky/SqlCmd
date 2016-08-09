@@ -8,11 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
-
-
 public class MainController {
-
 
     private List<Command> commands;
     private View view;

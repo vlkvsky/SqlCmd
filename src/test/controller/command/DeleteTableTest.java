@@ -42,7 +42,7 @@ public class DeleteTableTest {
     @Test
     public void testProcess() throws Exception {
         when(view.read()).thenReturn("y");
-        command.process("dropTable|nameTable");
+        command.process("deleteTable|nameTable");
         verify(view).write("Are you sure you want to delete 'nameTable'? Y/N");
         verify(manager).deleteTable("nameTable");
         verify(view).write("Table 'nameTable' successfully deleted.");
@@ -51,7 +51,7 @@ public class DeleteTableTest {
     @Test
     public void testActionCanceled() throws Exception {
         when(view.read()).thenReturn("n");
-        command.process("dropTable|nameTable");
+        command.process("deleteTable|nameTable");
         verify(view).write("Are you sure you want to delete 'nameTable'? Y/N");
         verify(view).write("Action canceled.");
     }

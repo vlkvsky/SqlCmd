@@ -20,7 +20,7 @@ public class DeleteRow extends Command {
 
         if (!deleteConfirmation(RowToDelete[2])) return;
 
-        manager.DeleteTableRow(databaseName, id);
+        manager.deleteTableRow(databaseName, id);
         view.write(String.format("Row with id '%s' successfully deleted.", RowToDelete[2]));
 
 

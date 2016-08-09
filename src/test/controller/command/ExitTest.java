@@ -31,7 +31,7 @@ public class ExitTest {
     }
 
     @Test
-    public void testProcessExitCommand_thowsExitException() {
+    public void testProcessExitCommand_throwsExitException() {
         try {
             command.process("exit");
             fail("Expected ExitException");

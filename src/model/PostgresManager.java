@@ -251,7 +251,7 @@ public class PostgresManager implements DatabaseManager {
     }
 
     @Override
-    public void DeleteTableRow(String tableName, String id) {
+    public void deleteTableRow(String tableName, String id) {
         try (Statement statement = connection.createStatement()) {
             statement.executeUpdate("DELETE FROM PUBLIC." + tableName + " WHERE id =" + id );
         } catch (SQLException e) {

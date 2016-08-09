@@ -61,7 +61,7 @@ public class CreateDBTest {
             command.process("createDB|12databaseName");
             fail();
         } catch (IllegalArgumentException e) {
-            assertEquals("Name базы must start with a letter, but expected '1'", e.getMessage());
+            assertEquals("Name of DB must start with a letter, but expected '1'", e.getMessage());
         }
     }
 }

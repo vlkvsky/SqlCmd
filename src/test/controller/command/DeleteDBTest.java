@@ -8,6 +8,7 @@ import src.model.*;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
+
 public class DeleteDBTest {
     private DatabaseManager manager;
     private View view;
@@ -79,7 +80,7 @@ public class DeleteDBTest {
     }
 
     @Test
-    public void testDropatabaseNameConnect() throws Exception {
+    public void testDeleteDBwithoutConnect() throws Exception {
         when(view.read()).thenReturn("Y");
         when(manager.getDatabaseName()).thenReturn("currentDB");
         command.process("dropDB|currentDB");

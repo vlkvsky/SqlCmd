@@ -13,9 +13,6 @@ import java.util.HashSet;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-/**
- * Created by serzh on 1/25/16.
- */
 public class TablesTest {
     private DatabaseManager manager;
     private View view;

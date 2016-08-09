@@ -3,9 +3,6 @@ package src.controller.command;
 import src.model.DatabaseManager;
 import src.view.View;
 
-/**
- * Created by Вадим Сергеевич on 03.06.2016.
- */
 public class CreateTable extends Command {
 
     public CreateTable(DatabaseManager manager, View view) {

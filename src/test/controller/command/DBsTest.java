@@ -13,6 +13,7 @@ import src.model.*;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
+
 public class DBsTest {
     private DatabaseManager manager;
     private View view;

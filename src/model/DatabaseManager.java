@@ -4,9 +4,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-/**
- * Created by Вадим Сергеевич on 02.06.2016.
- */
 public interface DatabaseManager {
 
     List<Map<String, Object>> getTableData(String tableName);
@@ -43,5 +40,7 @@ public interface DatabaseManager {
 
     int getTableSize(String tableName);
 
-    void DeleteTableRow(String tableName, String id);
+    void deleteTableRow(String tableName, String id);
+
+
 }

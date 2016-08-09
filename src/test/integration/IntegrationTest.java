@@ -15,7 +15,6 @@ import java.io.UnsupportedEncodingException;
 
 import static org.junit.Assert.assertEquals;
 
-
 public class IntegrationTest {
 
     private static final String DATABASE = BeforeTestsChangeNameAndPass.DATABASE;
