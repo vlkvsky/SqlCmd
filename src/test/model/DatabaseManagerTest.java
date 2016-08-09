@@ -47,17 +47,17 @@ public class DatabaseManagerTest {
         manager.clear("users");
         // when
         Map<String, Object> input = new LinkedHashMap<>();
+        input.put("id", 11);
         input.put("name", "Stiven");
         input.put("password", "****");
-        input.put("id", 11);
         manager.insert("users", input);
         // then
         List<Map<String, Object>> users = manager.getTableData("users");
         assertEquals(1, users.size());
 
         Map<String, Object> user = users.get(0);
-        assertEquals("[Stiven, ****, 11]", user.values().toString());
-        assertEquals("[name, password, id]", user.keySet().toString());
+        assertEquals("[11, Stiven, ****]", user.values().toString());
+        assertEquals("[id, name, password]", user.keySet().toString());
     }
 
     @Test
@@ -81,12 +81,12 @@ public class DatabaseManagerTest {
         assertEquals(2, users.size());
 
         Map<String, Object> user = users.get(0);
-        assertEquals("[Stiven, ****, 11]", user.values().toString());
-        assertEquals("[name, password, id]", user.keySet().toString());
+        assertEquals("[11, Stiven, ****]", user.values().toString());
+        assertEquals("[id, name, password]", user.keySet().toString());
 
         Map<String, Object> user2 = users.get(1);
-        assertEquals("[Stiven2, *****, 12]", user2.values().toString());
-        assertEquals("[name, password, id]", user2.keySet().toString());
+        assertEquals("[12, Stiven2, *****]", user2.values().toString());
+        assertEquals("[id, name, password]", user2.keySet().toString());
     }
 
     @Test
@@ -109,8 +109,8 @@ public class DatabaseManagerTest {
         assertEquals(1, users.size());
 
         Map<String, Object> user = users.get(0);
-        assertEquals("[name, password, id]", user.keySet().toString());
-        assertEquals("[Pup, pass2, 15]", user.values().toString());
+        assertEquals("[id, name, password]", user.keySet().toString());
+        assertEquals("[15, Pup, pass2]", user.values().toString());
     }
 
     @Test
@@ -118,7 +118,7 @@ public class DatabaseManagerTest {
         // when
         Set<String> columnNames = manager.getTableColumns("users");
         // then
-        assertEquals("[name, password, id]", columnNames.toString());
+        assertEquals("[id, name, password]", columnNames.toString());
     }
 
     @Test
