@@ -43,5 +43,5 @@ public interface DatabaseManager {
 
     int getTableSize(String tableName);
 
-
+    void DeleteTableRow(String tableName, String id);
 }

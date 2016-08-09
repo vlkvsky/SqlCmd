@@ -22,7 +22,8 @@ public class Help extends Command {
                 new CreateDB(manager, view),
                 new CreateTable(manager, view),
                 new ContentTable(manager, view),
-                new Insert(manager, view),
+                new InsertRow(manager, view),
+                new DeleteRow(manager, view),
                 new ClearTable(manager, view),
                 new DeleteTable(manager, view),
                 new DeleteDB(manager, view),
@@ -36,7 +37,7 @@ public class Help extends Command {
 
         for (Command command : commands) {
             view.write("\t • " + command.commandFormat() + "\t\t\t\t" + command.description() +
-                    "\n\t═════════════════════════════════");
+                    "\n\t═══════════════════════════════════");
         }
     }
 

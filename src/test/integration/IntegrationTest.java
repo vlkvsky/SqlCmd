@@ -82,27 +82,29 @@ public class IntegrationTest {
                 "Enter the command:\n" +
                 "Available commands:\n" +
                 "\t • help\t\t\t\t\t\t\tGet available commands\n" +
-                "\t═════════════════════════════════\n" +
+                "\t═══════════════════════════════════\n" +
                 "\t • DBs\t\t\t\t\t\t\tGet all DataBases\n" +
-                "\t═════════════════════════════════\n" +
+                "\t═══════════════════════════════════\n" +
                 "\t • tables\t\t\t\t\t\tGet all tables of DB\n" +
-                "\t═════════════════════════════════\n" +
+                "\t═══════════════════════════════════\n" +
                 "\t • createDB|<>\t\t\t\t\tCreate DB\n" +
-                "\t═════════════════════════════════\n" +
+                "\t═══════════════════════════════════\n" +
                 "\t • create\t\t\t\t\t\tCreate table step-by-step\n" +
-                "\t═════════════════════════════════\n" +
+                "\t═══════════════════════════════════\n" +
                 "\t • content|<>\t\t\t\t\tGet content of <table>\n" +
-                "\t═════════════════════════════════\n" +
+                "\t═══════════════════════════════════\n" +
                 "\t • insert|<>\t\t\t\t\tAdd data to <table>\n" +
-                "\t═════════════════════════════════\n" +
+                "\t═══════════════════════════════════\n" +
+                "\t • deleteRow|<>|id\t\t\t\tDelete row <id> from <table>\n" +
+                "\t═══════════════════════════════════\n" +
                 "\t • clear|<>\t\t\t\t\t\tClear data of <table>\n" +
-                "\t═════════════════════════════════\n" +
+                "\t═══════════════════════════════════\n" +
                 "\t • deleteTable|<>\t\t\t\tDelete <table>\n" +
-                "\t═════════════════════════════════\n" +
+                "\t═══════════════════════════════════\n" +
                 "\t • deleteDB|<>\t\t\t\t\tDelete <DB>\n" +
-                "\t═════════════════════════════════\n" +
+                "\t═══════════════════════════════════\n" +
                 "\t • exit\t\t\t\t\t\t\tClose application\n" +
-                "\t═════════════════════════════════\n" +
+                "\t═══════════════════════════════════\n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
                 "Connection successful. To see the available commands, type <help>\n" +
@@ -189,11 +191,11 @@ public class IntegrationTest {
                 "Connection successful. To see the available commands, type <help>\n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
-                "+-----+--------+--+\n" +
-                "|name |password|id|\n" +
-                "+-----+--------+--+\n" +
-                "|Vasia|****    |22|\n" +
-                "+-----+--------+--+\n" +
+                "+--+-------------+-------------------+\n" +
+                "|id|name         |password           |\n" +
+                "+--+-------------+-------------------+\n" +
+                "|0 |NameFromSetup|PasswordFromSupport|\n" +
+                "+--+-------------+-------------------+\n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
                 "Connection successful. To see the available commands, type <help>\n" +
@@ -268,6 +270,7 @@ public class IntegrationTest {
                 "See you later!\n", getData());
     }
 
+    @Ignore // проходит, но занимает много времени
     @Test
     public void testConnectAfterConnect() {
         // given
@@ -337,8 +340,13 @@ public class IntegrationTest {
         in.add("Nastya");
         in.add("+++++");
 
-        in.add("content|users");
 
+        in.add("deleteRow|users|1");
+        in.add("Y");
+        in.add("deleteRow|users|2");
+        in.add("Y");
+
+        in.add("content|users");
         in.add(commandDisconnect);
         in.add("exit");
         // when
@@ -371,14 +379,18 @@ public class IntegrationTest {
                 "+--+------+--------+\n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
+                "Are you sure you want to delete '1'? Y/N\n" +
+                "Row with id '1' successfully deleted.\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "Are you sure you want to delete '2'? Y/N\n" +
+                "Row with id '2' successfully deleted.\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
                 "+--+-------------+-------------------+\n" +
                 "|id|name         |password           |\n" +
                 "+--+-------------+-------------------+\n" +
                 "|0 |NameFromSetup|PasswordFromSupport|\n" +
-                "+--+-------------+-------------------+\n" +
-                "|1 |Vadym        |*****              |\n" +
-                "+--+-------------+-------------------+\n" +
-                "|2 |Nastya       |+++++              |\n" +
                 "+--+-------------+-------------------+\n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
@@ -720,7 +732,7 @@ public class IntegrationTest {
                 "See you later!\n", getData());
     }
 
-    @Ignore // тест занимает много времени, половина от всех вместе взятых...
+    @Ignore // Проходит, но занимает много времени
     @Test
     public void testCreateDeleteDatabase() {
         // given

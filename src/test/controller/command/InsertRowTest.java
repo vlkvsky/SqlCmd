@@ -9,10 +9,7 @@ import src.model.*;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-/**
- * Created by serzh on 6/7/16.
- */
-public class InsertTest {
+public class InsertRowTest {
 
     private Command command;
 
@@ -20,7 +17,7 @@ public class InsertTest {
     public void setup() {
         DatabaseManager manager = mock(DatabaseManager.class);
         View view = mock(View.class);
-        command = new Insert(manager, view);
+        command = new InsertRow(manager, view);
     }
 
     @Test

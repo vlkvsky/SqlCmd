@@ -6,9 +6,9 @@ import src.view.View;
 
 import java.util.*;
 
-public class Insert extends Command {
+public class InsertRow extends Command {
 
-    public Insert(DatabaseManager manager, View view) {
+    public InsertRow(DatabaseManager manager, View view) {
         super(manager, view);
     }
 

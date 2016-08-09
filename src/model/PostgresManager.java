@@ -249,4 +249,13 @@ public class PostgresManager implements DatabaseManager {
             throw new RuntimeException(e.getLocalizedMessage());
         }
     }
+
+    @Override
+    public void DeleteTableRow(String tableName, String id) {
+        try (Statement statement = connection.createStatement()) {
+            statement.executeUpdate("DELETE FROM PUBLIC." + tableName + " WHERE id =" + id );
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getLocalizedMessage());
+        }
+    }
 }
