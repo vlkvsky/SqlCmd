@@ -23,9 +23,9 @@ public class IntegrationTest {
     private static final String PASSWORD = BeforeTestsChangeNameAndPass.PASSWORD;
 
     private final String commandConnect = "connect|" + DATABASE + "|" + USER + "|" + PASSWORD;
-    private final String commandDisconnect = "connect|" + "" + "|" + USER + "|" + PASSWORD;
-    private final String pleaseConnect = "Введите имя базы данных, с которой будем работать, имя пользователя и пароль в формате: " +
-            "connect|database|userName|password\n";
+    private final String commandDisconnect = "connect|" + "sqlcmd" + "|" + USER + "|" + PASSWORD;
+    private final String pleaseConnect = "Hello user!\n" +
+            "Enter DB name, login, password in the format: connect|sqlcmd|vlkvsky|0990\n";
 
     private static DatabaseManager manager;
     private ConfigurableInputStream in;
@@ -46,12 +46,12 @@ public class IntegrationTest {
     }
 
     @AfterClass
-    public static void dropDatabase() {
+    public static void DeleteDB() {
         Support.deleteData(manager);
     }
 
     @Test
-    public void testHelp() {
+    public void testHelpBeforeConnect() {
         // given
         in.add("help");
         in.add("exit");
@@ -60,40 +60,55 @@ public class IntegrationTest {
         // then
         assertEquals(pleaseConnect +
                 // help
-                "Существующие команды:\n" +
-                "\tconnect|databaseName|userName|password\n" +
-                "\t\tдля подключения к базе данных, с которой будем работать\n" +
-                "\tdatabases\n" +
-                "\t\tдля получения списка баз\n" +
-                "\ttables\n" +
-                "\t\tдля получения списка всех таблиц базы, к которой подключились\n" +
-                "\tcreateDB|databaseName\n" +
-                "\t\tдля создания новой Database. Имя базы должно начинаться с буквы.\n" +
-                "\tdropDB|databaseName\n" +
-                "\t\tдля удаления Database. База должна быть свободна от любого конекшина.\n" +
-                "\tcreateTable\n" +
-                "\t\tдля создания новой таблицы пошагово\n" +
-                "\tcreateTableSQL|tableName(column1,column2,...,columnN)\n" +
-                "\t\tдля создания новой таблицы знающих SQL, в круглых скобках вставить опиание колонок в SQL формате, пример:\n" +
-                "\t\tcreateTableSQL|user(id SERIAL NOT NULL PRIMARY KEY,username varchar(225) NOT NULL UNIQUE, password varchar(225))\n" +
-                "\tsize|tableName\n" +
-                "\t\tколичество строк в таблице\n" +
-                "\tclear|tableName\n" +
-                "\t\tдля очистки всей таблицы\n" +
-                "\tdropTable|tableName\n" +
-                "\t\tдля удаления таблицы\n" +
-                "\tinsertTable|tableName\n" +
-                "\t\tдля пошагового создания записи в существующей таблице\n" +
-                "\tinsert|tableName|column1|value1|column2|value2|...|columnN|valueN\n" +
-                "\t\tдля создания записи в существующей таблице\n" +
-                "\tfind|tableName\n" +
-                "\t\tдля получения содержимого таблицы 'tableName'\n" +
-                "\thelp\n" +
-                "\t\tдля вывода этого списка на экран\n" +
-                "\texit\n" +
-                "\t\tдля выхода из программы\n" +
-                "Введи команду (или help для помощи):\n" +
-                "До скорой встречи!\n", getData());
+                "Command 'help' is not available. You must connect! \n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "See you later!\n", getData());
+    }
+    @Test
+    public void testHelpAfterConnect() {
+        // given
+        in.add(commandConnect);
+        in.add("help");
+        in.add(commandDisconnect);
+        in.add("exit");
+        // when
+        Main.main(new String[0]);
+        // then
+        assertEquals(pleaseConnect +
+                // help
+                "Connection successful. To see the available commands, type <help>\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "Available commands:\n" +
+                "\t • help\t\t\t\t\t\t\tGet available commands\n" +
+                "\t═════════════════════════════════\n" +
+                "\t • DBs\t\t\t\t\t\t\tGet all DataBases\n" +
+                "\t═════════════════════════════════\n" +
+                "\t • tables\t\t\t\t\t\tGet all tables of DB\n" +
+                "\t═════════════════════════════════\n" +
+                "\t • createDB|<>\t\t\t\t\tCreate DB\n" +
+                "\t═════════════════════════════════\n" +
+                "\t • create\t\t\t\t\t\tCreate table step-by-step\n" +
+                "\t═════════════════════════════════\n" +
+                "\t • content|<>\t\t\t\t\tGet content of <table>\n" +
+                "\t═════════════════════════════════\n" +
+                "\t • insert|<>\t\t\t\t\tAdd data to <table>\n" +
+                "\t═════════════════════════════════\n" +
+                "\t • clear|<>\t\t\t\t\t\tClear data of <table>\n" +
+                "\t═════════════════════════════════\n" +
+                "\t • deleteTable|<>\t\t\t\tDelete <table>\n" +
+                "\t═════════════════════════════════\n" +
+                "\t • deleteDB|<>\t\t\t\t\tDelete <DB>\n" +
+                "\t═════════════════════════════════\n" +
+                "\t • exit\t\t\t\t\t\t\tClose application\n" +
+                "\t═════════════════════════════════\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "Connection successful. To see the available commands, type <help>\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "See you later!\n", getData());
     }
 
     public String getData() {
@@ -115,7 +130,17 @@ public class IntegrationTest {
         // then
         assertEquals(pleaseConnect +
                 // exit
-                "До скорой встречи!\n", getData());
+                "See you later!\n", getData());
+    }   @Test
+    public void testEx() {
+        // given
+        in.add("ex");
+        // when
+        Main.main(new String[0]);
+        // then
+        assertEquals(pleaseConnect +
+                // exit
+                "See you later!\n", getData());
     }
 
     @Test
@@ -128,30 +153,57 @@ public class IntegrationTest {
         // then
         assertEquals(pleaseConnect +
                 // tables
-                "Вы не можете пользоваться командами, пока не подключитесь с помощью комманды connect|databaseName|userName|password\n" +
-                "Введи команду (или help для помощи):\n" +
-                // exit
-                "До скорой встречи!\n", getData());
+                "Command 'tables' is not available. You must connect! \n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "See you later!\n", getData());
     }
 
     @Test
-    public void testFindWithoutConnect() {
+    public void testContentBeforeConnect() {
         // given
-        in.add("find|user");
+        in.add("content|t1");
         in.add("exit");
         // when
         Main.main(new String[0]);
         // then
         assertEquals(pleaseConnect +
                 // find|user
-                "Вы не можете пользоваться командами, пока не подключитесь с помощью комманды connect|databaseName|userName|password\n" +
-                "Введи команду (или help для помощи):\n" +
-                // exit
-                "До скорой встречи!\n", getData());
+                "Command 'content|t1' is not available. You must connect! \n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "See you later!\n", getData());
     }
 
     @Test
-    public void testUnsupported() {
+    public void testContentAfterConnect() {
+        // given
+        in.add(commandConnect);
+        in.add("content|users");
+        in.add(commandDisconnect);
+        in.add("exit");
+        // when
+        Main.main(new String[0]);
+        // then
+        assertEquals(pleaseConnect +
+                "Connection successful. To see the available commands, type <help>\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "+-----+--------+--+\n" +
+                "|name |password|id|\n" +
+                "+-----+--------+--+\n" +
+                "|Vasia|****    |22|\n" +
+                "+-----+--------+--+\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "Connection successful. To see the available commands, type <help>\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "See you later!\n", getData());
+    }
+
+    @Test
+    public void testUnsupportedBeforeConnect() {
         // given
         in.add("unsupported");
         in.add("exit");
@@ -160,10 +212,10 @@ public class IntegrationTest {
         // then
         assertEquals(pleaseConnect +
                 // unsupported
-                "Вы не можете пользоваться командами, пока не подключитесь с помощью комманды connect|databaseName|userName|password\n" +
-                "Введи команду (или help для помощи):\n" +
-                // exit
-                "До скорой встречи!\n", getData());
+                "Command 'unsupported' is not available. You must connect! \n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "See you later!\n", getData());
     }
 
     @Test
@@ -178,15 +230,18 @@ public class IntegrationTest {
         // then
         assertEquals(pleaseConnect +
                 // connect
-                "Успех!\n" +
-                "Введи команду (или help для помощи):\n" +
+                "Connection successful. To see the available commands, type <help>\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
                 // unsupported
-                "Несуществующая команда: unsupported\n" +
-                "Введи команду (или help для помощи):\n" +
-                "Успех!\n" +
-                "Введи команду (или help для помощи):\n" +
+                "non-existent request: 'unsupported'\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "Connection successful. To see the available commands, type <help>\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
                 // exit
-                "До скорой встречи!\n", getData());
+                "See you later!\n", getData());
     }
 
     @Test
@@ -201,70 +256,54 @@ public class IntegrationTest {
         // then
         assertEquals(pleaseConnect +
                 // connect
-                "Успех!\n" +
-                "Введи команду (или help для помощи):\n" +
-                // tables
-                "Существующие таблицы: users, test1, users2\n" +
-                "Введи команду (или help для помощи):\n" +
-                "Успех!\n" +
-                "Введи команду (или help для помощи):\n" +
-                // exit
-                "До скорой встречи!\n", getData());
-    }
-
-    @Test
-    public void testFindAfterConnect() {
-        // given
-        in.add(commandConnect);
-        in.add("find|users");
-        in.add(commandDisconnect);
-        in.add("exit");
-        // when
-        Main.main(new String[0]);
-        // then
-        assertEquals(pleaseConnect +
-                "Успех!\n" +
-                "Введи команду (или help для помощи):\n" +
-                "+-----+--------+--+\n" +
-                "|name |password|id|\n" +
-                "+-----+--------+--+\n" +
-                "|Vasia|****    |22|\n" +
-                "+-----+--------+--+\n" +
-                "Введи команду (или help для помощи):\n" +
-                "Успех!\n" +
-                "Введи команду (или help для помощи):\n" +
-                "До скорой встречи!\n", getData());
+                "Connection successful. To see the available commands, type <help>\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "Available tables: users, test1, users2\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "Connection successful. To see the available commands, type <help>\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "See you later!\n", getData());
     }
 
     @Test
     public void testConnectAfterConnect() {
         // given
         in.add(commandConnect);
-        in.add("tables");
-        in.add("connect|test|" + USER + "|" + PASSWORD);
+        in.add("createDB|testconnectafterconnect");
+        in.add("connect|testconnectafterconnect|" + USER + "|" + PASSWORD);
         in.add("tables");
         in.add(commandDisconnect);
+        in.add("deleteDB|testconnectafterconnect");
+        in.add("Y");
+
         in.add("exit");
         // when
         Main.main(new String[0]);
         // then
         assertEquals(pleaseConnect +
-                // connect
-                "Успех!\n" +
-                "Введи команду (или help для помощи):\n" +
-                // tables
-                "Существующие таблицы: users, test1, users2\n" +
-                "Введи команду (или help для помощи):\n" +
-                // connect test
-                "Успех!\n" +
-                "Введи команду (или help для помощи):\n" +
-                // tables
-                "Существующие таблицы: qwe\n" +
-                "Введи команду (или help для помощи):\n" +
-                "Успех!\n" +
-                "Введи команду (или help для помощи):\n" +
-                // exit
-                "До скорой встречи!\n", getData());
+                "Connection successful. To see the available commands, type <help>\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "DB 'testconnectafterconnect' created.\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "Connection successful. To see the available commands, type <help>\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "DB is empty.\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "Connection successful. To see the available commands, type <help>\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "Are you sure you want to delete 'testconnectafterconnect'? Y/N\n" +
+                "DB 'testconnectafterconnect' successfully deleted\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "See you later!\n", getData());
     }
 
     @Test
@@ -276,22 +315,30 @@ public class IntegrationTest {
         Main.main(new String[0]);
         // then
         assertEquals(pleaseConnect +
-                // connect
-                "Неудача! по причине: Формат команды 'connect|databaseName|userName|password', а ты ввел: connect|sqlcmd5hope5never5exist\n" +
-                "Введи команду (или help для помощи):\n" +
-                // exit
-                "До скорой встречи!\n", getData());
+                "Can't perform the action! Problem: Format 'connect|DB|user|password', but expected: connect|db_for_integration_test\n" +
+                "Repeat one more time.\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "See you later!\n", getData());
     }
 
     @Test
     public void testFindAfterConnect_withData() {
         // given
         in.add(commandConnect);
-        in.add("clear|users");
-        in.add("insert|users|id|13|name|Stiven|password|*****");
-        in.add("insert|users|id|14|name|Eva|password|+++++");
-        in.add("find|users");
-        in.add("clear|users");
+
+        in.add("insert|users");
+        in.add("1");
+        in.add("Vadym");
+        in.add("*****");
+
+        in.add("insert|users");
+        in.add("2");
+        in.add("Nastya");
+        in.add("+++++");
+
+        in.add("content|users");
+
         in.add(commandDisconnect);
         in.add("exit");
         // when
@@ -299,42 +346,46 @@ public class IntegrationTest {
         // then
         assertEquals(pleaseConnect +
                 // connect
-                "Успех!\n" +
-                "Введи команду (или help для помощи):\n" +
-                // clear|users
-                "Таблица users была успешно очищена.\n" +
-                "Введи команду (или help для помощи):\n" +
-                // insert|users|id|13|name|Stiven|password|*****
-                "В таблице 'users' была успешно добавлена запись:\n" +
+                "Connection successful. To see the available commands, type <help>\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "Enter a value in the field 'id' or enter '0' to exit to the main menu .\n" +
+                "Enter a value in the field 'name' or enter '0' to exit to the main menu .\n" +
+                "Enter a value in the field 'password' or enter '0' to exit to the main menu .\n" +
+                "Successfully added to the table 'users' this data:\n" +
+                "+--+-----+--------+\n" +
+                "|id|name |password|\n" +
+                "+--+-----+--------+\n" +
+                "|1 |Vadym|*****   |\n" +
+                "+--+-----+--------+\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "Enter a value in the field 'id' or enter '0' to exit to the main menu .\n" +
+                "Enter a value in the field 'name' or enter '0' to exit to the main menu .\n" +
+                "Enter a value in the field 'password' or enter '0' to exit to the main menu .\n" +
+                "Successfully added to the table 'users' this data:\n" +
                 "+--+------+--------+\n" +
                 "|id|name  |password|\n" +
                 "+--+------+--------+\n" +
-                "|13|Stiven|*****   |\n" +
+                "|2 |Nastya|+++++   |\n" +
                 "+--+------+--------+\n" +
-                "Введи команду (или help для помощи):\n" +
-                // insert|users|id|14|name|Eva|password|+++++
-                "В таблице 'users' была успешно добавлена запись:\n" +
-                "+--+----+--------+\n" +
-                "|id|name|password|\n" +
-                "+--+----+--------+\n" +
-                "|14|Eva |+++++   |\n" +
-                "+--+----+--------+\n" +
-                "Введи команду (или help для помощи):\n" +
-                // find|users
-                "+------+--------+--+\n" +
-                "|name  |password|id|\n" +
-                "+------+--------+--+\n" +
-                "|Stiven|*****   |13|\n" +
-                "+------+--------+--+\n" +
-                "|Eva   |+++++   |14|\n" +
-                "+------+--------+--+\n" +
-                "Введи команду (или help для помощи):\n" +
-                "Таблица users была успешно очищена.\n" +
-                "Введи команду (или help для помощи):\n" +
-                "Успех!\n" +
-                "Введи команду (или help для помощи):\n" +
-                // exit
-                "До скорой встречи!\n", getData());
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "+--+-------------+-------------------+\n" +
+                "|id|name         |password           |\n" +
+                "+--+-------------+-------------------+\n" +
+                "|0 |NameFromSetup|PasswordFromSupport|\n" +
+                "+--+-------------+-------------------+\n" +
+                "|1 |Vadym        |*****              |\n" +
+                "+--+-------------+-------------------+\n" +
+                "|2 |Nastya       |+++++              |\n" +
+                "+--+-------------+-------------------+\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "Connection successful. To see the available commands, type <help>\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "See you later!\n", getData());
     }
 
     @Test
@@ -350,15 +401,20 @@ public class IntegrationTest {
 
         assertEquals(pleaseConnect +
                 // connect
-                "Успех!\n" +
-                "Введи команду (или help для помощи):\n" +
-                // clear|sadfasd|fsf|fdsf
-                "Неудача! по причине: Формат команды 'clear|tableName', а ты ввел: clear|sadfasd|fsf|fdsf\n" +
-                "Введи команду (или help для помощи):\n" +
-                "Успех!\n" +
-                "Введи команду (или help для помощи):\n" +
-                // exit
-                "До скорой встречи!\n", getData());
+                "Connection successful. To see the available commands, type <help>\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                //clear|sadfasd|fsf|fdsf
+                "Can't perform the action! Problem: Expected format is 'clear|<table>'. But actual 'clear|sadfasd|fsf|fdsf'\n" +
+                "Repeat one more time.\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                //commandDisconnect
+                "Connection successful. To see the available commands, type <help>\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                //exit
+                "See you later!\n", getData());
     }
 
     @Test
@@ -373,28 +429,33 @@ public class IntegrationTest {
         // then
         assertEquals(pleaseConnect +
                 // connect
-                "Успех!\n" +
-                "Введи команду (или help для помощи):\n" +
+                "Connection successful. To see the available commands, type <help>\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
                 // insert|user|error
-                "Неудача! по причине: Должно быть четное количество параметров в формате 'insert|tableName|column1|value1|column2|value2|...|columnN|valueN', а ты прислал: 'insert|user|error'\n" +
-                "Введи команду (или help для помощи):\n" +
-                "Успех!\n" +
-                "Введи команду (или help для помощи):\n" +
+                "Can't perform the action! Problem: Format 'insert|<>', but expected: insert|user|error\n" +
+                "Repeat one more time.\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                // commandDisconnect
+                "Connection successful. To see the available commands, type <help>\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
                 // exit
-                "До скорой встречи!\n", getData());
+                "See you later!\n", getData());
     }
 
     @Test
     public void testCreateTableSimple() {
         // given
         in.add(commandConnect);
-        in.add("createTable");
+        in.add("create");
         in.add("users5");
         in.add("id");
         in.add("name");
         in.add("password");
         in.add("5");
-        in.add("dropTable|users5");
+        in.add("deleteTable|users5");
         in.add("Y");
         in.add(commandDisconnect);
         in.add("exit");
@@ -403,52 +464,58 @@ public class IntegrationTest {
         // then
         assertEquals(pleaseConnect +
                 // connect
-                "Успех!\n" +
-                "Введи команду (или help для помощи):\n" +
-                "Введите имя для создаваемой таблицы(имя должно начинаться с буквы) или '0' для выхода в основное меню\n" +
-                "Имя новой базы: users5\n" +
-                "Введите имя для колонки PRIMARY KEY(имя должно начинаться с буквы) или '0' для выхода в основное меню\n" +
-                "Имя колонки PRIMARY KEY: id\n" +
-                "Введите имя для еще одной колонки(имя должно начинаться с буквы) или '5' для создания базы с введенными колонками или '0' для выхода в основное меню\n" +
-                "Имя еще одной колонки: name\n" +
-                "Введите имя для еще одной колонки(имя должно начинаться с буквы) или '5' для создания базы с введенными колонками или '0' для выхода в основное меню\n" +
-                "Имя еще одной колонки: password\n" +
-                "Введите имя для еще одной колонки(имя должно начинаться с буквы) или '5' для создания базы с введенными колонками или '0' для выхода в основное меню\n" +
-                "Таблица users5 была успешно создана.\n" +
+                "Connection successful. To see the available commands, type <help>\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "Enter the name for a new table:(the name must begin with a letter!) or '0' to main menu.\n" +
+                "Name for a new table: users5\n" +
+                "Enter name to column of PRIMARY KEY(the name must begin with a letter!) or '0' to main menu.\n" +
+                "Column name of PRIMARY KEY: id\n" +
+                "Enter the name of the next column(the name must begin with a letter!) or '5' to finish creating or '0' to main menu.\n" +
+                "The name of the next column 'name'\n" +
+                "Enter the name of the next column(the name must begin with a letter!) or '5' to finish creating or '0' to main menu.\n" +
+                "The name of the next column 'password'\n" +
+                "Enter the name of the next column(the name must begin with a letter!) or '5' to finish creating or '0' to main menu.\n" +
+                "Table users5 created.\n" +
                 "+--+----+--------+\n" +
                 "|id|name|password|\n" +
                 "+--+----+--------+\n" +
-                "Введи команду (или help для помощи):\n" +
-                "Вы уверены, что хотите удалить users5? Y/N\n" +
-                "Таблица users5 была успешно удалена.\n" +
-                "Введи команду (или help для помощи):\n" +
-                "Успех!\n" +
-                "Введи команду (или help для помощи):\n" +
-                "До скорой встречи!\n", getData());
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "Are you sure you want to delete 'users5'? Y/N\n" +
+                "Table 'users5' successfully deleted.\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "Connection successful. To see the available commands, type <help>\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "See you later!\n", getData());
     }
 
     @Test
     public void testTableSimpleExit() {
         // given
         in.add(commandConnect);
-        in.add("createTable");
+        in.add("create");
         in.add("");
         in.add("1");
         in.add("0");
-        in.add("createTable");
+        in.add("create");
         in.add("user6");
         in.add("");
         in.add("0");
-        in.add("createTable");
+        in.add("create");
         in.add("user6");
         in.add("id");
         in.add("");
         in.add("0");
-        in.add("createTable");
+        in.add("create");
         in.add("user6");
         in.add("id");
         in.add("name");
         in.add("0");
+
+
         in.add(commandDisconnect);
         in.add("exit");
         // when
@@ -456,96 +523,134 @@ public class IntegrationTest {
         // then
         assertEquals(pleaseConnect +
                 // connect
-                "Успех!\n" +
-                "Введи команду (или help для помощи):\n" +
-                "Введите имя для создаваемой таблицы(имя должно начинаться с буквы) или '0' для выхода в основное меню\n" +
-                "Нужно ввести имя для создаваемой таблицы, а вы вели пустую строку\n" +
-                "Введите имя для создаваемой таблицы(имя должно начинаться с буквы) или '0' для выхода в основное меню\n" +
-                "Имя должно начинаться с буквы, а у тебя начинается с '1'\n" +
-                "Введите имя для создаваемой таблицы(имя должно начинаться с буквы) или '0' для выхода в основное меню\n" +
-                "Выход в основное меню\n" +
-                "Введи команду (или help для помощи):\n" +
-                "Введите имя для создаваемой таблицы(имя должно начинаться с буквы) или '0' для выхода в основное меню\n" +
-                "Имя новой базы: user6\n" +
-                "Введите имя для колонки PRIMARY KEY(имя должно начинаться с буквы) или '0' для выхода в основное меню\n" +
-                "Нужно ввести имя для колонки PRIMARY KEY, а вы вели пустую строку\n" +
-                "Введите имя для колонки PRIMARY KEY(имя должно начинаться с буквы) или '0' для выхода в основное меню\n" +
-                "Выход в основное меню\n" +
-                "Введи команду (или help для помощи):\n" +
-                "Введите имя для создаваемой таблицы(имя должно начинаться с буквы) или '0' для выхода в основное меню\n" +
-                "Имя новой базы: user6\n" +
-                "Введите имя для колонки PRIMARY KEY(имя должно начинаться с буквы) или '0' для выхода в основное меню\n" +
-                "Имя колонки PRIMARY KEY: id\n" +
-                "Введите имя для еще одной колонки(имя должно начинаться с буквы) или '5' для создания базы с введенными колонками или '0' для выхода в основное меню\n" +
-                "Нужно ввести имя для колонки, а вы вели пустую строку\n" +
-                "Введите имя для еще одной колонки(имя должно начинаться с буквы) или '5' для создания базы с введенными колонками или '0' для выхода в основное меню\n" +
-                "Выход в основное меню\n" +
-                "Введи команду (или help для помощи):\n" +
-                "Введите имя для создаваемой таблицы(имя должно начинаться с буквы) или '0' для выхода в основное меню\n" +
-                "Имя новой базы: user6\n" +
-                "Введите имя для колонки PRIMARY KEY(имя должно начинаться с буквы) или '0' для выхода в основное меню\n" +
-                "Имя колонки PRIMARY KEY: id\n" +
-                "Введите имя для еще одной колонки(имя должно начинаться с буквы) или '5' для создания базы с введенными колонками или '0' для выхода в основное меню\n" +
-                "Имя еще одной колонки: name\n" +
-                "Введите имя для еще одной колонки(имя должно начинаться с буквы) или '5' для создания базы с введенными колонками или '0' для выхода в основное меню\n" +
-                "Выход в основное меню\n" +
-                "Введи команду (или help для помощи):\n" +
-                "Успех!\n" +
-                "Введи команду (или help для помощи):\n" +
-                "До скорой встречи!\n", getData());
+                "Connection successful. To see the available commands, type <help>\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                // "create"
+                "Enter the name for a new table:(the name must begin with a letter!) or '0' to main menu.\n" +
+                // ""
+                "Enter the name for a new table, but you enter an empty string.\n" +
+                "Enter the name for a new table:(the name must begin with a letter!) or '0' to main menu.\n" +
+                // "1"
+                "The name must begin with a letter, but not with: '1'\n" +
+                "Enter the name for a new table:(the name must begin with a letter!) or '0' to main menu.\n" +
+                // "0"
+                " \n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                // "create"
+                "Enter the name for a new table:(the name must begin with a letter!) or '0' to main menu.\n" +
+                // "user6"
+                "Name for a new table: user6\n" +
+                "Enter name to column of PRIMARY KEY(the name must begin with a letter!) or '0' to main menu.\n" +
+                // ""
+                "Enter name to column of PRIMARY KEY, but not an empty string!\n" +
+                "Enter name to column of PRIMARY KEY(the name must begin with a letter!) or '0' to main menu.\n" +
+                // "0"
+                " \n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                // "create"
+                "Enter the name for a new table:(the name must begin with a letter!) or '0' to main menu.\n" +
+                // "user6"
+                "Name for a new table: user6\n" +
+                "Enter name to column of PRIMARY KEY(the name must begin with a letter!) or '0' to main menu.\n" +
+                // "id"
+                "Column name of PRIMARY KEY: id\n" +
+                "Enter the name of the next column(the name must begin with a letter!) or '5' to finish creating or '0' to main menu.\n" +
+                // ""
+                "Enter the column name, but you enter an empty string\n" +
+                "Enter the name of the next column(the name must begin with a letter!) or '5' to finish creating or '0' to main menu.\n" +
+                // "0"
+                " \n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                // "create"
+                "Enter the name for a new table:(the name must begin with a letter!) or '0' to main menu.\n" +
+                // "user6"
+                "Name for a new table: user6\n" +
+                "Enter name to column of PRIMARY KEY(the name must begin with a letter!) or '0' to main menu.\n" +
+                // "id"
+                "Column name of PRIMARY KEY: id\n" +
+                "Enter the name of the next column(the name must begin with a letter!) or '5' to finish creating or '0' to main menu.\n" +
+                // "name"
+                "The name of the next column 'name'\n" +
+                "Enter the name of the next column(the name must begin with a letter!) or '5' to finish creating or '0' to main menu.\n" +
+                // "0"
+                " \n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                // "connect|sqlcmd|USER|PASSWORD
+                "Connection successful. To see the available commands, type <help>\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                // ex
+                "See you later!\n", getData());
+
     }
 
     @Test
     public void testInsertSimple() {
         // given
         in.add(commandConnect);
-        in.add("insertTable|users2");
+        in.add("insert|users2");
         in.add("1");
-        in.add("Frank");
-        in.add("****");
+        in.add("Vadym");
+        in.add("*****");
         in.add("clear|users2");
         in.add(commandDisconnect);
-        in.add("exit");
+        in.add("ex");
         // when
         Main.main(new String[0]);
         // then
         assertEquals(pleaseConnect +
                 // connect
-                "Успех!\n" +
-                "Введи команду (или help для помощи):\n" +
-                "Введите значение в поле 'id' или введите '0' для выхода в основное меню.\n" +
-                "Введите значение в поле 'username' или введите '0' для выхода в основное меню.\n" +
-                "Введите значение в поле 'password' или введите '0' для выхода в основное меню.\n" +
-                "В таблице 'users2' была успешно добавлена запись:\n" +
+                "Connection successful. To see the available commands, type <help>\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                // insert|users2
+                "Enter a value in the field 'id' or enter '0' to exit to the main menu .\n" +
+                // 1
+                "Enter a value in the field 'username' or enter '0' to exit to the main menu .\n" +
+                // Vadym
+                "Enter a value in the field 'password' or enter '0' to exit to the main menu .\n" +
+                // *****
+                "Successfully added to the table 'users2' this data:\n" +
                 "+--+--------+--------+\n" +
                 "|id|username|password|\n" +
                 "+--+--------+--------+\n" +
-                "|1 |Frank   |****    |\n" +
+                "|1 |Vadym   |*****   |\n" +
                 "+--+--------+--------+\n" +
-                "Введи команду (или help для помощи):\n" +
-                "Таблица users2 была успешно очищена.\n" +
-                "Введи команду (или help для помощи):\n" +
-                "Успех!\n" +
-                "Введи команду (или help для помощи):\n" +
-                "До скорой встречи!\n", getData());
+                "-----------------\n" +
+                "Enter the command:\n" +
+                // clear|users2
+                "Table 'users2' cleared\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                // connect|sqlcmd|USER|PASSWORD
+                "Connection successful. To see the available commands, type <help>\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                // ex
+                "See you later!\n", getData());
     }
 
     @Test
     public void testInsertSimpleExit() {
         // given
         in.add(commandConnect);
-        in.add("insertTable|users2");
+        in.add("insert|users2");
         in.add("");
         in.add("1");
         in.add("0");
-        in.add("insertTable|users2");
+        in.add("insert|users2");
         in.add("1");
         in.add("");
-        in.add("Frank");
+        in.add("Vadym");
         in.add("0");
-        in.add("insertTable|users2");
+        in.add("insert|users2");
         in.add("1");
-        in.add("Frank");
+        in.add("Vadym");
         in.add("");
         in.add("0");
         in.add(commandDisconnect);
@@ -555,38 +660,43 @@ public class IntegrationTest {
         // then
         assertEquals(pleaseConnect +
                 // connect
-                "Успех!\n" +
-                "Введи команду (или help для помощи):\n" +
-                "Введите значение в поле 'id' или введите '0' для выхода в основное меню.\n" +
-                "Нужно ввести имя для колонки PRIMARY KEY, а вы вели пустую строку\n" +
-                "Введите значение в поле 'id' или введите '0' для выхода в основное меню.\n" +
-                "Введите значение в поле 'username' или введите '0' для выхода в основное меню.\n" +
-                "Выход в основное меню\n" +
-                "Введи команду (или help для помощи):\n" +
-                "Введите значение в поле 'id' или введите '0' для выхода в основное меню.\n" +
-                "Введите значение в поле 'username' или введите '0' для выхода в основное меню.\n" +
-                "Нужно ввести имя для колонки PRIMARY KEY, а вы вели пустую строку\n" +
-                "Введите значение в поле 'username' или введите '0' для выхода в основное меню.\n" +
-                "Введите значение в поле 'password' или введите '0' для выхода в основное меню.\n" +
-                "Выход в основное меню\n" +
-                "Введи команду (или help для помощи):\n" +
-                "Введите значение в поле 'id' или введите '0' для выхода в основное меню.\n" +
-                "Введите значение в поле 'username' или введите '0' для выхода в основное меню.\n" +
-                "Введите значение в поле 'password' или введите '0' для выхода в основное меню.\n" +
-                "Нужно ввести имя для колонки PRIMARY KEY, а вы вели пустую строку\n" +
-                "Введите значение в поле 'password' или введите '0' для выхода в основное меню.\n" +
-                "Выход в основное меню\n" +
-                "Введи команду (или help для помощи):\n" +
-                "Успех!\n" +
-                "Введи команду (или help для помощи):\n" +
-                "До скорой встречи!\n", getData());
+                "Connection successful. To see the available commands, type <help>\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "Enter a value in the field 'id' or enter '0' to exit to the main menu .\n" +
+                "Enter name to column of PRIMARY KEY, but not an empty string!\n" +
+                "Enter a value in the field 'id' or enter '0' to exit to the main menu .\n" +
+                "Enter a value in the field 'username' or enter '0' to exit to the main menu .\n" +
+                "Main menu:\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "Enter a value in the field 'id' or enter '0' to exit to the main menu .\n" +
+                "Enter a value in the field 'username' or enter '0' to exit to the main menu .\n" +
+                "Enter name to column of PRIMARY KEY, but not an empty string!\n" +
+                "Enter a value in the field 'username' or enter '0' to exit to the main menu .\n" +
+                "Enter a value in the field 'password' or enter '0' to exit to the main menu .\n" +
+                "Main menu:\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "Enter a value in the field 'id' or enter '0' to exit to the main menu .\n" +
+                "Enter a value in the field 'username' or enter '0' to exit to the main menu .\n" +
+                "Enter a value in the field 'password' or enter '0' to exit to the main menu .\n" +
+                "Enter name to column of PRIMARY KEY, but not an empty string!\n" +
+                "Enter a value in the field 'password' or enter '0' to exit to the main menu .\n" +
+                "Main menu:\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "Connection successful. To see the available commands, type <help>\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "See you later!\n", getData());
     }
 
     @Test
-    public void testDropDatabaseException() {
+    public void testDeleteDBException() {
         // given
         in.add(commandConnect);
-        in.add("dropDB|sqlcmd965823756925");
+        in.add("deleteDB|sqlcmd_DONT_EXIT");
         in.add("y");
         in.add(commandDisconnect);
         in.add("exit");
@@ -596,23 +706,27 @@ public class IntegrationTest {
 
         assertEquals(pleaseConnect +
                 // connect
-                "Успех!\n" +
-                "Введи команду (или help для помощи):\n" +
-                "Вы уверены, что хотите удалить sqlcmd965823756925? Y/N\n" +
-                "Неудача! по причине: ERROR: database \"sqlcmd965823756925\" does not exist\n" +
-                "Введи команду (или help для помощи):\n" +
-                "Успех!\n" +
-                "Введи команду (или help для помощи):\n" +
-                "До скорой встречи!\n", getData());
+                "Connection successful. To see the available commands, type <help>\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "Are you sure you want to delete 'sqlcmd_DONT_EXIT'? Y/N\n" +
+                "Can't perform the action! Problem: ОШИБКА: база данных \"sqlcmd_dont_exit\" не существует\n" +
+                "Repeat one more time.\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "Connection successful. To see the available commands, type <help>\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "See you later!\n", getData());
     }
 
     @Ignore // тест занимает много времени, половина от всех вместе взятых...
     @Test
-    public void testCreateDropDatabase() {
+    public void testCreateDeleteDatabase() {
         // given
         in.add(commandConnect);
-        in.add("createDB|sqlcmd9hope9never9exist");
-        in.add("dropDB|sqlcmd9hope9never9exist");
+        in.add("createDB|testCreateDeleteDatabase");
+        in.add("deleteDB|testCreateDeleteDatabase");
         in.add("y");
         in.add(commandDisconnect);
         in.add("exit");
@@ -622,15 +736,25 @@ public class IntegrationTest {
 
         assertEquals(pleaseConnect +
                 // connect
-                "Успех!\n" +
-                "Введи команду (или help для помощи):\n" +
-                "Database sqlcmd9hope9never9exist была успешно создана.\n" +
-                "Введи команду (или help для помощи):\n" +
-                "Вы уверены, что хотите удалить sqlcmd9hope9never9exist? Y/N\n" +
-                "Database 'sqlcmd9hope9never9exist' была успешно удалена.\n" +
-                "Введи команду (или help для помощи):\n" +
-                // exit
-                "До скорой встречи!\n", getData());
+                "Connection successful. To see the available commands, type <help>\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                // createDB|testCreateDeleteDatabase
+                "DB 'testCreateDeleteDatabase' created.\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                // deleteDB|testCreateDeleteDatabase
+                "Are you sure you want to delete 'testCreateDeleteDatabase'? Y/N\n" +
+                // y
+                "DB 'testCreateDeleteDatabase' successfully deleted\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                // commandDisconnect
+                "Connection successful. To see the available commands, type <help>\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                // ex
+                "See you later!\n", getData());
     }
 
 }

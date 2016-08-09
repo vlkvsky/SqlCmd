@@ -16,9 +16,7 @@ import java.util.Set;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by serzh on 5/11/16.
- */
+
 public class DatabaseManagerTest {
 
     private static DatabaseManager manager;
