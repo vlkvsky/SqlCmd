@@ -36,13 +36,6 @@ public class DeleteRowTest {
     }
 
     @Test
-    public void testCanProcessDeleteWithoutParametersString() throws Exception {
-        boolean canNotProcess = !command.canProcess("deleteRow|");
-        assertFalse(canNotProcess);
-    }
-
-
-    @Test
     public void testProcess() throws Exception {
         when(view.read()).thenReturn("y");
         command.process("deleteRow|table|id");

@@ -246,6 +246,22 @@ public class IntegrationTest {
     }
 
     @Test
+    public void testConnectWithError() {
+        // given
+        in.add("connect|" + DATABASE);
+        in.add("exit");
+        // when
+        Main.main(new String[0]);
+        // then
+        assertEquals(pleaseConnect +
+                "Can't perform the action! Problem: Format 'connect|DB|user|password', but expected: connect|db_for_integration_test\n" +
+                "Repeat one more time.\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "See you later!\n", getData());
+    }
+
+    @Test
     public void testTablesAfterConnect() {
         // given
         in.add(commandConnect);
@@ -264,61 +280,6 @@ public class IntegrationTest {
                 "-----------------\n" +
                 "Enter the command:\n" +
                 "Connection successful. To see the available commands, type <help>\n" +
-                "-----------------\n" +
-                "Enter the command:\n" +
-                "See you later!\n", getData());
-    }
-
-    @Ignore // проходит, но занимает много времени
-    @Test
-    public void testConnectAfterConnect() {
-        // given
-        in.add(commandConnect);
-        in.add("createDB|testconnectafterconnect");
-        in.add("connect|testconnectafterconnect|" + USER + "|" + PASSWORD);
-        in.add("tables");
-        in.add(commandDisconnect);
-        in.add("deleteDB|testconnectafterconnect");
-        in.add("Y");
-
-        in.add("exit");
-        // when
-        Main.main(new String[0]);
-        // then
-        assertEquals(pleaseConnect +
-                "Connection successful. To see the available commands, type <help>\n" +
-                "-----------------\n" +
-                "Enter the command:\n" +
-                "DB 'testconnectafterconnect' created.\n" +
-                "-----------------\n" +
-                "Enter the command:\n" +
-                "Connection successful. To see the available commands, type <help>\n" +
-                "-----------------\n" +
-                "Enter the command:\n" +
-                "DB is empty.\n" +
-                "-----------------\n" +
-                "Enter the command:\n" +
-                "Connection successful. To see the available commands, type <help>\n" +
-                "-----------------\n" +
-                "Enter the command:\n" +
-                "Are you sure you want to delete 'testconnectafterconnect'? Y/N\n" +
-                "DB 'testconnectafterconnect' successfully deleted\n" +
-                "-----------------\n" +
-                "Enter the command:\n" +
-                "See you later!\n", getData());
-    }
-
-    @Test
-    public void testConnectWithError() {
-        // given
-        in.add("connect|" + DATABASE);
-        in.add("exit");
-        // when
-        Main.main(new String[0]);
-        // then
-        assertEquals(pleaseConnect +
-                "Can't perform the action! Problem: Format 'connect|DB|user|password', but expected: connect|db_for_integration_test\n" +
-                "Repeat one more time.\n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
                 "See you later!\n", getData());
@@ -731,7 +692,46 @@ public class IntegrationTest {
                 "See you later!\n", getData());
     }
 
-    @Ignore // Проходит, но занимает много времени
+    //@Ignore // проходит, но занимает много времени
+    @Test
+    public void testConnectAfterConnect() {
+        // given
+        in.add(commandConnect);
+        in.add("createDB|testconnectafterconnect");
+        in.add("connect|testconnectafterconnect|" + USER + "|" + PASSWORD);
+        in.add("tables");
+        in.add(commandDisconnect);
+        in.add("deleteDB|testconnectafterconnect");
+        in.add("Y");
+
+        in.add("exit");
+        // when
+        Main.main(new String[0]);
+        // then
+        assertEquals(pleaseConnect +
+                "Connection successful. To see the available commands, type <help>\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "DB 'testconnectafterconnect' created.\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "Connection successful. To see the available commands, type <help>\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "DB is empty.\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "Connection successful. To see the available commands, type <help>\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "Are you sure you want to delete 'testconnectafterconnect'? Y/N\n" +
+                "DB 'testconnectafterconnect' successfully deleted\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "See you later!\n", getData());
+    }
+
+    //@Ignore // Проходит, но занимает много времени
     @Test
     public void testCreateDeleteDatabase() {
         // given
