@@ -2,12 +2,15 @@ package src.test.controller.command;
 
 import org.junit.Before;
 import org.junit.Test;
-import src.view.*;
-import src.controller.command.*;
-import src.model.*;
+import src.controller.command.Command;
+import src.controller.command.CreateDB;
+import src.model.DatabaseManager;
+import src.view.View;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+
 public class CreateDBTest {
     private DatabaseManager manager;
     private View view;

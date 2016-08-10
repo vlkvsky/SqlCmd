@@ -1,6 +1,6 @@
 package src.test;
 
-import src.model.*;
+import src.model.DatabaseManager;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -20,21 +20,21 @@ public class Support {
         }
         try {
             manager.createDB(DATABASE);
-        } catch (RuntimeException e){
+        } catch (RuntimeException e) {
             throw new RuntimeException("Невозможно создать тестовую базу данных."
                     + "\n" + e.getCause());
         }
         try {
             manager.connect(DATABASE, USER, PASSWORD);
 
-        }  catch (RuntimeException e){
+        } catch (RuntimeException e) {
             throw new RuntimeException("Невозможно подключиться к тестовой базе данных."
                     + "\n" + e.getCause());
         }
         try {
             createTablesWithData(manager);
 
-        }  catch (RuntimeException e){
+        } catch (RuntimeException e) {
             throw new RuntimeException("Невозможно редактировать таблицы в тестовой базе данных."
                     + "\n" + e.getCause());
         }

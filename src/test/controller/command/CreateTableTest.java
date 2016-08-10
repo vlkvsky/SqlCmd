@@ -1,13 +1,16 @@
 package src.test.controller.command;
 
-import src.view.*;
 import org.junit.Before;
 import org.junit.Test;
-import src.controller.command.*;
-import src.model.*;
+import src.controller.command.Command;
+import src.controller.command.CreateTable;
+import src.model.DatabaseManager;
+import src.view.View;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+
 public class CreateTableTest {
 
     private Command command;

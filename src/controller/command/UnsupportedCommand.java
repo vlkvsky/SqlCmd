@@ -4,11 +4,12 @@ import src.view.View;
 
 
 public class UnsupportedCommand extends Command {
-    private View view;
+    private final View view;
 
     public UnsupportedCommand(View view) {
         this.view = view;
     }
+
     @Override
     public boolean canProcess(String command) {
         return true;

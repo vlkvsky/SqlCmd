@@ -1,11 +1,12 @@
 package src.test.controller.command;
 
-import org.mockito.ArgumentCaptor;
-import src.view.*;
 import org.junit.Before;
 import org.junit.Test;
-import src.controller.command.*;
-import src.model.*;
+import org.mockito.ArgumentCaptor;
+import src.controller.command.Command;
+import src.controller.command.Tables;
+import src.model.DatabaseManager;
+import src.view.View;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -58,7 +59,7 @@ public class TablesTest {
 
     @Test
     public void testPrintEmptyTableData() {
-        when(manager.getTableNames()).thenReturn(new HashSet<String>());
+        when(manager.getTableNames()).thenReturn(new HashSet<>());
         command.process(("tables"));
         shouldPrint("[DB is empty.]");
     }

@@ -1,10 +1,12 @@
 package src.test.controller.command;
 
-import src.view.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import src.controller.command.*;
+import src.controller.command.Command;
+import src.controller.command.Exit;
+import src.controller.command.ExitException;
+import src.view.View;
 
 import static org.junit.Assert.*;
 

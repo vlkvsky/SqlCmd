@@ -3,13 +3,13 @@ package src.test.controller.command;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import src.controller.command.Command;
+import src.controller.command.DBs;
+import src.model.DatabaseManager;
+import src.view.View;
 
 import java.util.Arrays;
 import java.util.HashSet;
-
-import src.view.*;
-import src.controller.command.*;
-import src.model.*;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;

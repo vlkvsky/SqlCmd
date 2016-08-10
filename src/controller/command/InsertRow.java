@@ -8,12 +8,11 @@ import java.util.*;
 
 public class InsertRow extends Command {
 
+    private Set<String> columns;
+    private boolean exitMain;
     public InsertRow(DatabaseManager manager, View view) {
         super(manager, view);
     }
-
-    Set<String> columns;
-    private boolean exitMain;
 
     @Override
     public void process(String input) {
@@ -61,7 +60,7 @@ public class InsertRow extends Command {
         return input;
     }
 
-    public String getTableConstructor(Map<String, Object> dataSet) {
+    private String getTableConstructor(Map<String, Object> dataSet) {
         Map<String, Object> map = new LinkedHashMap<>();
         map.putAll(dataSet);
 

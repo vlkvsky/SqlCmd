@@ -34,6 +34,7 @@ public class Exit extends Command {
             view.write("See you later!");
             throw new ExitException();
         }
+
         @Override
         public String commandFormat() {
             return "ex";

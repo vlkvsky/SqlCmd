@@ -18,10 +18,10 @@ import static org.junit.Assert.assertTrue;
 
 public class DatabaseManagerTest {
 
-    private static DatabaseManager manager;
     private static final String DATABASE = BeforeTestsChangeNameAndPass.DATABASE;
     private static final String USER = BeforeTestsChangeNameAndPass.USER;
     private static final String PASSWORD = BeforeTestsChangeNameAndPass.PASSWORD;
+    private static DatabaseManager manager;
 
     @BeforeClass
     public static void setup() {

@@ -14,7 +14,7 @@ public class DeleteDB extends Command {
     public void process(String input) {
         validationParameters(input);
         String databaseName = splitInput(input)[1];
-        if (!deleteConfirmation(databaseName)) return;
+        if (deleteConfirmation(databaseName)) return;
 
         String databaseNameConnect = manager.getDatabaseName();
         if (databaseName.equals(databaseNameConnect)) {

@@ -40,7 +40,7 @@ public class ClearTest {
 
     @Test
     public void testClearTableWrongCommand() {
-        boolean  canNotProcess = command.canProcess("cleardf|user");
+        boolean canNotProcess = command.canProcess("cleardf|user");
         assertFalse(canNotProcess);
     }
 

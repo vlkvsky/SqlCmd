@@ -10,9 +10,9 @@ import java.util.Set;
 
 public class TableConstructor {
 
-    private Table table;
-    private Set<String> columns;
-    private List<Map<String, Object>> tableData;
+    private final Table table;
+    private final Set<String> columns;
+    private final List<Map<String, Object>> tableData;
 
     public TableConstructor(Set<String> columns, List<Map<String, Object>> tableData) {
         this.columns = columns;
@@ -31,9 +31,7 @@ public class TableConstructor {
     }
 
     private void buildHeader() {
-        for (String column : columns) {
-            table.addCell(column);
-        }
+        columns.forEach(table::addCell);
     }
 
     private void buildRows() {

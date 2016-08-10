@@ -20,6 +20,7 @@ public class Connect extends Command {
         manager.connect(databaseName, userName, password);
         view.write("Connection successful. To see the available commands, type <help>");
     }
+
     @Override
     public String commandFormat() {
         return "connect|DB|user|password";

@@ -1,23 +1,23 @@
 package src.test.controller.command;
 
-import src.view.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import src.controller.command.*;
-import src.model.*;
+import src.controller.command.Command;
+import src.controller.command.Connect;
+import src.model.DatabaseManager;
+import src.view.View;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
 
 public class ConnectTest {
-    DatabaseManager manager;
-    View view;
-    Command command;
+    private View view;
+    private Command command;
 
     @Before
     public void setup() {
-        manager = Mockito.mock(DatabaseManager.class);
+        DatabaseManager manager = Mockito.mock(DatabaseManager.class);
         view = Mockito.mock(View.class);
         command = new Connect(manager, view);
     }

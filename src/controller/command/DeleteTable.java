@@ -15,7 +15,7 @@ public class DeleteTable extends Command {
         validationParameters(input);
         String tableName = splitInput(input)[1];
 
-        if (!deleteConfirmation(tableName)) return;
+        if (deleteConfirmation(tableName)) return;
         manager.deleteTable(tableName);
         view.write(String.format("Table '%s' successfully deleted.", tableName));
     }

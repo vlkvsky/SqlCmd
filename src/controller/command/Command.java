@@ -3,24 +3,21 @@ package src.controller.command;
 import src.model.DatabaseManager;
 import src.view.View;
 
-/**
- * Created by Вадим Сергеевич on 03.06.2016.
- */
 public abstract class Command {
 
-    protected DatabaseManager manager;
-    protected View view;
+    DatabaseManager manager;
+    View view;
 
-    public Command(DatabaseManager manager, View view) {
+    Command(DatabaseManager manager, View view) {
         this.view = view;
         this.manager = manager;
     }
 
-    public Command(View view) {
+    Command(View view) {
         this.view = view;
     }
 
-    public Command() {
+    Command() {
     }
 
     public abstract void process(String input);
@@ -36,16 +33,16 @@ public abstract class Command {
         return parametersInput[0].toLowerCase().equals(parametersCommandFormat[0].toLowerCase());
     }
 
-    public boolean deleteConfirmation(String name) {
+    boolean deleteConfirmation(String name) {
         view.write(String.format("Are you sure you want to delete '%s'? Y/N", name));
         if (view.read().toUpperCase().equals("Y")) {
-            return true;
+            return false;
         }
         view.write("Action canceled.");
-        return false;
+        return true;
     }
 
-    public void validationParameters(String input) {
+    void validationParameters(String input) {
         int formatLength = parametersLength(commandFormat());
         int inputLength = parametersLength(input);
         if (formatLength != inputLength) {
@@ -53,7 +50,7 @@ public abstract class Command {
         }
     }
 
-    public void checkNameStartWithLetter(String input, String name) {
+    void checkNameStartWithLetter(String input) {
         char fistChar = input.charAt(0);
         if (!(fistChar >= 'a' && fistChar <= 'z') && !(fistChar >= 'A' && fistChar <= 'Z')) {
             throw new IllegalArgumentException(String.format(
@@ -61,11 +58,11 @@ public abstract class Command {
         }
     }
 
-    public String[] splitInput(String input) {
+    String[] splitInput(String input) {
         return input.split("\\|");
     }
 
-    public int parametersLength(String input) {
+    private int parametersLength(String input) {
         return input.split("\\|").length;
     }
 }

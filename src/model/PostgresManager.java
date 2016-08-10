@@ -5,6 +5,10 @@ import java.util.*;
 
 public class PostgresManager implements DatabaseManager {
 
+    private static final String ERROR = "It is impossible because: ";
+    private static final String HOST = "localhost";
+    private static final String PORT = "5432";
+
     static {
         try {
             Class.forName("org.postgresql.Driver");
@@ -12,10 +16,6 @@ public class PostgresManager implements DatabaseManager {
             throw new DriverException("Not installed PostgreSQL JDBC driver.", e);
         }
     }
-
-    private static final String ERROR = "It is impossible because: ";
-    private static final String HOST = "localhost";
-    private static final String PORT = "5432";
 
     private Connection connection;
     private String user;
@@ -124,7 +124,7 @@ public class PostgresManager implements DatabaseManager {
     public void insert(String tableName, Map<String, Object> input) {
         try (Statement stmt = connection.createStatement()) {
             String tableNames = getNameFormatted(input, "%s,");
-            String values = getValuesFormatted(input, "'%s',");
+            String values = getValuesFormatted(input);
 
             stmt.executeUpdate("INSERT INTO public." + tableName + " (" + tableNames + ")" +
                     "VALUES (" + values + ")");
@@ -181,10 +181,10 @@ public class PostgresManager implements DatabaseManager {
         return strings.substring(0, strings.length() - 1);
     }
 
-    private String getValuesFormatted(Map<String, Object> input, String format) {
+    private String getValuesFormatted(Map<String, Object> input) {
         StringBuilder values = new StringBuilder("");
         for (Object value : input.values()) {
-            values.append(String.format(format, value));
+            values.append(String.format("'%s',", value));
         }
         return values.substring(0, values.length() - 1);
     }
@@ -253,7 +253,7 @@ public class PostgresManager implements DatabaseManager {
     @Override
     public void deleteTableRow(String tableName, String id) {
         try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate("DELETE FROM PUBLIC." + tableName + " WHERE id =" + id );
+            statement.executeUpdate("DELETE FROM PUBLIC." + tableName + " WHERE id =" + id);
         } catch (SQLException e) {
             throw new RuntimeException(e.getLocalizedMessage());
         }

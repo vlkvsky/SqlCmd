@@ -5,14 +5,13 @@ import src.view.View;
 
 public class CreateTable extends Command {
 
+    private final String orExit = " or '0' to main menu.";
+    private final String fromLetter = "(the name must begin with a letter!)";
+    private boolean exitMain;
+    private String query = "";
     public CreateTable(DatabaseManager manager, View view) {
         super(manager, view);
     }
-
-    String orExit = " or '0' to main menu.";
-    String fromLetter = "(the name must begin with a letter!)";
-    private boolean exitMain;
-    String query = "";
 
     @Override
     public void process(String input) {
@@ -51,17 +50,21 @@ public class CreateTable extends Command {
             view.write("Enter the name for a new table:" + fromLetter + orExit);
             String input = view.read();
 
-            if (input.equals("0")) {
-                exit = true;
-                exitMain = true;
-            } else if (input.equals("")) {
-                view.write("Enter the name for a new table, but you enter an empty string.");
-            } else {
-                if (checkNameStartWithLetterB(input)) {
-                    query += input + "(";
-                    view.write("Name for a new table: " + input);
+            switch (input) {
+                case "0":
                     exit = true;
-                }
+                    exitMain = true;
+                    break;
+                case "":
+                    view.write("Enter the name for a new table, but you enter an empty string.");
+                    break;
+                default:
+                    if (checkNameStartWithLetterB(input)) {
+                        query += input + "(";
+                        view.write("Name for a new table: " + input);
+                        exit = true;
+                    }
+                    break;
             }
         }
     }
@@ -71,17 +74,21 @@ public class CreateTable extends Command {
         while (!exit) {
             view.write("Enter name to column of PRIMARY KEY" + fromLetter + orExit);
             String input = view.read();
-            if (input.equals("0")) {
-                exit = true;
-                exitMain = true;
-            } else if (input.equals("")) {
-                view.write("Enter name to column of PRIMARY KEY, but not an empty string!");
-            } else {
-                if (checkNameStartWithLetterB(input)) {
-                    view.write("Column name of PRIMARY KEY: " + input);
-                    query += input + " SERIAL NOT NULL PRIMARY KEY";
+            switch (input) {
+                case "0":
                     exit = true;
-                }
+                    exitMain = true;
+                    break;
+                case "":
+                    view.write("Enter name to column of PRIMARY KEY, but not an empty string!");
+                    break;
+                default:
+                    if (checkNameStartWithLetterB(input)) {
+                        view.write("Column name of PRIMARY KEY: " + input);
+                        query += input + " SERIAL NOT NULL PRIMARY KEY";
+                        exit = true;
+                    }
+                    break;
             }
         }
     }
@@ -91,29 +98,34 @@ public class CreateTable extends Command {
         while (!exit) {
             view.write("Enter the name of the next column" + fromLetter + " or '5' to finish creating" + orExit);
             String input = view.read();
-            if (input.equals("5")) {
-                query += ")";
-                exit = true;
-            } else if (input.equals("0")) {
-                exit = true;
-                exitMain = true;
-            } else if (input.equals("")) {
-                view.write("Enter the column name, but you enter an empty string");
-            } else {
-                if (checkNameStartWithLetterB(input)) {
-                    query += "," + input + " varchar(225)";
-                    view.write("The name of the next column " + "'" + input +"'");
-                    createColumn();
+            switch (input) {
+                case "5":
+                    query += ")";
                     exit = true;
-                }
+                    break;
+                case "0":
+                    exit = true;
+                    exitMain = true;
+                    break;
+                case "":
+                    view.write("Enter the column name, but you enter an empty string");
+                    break;
+                default:
+                    if (checkNameStartWithLetterB(input)) {
+                        query += "," + input + " varchar(225)";
+                        view.write("The name of the next column " + "'" + input + "'");
+                        createColumn();
+                        exit = true;
+                    }
+                    break;
             }
         }
     }
 
-    public boolean checkNameStartWithLetterB(String input) {
+    private boolean checkNameStartWithLetterB(String input) {
         char fistChar = input.charAt(0);
         if (!(fistChar >= 'a' && fistChar <= 'z') && !(fistChar >= 'A' && fistChar <= 'Z') &&
-         (!(fistChar >= 'а' && fistChar <= 'я') && !(fistChar >= 'А' && fistChar <= 'Я'))) {
+                (!(fistChar >= 'а' && fistChar <= 'я') && !(fistChar >= 'А' && fistChar <= 'Я'))) {
             view.write(String.format("The name must begin with a letter, but not with: '%s'", fistChar));
             return false;
         }

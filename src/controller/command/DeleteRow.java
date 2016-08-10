@@ -18,11 +18,10 @@ public class DeleteRow extends Command {
         String databaseName = RowToDelete[1];
         String id = RowToDelete[2];
 
-        if (!deleteConfirmation(RowToDelete[2])) return;
+        if (deleteConfirmation(RowToDelete[2])) return;
 
         manager.deleteTableRow(databaseName, id);
         view.write(String.format("Row with id '%s' successfully deleted.", RowToDelete[2]));
-
 
 
     }

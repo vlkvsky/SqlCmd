@@ -1,13 +1,14 @@
 package src.test.controller.command;
 
-import src.view.*;
 import org.junit.Before;
 import org.junit.Test;
-import src.controller.command.*;
-import src.model.*;
+import src.controller.command.Command;
+import src.controller.command.InsertRow;
+import src.model.DatabaseManager;
+import src.view.View;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
 
 public class InsertRowTest {
 

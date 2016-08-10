@@ -14,7 +14,7 @@ public class CreateDB extends Command {
     public void process(String input) {
         validationParameters(input);
         String databaseName = input.split("\\|")[1];
-        checkNameStartWithLetter(databaseName, "DB");
+        checkNameStartWithLetter(databaseName);
 
         manager.createDB(databaseName);
         view.write(String.format("DB '%s' created.", databaseName));

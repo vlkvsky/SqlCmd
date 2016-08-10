@@ -8,8 +8,8 @@ import java.util.List;
 
 public class Help extends Command {
 
-    private View view;
-    private List<Command> commands;
+    private final View view;
+    private final List<Command> commands;
 
 
     public Help(View view) {

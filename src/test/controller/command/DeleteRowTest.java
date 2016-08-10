@@ -3,7 +3,6 @@ package src.test.controller.command;
 import org.junit.Before;
 import org.junit.Test;
 import src.controller.command.Command;
-import src.controller.command.DeleteDB;
 import src.controller.command.DeleteRow;
 import src.model.DatabaseManager;
 import src.view.View;
@@ -41,7 +40,7 @@ public class DeleteRowTest {
         command.process("deleteRow|table|id");
 
         verify(view).write("Are you sure you want to delete 'id'? Y/N");
-        verify(manager).deleteTableRow("table","id");
+        verify(manager).deleteTableRow("table", "id");
         verify(view).write("Row with id 'id' successfully deleted.");
     }
 
@@ -51,7 +50,7 @@ public class DeleteRowTest {
         command.process("deleteRow|table|id");
 
         verify(view).write("Are you sure you want to delete 'id'? Y/N");
-        verify(manager).deleteTableRow("table","id");
+        verify(manager).deleteTableRow("table", "id");
         verify(view).write("Row with id 'id' successfully deleted.");
     }
 

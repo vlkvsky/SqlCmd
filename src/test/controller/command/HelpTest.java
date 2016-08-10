@@ -1,13 +1,14 @@
 package src.test.controller.command;
 
-import src.view.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import src.controller.command.*;
+import src.controller.command.Command;
+import src.controller.command.Help;
+import src.view.View;
 
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
 
 public class HelpTest {

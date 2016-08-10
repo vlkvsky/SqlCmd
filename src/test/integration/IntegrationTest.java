@@ -1,13 +1,14 @@
 package src.test.integration;
 
-import org.junit.*;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import src.Main;
-import src.model.*;
+import src.model.DatabaseManager;
+import src.model.PostgresManager;
 import src.test.BeforeTestsChangeNameAndPass;
 import src.test.Support;
-
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -20,13 +21,11 @@ public class IntegrationTest {
     private static final String DATABASE = BeforeTestsChangeNameAndPass.DATABASE;
     private static final String USER = BeforeTestsChangeNameAndPass.USER;
     private static final String PASSWORD = BeforeTestsChangeNameAndPass.PASSWORD;
-
+    private static DatabaseManager manager;
     private final String commandConnect = "connect|" + DATABASE + "|" + USER + "|" + PASSWORD;
     private final String commandDisconnect = "connect|" + "sqlcmd" + "|" + USER + "|" + PASSWORD;
     private final String pleaseConnect = "Hello user!\n" +
             "Enter DB name, login, password in the format: connect|sqlcmd|vlkvsky|0990\n";
-
-    private static DatabaseManager manager;
     private ConfigurableInputStream in;
     private ByteArrayOutputStream out;
 
@@ -36,17 +35,17 @@ public class IntegrationTest {
         Support.setupData(manager);
     }
 
+    @AfterClass
+    public static void DeleteDB() {
+        Support.deleteData(manager);
+    }
+
     @Before
     public void setup() {
         out = new ByteArrayOutputStream();
         in = new ConfigurableInputStream();
         System.setIn(in);
         System.setOut(new PrintStream(out));
-    }
-
-    @AfterClass
-    public static void DeleteDB() {
-        Support.deleteData(manager);
     }
 
     @Test
@@ -64,6 +63,7 @@ public class IntegrationTest {
                 "Enter the command:\n" +
                 "See you later!\n", getData());
     }
+
     @Test
     public void testHelpAfterConnect() {
         // given
@@ -112,7 +112,7 @@ public class IntegrationTest {
                 "See you later!\n", getData());
     }
 
-    public String getData() {
+    private String getData() {
         try {
             String result = new String(out.toByteArray(), "UTF-8").replaceAll("\r\n", "\n");
             out.reset();
@@ -132,7 +132,9 @@ public class IntegrationTest {
         assertEquals(pleaseConnect +
                 // exit
                 "See you later!\n", getData());
-    }   @Test
+    }
+
+    @Test
     public void testEx() {
         // given
         in.add("ex");
