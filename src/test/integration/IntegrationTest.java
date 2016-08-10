@@ -288,7 +288,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void testFindAfterConnect_withData() {
+    public void testInsertAfterConnect_withData() {
         // given
         in.add(commandConnect);
 
@@ -392,7 +392,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void testCreateWithErrors() {
+    public void testInsertWithErrors() {
         // given
         in.add(commandConnect);
         in.add("insert|user|error");
@@ -610,6 +610,56 @@ public class IntegrationTest {
     }
 
     @Test
+    public void testInsertToNonExistenTable() {
+        // given
+        in.add(commandConnect);
+        in.add("insert|NonExistenTable");
+        in.add("insert|users2");
+        in.add("1");
+        in.add("Vadym");
+        in.add("*****");
+        in.add("clear|users2");
+        in.add(commandDisconnect);
+        in.add("ex");
+        // when
+        Main.main(new String[0]);
+        // then
+        assertEquals(pleaseConnect +
+                // connect
+                "Connection successful. To see the available commands, type <help>\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "Table 'NonExistenTable' not found. Try insert to another table.\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                // insert|users2
+                "Enter a value in the field 'id' or enter '0' to exit to the main menu .\n" +
+                // 1
+                "Enter a value in the field 'username' or enter '0' to exit to the main menu .\n" +
+                // Vadym
+                "Enter a value in the field 'password' or enter '0' to exit to the main menu .\n" +
+                // *****
+                "Successfully added to the table 'users2' this data:\n" +
+                "+--+--------+--------+\n" +
+                "|id|username|password|\n" +
+                "+--+--------+--------+\n" +
+                "|1 |Vadym   |*****   |\n" +
+                "+--+--------+--------+\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                // clear|users2
+                "Table 'users2' cleared\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                // connect|sqlcmd|USER|PASSWORD
+                "Connection successful. To see the available commands, type <help>\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                // ex
+                "See you later!\n", getData());
+    }
+
+    @Test
     public void testInsertSimpleExit() {
         // given
         in.add(commandConnect);
@@ -641,7 +691,7 @@ public class IntegrationTest {
                 "Enter name to column of PRIMARY KEY, but not an empty string!\n" +
                 "Enter a value in the field 'id' or enter '0' to exit to the main menu .\n" +
                 "Enter a value in the field 'username' or enter '0' to exit to the main menu .\n" +
-                "Main menu:\n" +
+                "Main menu\n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
                 "Enter a value in the field 'id' or enter '0' to exit to the main menu .\n" +
@@ -649,7 +699,7 @@ public class IntegrationTest {
                 "Enter name to column of PRIMARY KEY, but not an empty string!\n" +
                 "Enter a value in the field 'username' or enter '0' to exit to the main menu .\n" +
                 "Enter a value in the field 'password' or enter '0' to exit to the main menu .\n" +
-                "Main menu:\n" +
+                "Main menu\n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
                 "Enter a value in the field 'id' or enter '0' to exit to the main menu .\n" +
@@ -657,7 +707,7 @@ public class IntegrationTest {
                 "Enter a value in the field 'password' or enter '0' to exit to the main menu .\n" +
                 "Enter name to column of PRIMARY KEY, but not an empty string!\n" +
                 "Enter a value in the field 'password' or enter '0' to exit to the main menu .\n" +
-                "Main menu:\n" +
+                "Main menu\n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
                 "Connection successful. To see the available commands, type <help>\n" +

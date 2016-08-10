@@ -23,11 +23,16 @@ public class InsertRow extends Command {
         columns = manager.getTableColumns(tableName);
         Map<String, Object> command = createQuery();
         if (exitMain) {
-            view.write("Main menu:");
+            view.write("Main menu");
         } else {
-            manager.insert(tableName, command);
-            view.write(String.format("Successfully added to the table '%s' this data:", tableName));
-            view.write(getTableConstructor(command));
+            try {
+                manager.insert(tableName, command);
+                view.write(String.format("Successfully added to the table '%s' this data:", tableName));
+                view.write(getTableConstructor(command));
+            } catch (IndexOutOfBoundsException e) {
+                view.write(String.format("Table '%s' not found. Try insert to another table.", tableName));
+
+            }
         }
     }
 
