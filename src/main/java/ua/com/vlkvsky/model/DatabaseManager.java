@@ -1,10 +1,15 @@
 package ua.com.vlkvsky.model;
 
+import ua.com.vlkvsky.Configuration;
+import ua.com.vlkvsky.controller.command.Connect;
+
 import  java.util.List;
 import  java.util.Map;
 import  java.util.Set;
 
 public interface DatabaseManager {
+
+//    void connect(Configuration configuration);
 
     List<Map<String, Object>> getTableData(String tableName);
 
@@ -41,6 +46,4 @@ public interface DatabaseManager {
     int getTableSize(String tableName);
 
     void deleteTableRow(String tableName, String id);
-
-
 }

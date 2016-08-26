@@ -1,13 +1,23 @@
 package ua.com.vlkvsky.model;
 
+import ua.com.vlkvsky.Configuration;
+
 import  java.sql.*;
 import  java.util.*;
 
 public class PostgresManager implements DatabaseManager {
+    private Connection connection;
+    Configuration configuration = new Configuration();
 
     private static final String ERROR = "It is impossible because: ";
-    private static final String HOST = "localhost";
-    private static final String PORT = "5432";
+
+    private String DbDriver = configuration.getDbDriver();
+    private String HOST = configuration.getDbHost();
+    private String PORT = configuration.getDbPort();
+
+    private String user = configuration.getUsername();
+    private String password = configuration.getPassword();
+    private String database = configuration.getDbName();
 
     static {
         try {
@@ -17,18 +27,13 @@ public class PostgresManager implements DatabaseManager {
         }
     }
 
-    private Connection connection;
-    private String user;
-    private String password;
-    private String database;
-
     @Override
     public void connect(String database, String user, String password) {
         if (user != null && password != null) {
-            this.user = user;
-            this.password = password;
+            this.user = configuration.getUsername();
+            this.password = configuration.getPassword();
         }
-        this.database = database;
+        this.database = configuration.getDbName();
 
         closeOpenedConnection();
         getConnection();
@@ -36,7 +41,7 @@ public class PostgresManager implements DatabaseManager {
 
     private void getConnection() {
         try {
-            String url = String.format("jdbc:postgresql://%s:%s/%s", HOST, PORT, database);
+            String url = String.format(DbDriver + "%s:%s/%s", HOST, PORT, database);
             connection = DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
             connection = null;

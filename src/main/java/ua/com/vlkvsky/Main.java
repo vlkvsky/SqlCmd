@@ -8,6 +8,10 @@ import ua.com.vlkvsky.model.PostgresManager;
 import ua.com.vlkvsky.view.Console;
 import ua.com.vlkvsky.view.View;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 public class Main {
     public static void main(String[] args) {
 
