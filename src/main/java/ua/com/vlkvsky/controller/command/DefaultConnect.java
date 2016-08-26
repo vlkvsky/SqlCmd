@@ -1,20 +1,20 @@
 package ua.com.vlkvsky.controller.command;
-import ua.com.vlkvsky.Configuration;
 import ua.com.vlkvsky.model.DatabaseManager;
-import ua.com.vlkvsky.model.PostgresManager;
-import ua.com.vlkvsky.view.Console;
 import ua.com.vlkvsky.view.View;
 
-import java.sql.SQLException;
+public class DefaultConnect extends Command {
+
+    public DefaultConnect(DatabaseManager manager, View view) {
+        super(manager, view);
+    }
 
 
-public class DefaultConnect {
-    DatabaseManager manager = new PostgresManager();
-    View view = new Console();
-    public void process() {
-        Configuration configuration = new Configuration();
+    @Override
+    public void process(String input) {
+        validationParameters(input);
 
         try{
+            String[] data = input.split("\\|");
             String databaseName = configuration.getDbName();
             String userName = configuration.getUsername();
             String password = configuration.getPassword();
@@ -23,6 +23,16 @@ public class DefaultConnect {
         } catch (Exception e){
             view.write("Can not get connection to default DB. Configuration of 'configuration/SqlCmd.properties' is incorrect.");
         }
+    }
+
+    @Override
+    public String commandFormat() {
+        return "connect default";
+    }
+
+    @Override
+    public String description() {
+        return "Connect to default DB. Setting in '/configuration/sqlcmd.properties";
     }
 
 }

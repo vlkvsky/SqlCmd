@@ -19,24 +19,25 @@ public class MainController {
     public MainController(View view, DatabaseManager manager) {
         this.view = view;
         this.commands = new ArrayList<>(Arrays.asList(
-                new Exit.ex(view),                  // выход
-                new Exit(view),                     // выход
+                new Exit.ex(view),                   // выход
+                new Exit(view),                      // выход
                 new Connect(manager, view),          // подключение
+                new DefaultConnect(manager,view),                // подключение к дефолтной БД
                 new isConnected(manager, view),      // проверка подключения
 
-                new Help(view),                     // возможные комманды
+                new Help(view),                      // возможные комманды
                 new DBs(manager, view),              // вывод существующих баз данных
                 new Tables(manager, view),           // вывод существующих таблиц
                 new ContentTable(manager, view),     // содержимое таблицы
                 new CreateTable(manager, view),      // создать таблицу
                 new CreateDB(manager, view),         // создать базу данных
-                new InsertRow(manager, view),       // вставить данные в таблицу
+                new InsertRow(manager, view),        // вставить данные в таблицу
                 new DeleteTable(manager, view),      // удалить таблицу
                 new DeleteDB(manager, view),         // удалить базу данных
-                new DeleteRow(manager, view),       // удалить строку из таблицы
+                new DeleteRow(manager, view),        // удалить строку из таблицы
                 new ClearTable(manager, view),       // очистить таблицу
 
-                new UnsupportedCommand(view)        // несуществующая комманда
+                new UnsupportedCommand(view)         // несуществующая комманда
         ));
     }
 
@@ -52,11 +53,9 @@ public class MainController {
 
 
     private void doWork() {
-
-        DefaultConnect defaultConnect = new DefaultConnect();
-        defaultConnect.process();
-
         view.write("Hello user!");
+
+
         view.write("Enter DB name, login, password in the format: connect|sqlcmd|vlkvsky|0990");
         while (true) {
             String input = view.read();
