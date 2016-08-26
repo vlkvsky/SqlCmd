@@ -16,7 +16,6 @@ public class Help extends Command {
         this.view = view;
         commands = new ArrayList<>(Arrays.asList(
                 this,
-//                new Connect(manager, view),
                 new DBs(manager, view),
                 new Tables(manager, view),
                 new CreateDB(manager, view),
@@ -36,8 +35,8 @@ public class Help extends Command {
         view.write("Available commands:");
 
         for (Command command : commands) {
-            view.write("\t • " + command.commandFormat() + "\t\t\t\t" + command.description() +
-                    "\n\t═══════════════════════════════════");
+            view.write("\t $ " + command.commandFormat() + "\t\t\t\t" + command.description() +
+                    "\n\t------------------------------------------------------------------");
         }
     }
 
