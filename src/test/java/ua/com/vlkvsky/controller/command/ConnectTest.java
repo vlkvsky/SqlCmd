@@ -22,29 +22,29 @@ public class ConnectTest {
 
     @Test
     public void testCanProcess() throws Exception {
-        boolean canProcess = command.canProcess("connect|");
+        boolean canProcess = command.canProcess("connect ");
         assertTrue(canProcess);
     }
 
     @Test
     public void testCanNotProcess() throws Exception {
-        boolean canProcess = command.canProcess("conneeeect|");
+        boolean canProcess = command.canProcess("conneeeect ");
         assertFalse(canProcess);
     }
 
     @Test
     public void testProcess() throws Exception {
-        command.process("connect|databaseName|userName|password");
+        command.process("connect databaseName userName password");
         verify(view).write("Connection successful. To see the available commands, type <help>");
     }
 
     @Test
     public void testProcessWithWrongParameters() throws Exception {
         try {
-            command.process("connect|databaseName|userName");
+            command.process("connect databaseName userName");
             fail("Expected IllegalArgumentException");
         } catch (IllegalArgumentException e) {
-            assertEquals("Format 'connect|DB|user|password', but expected: connect|databaseName|userName", e.getMessage());
+            assertEquals("Format 'connect DB user password', but expected: connect databaseName userName", e.getMessage());
         }
     }
 }

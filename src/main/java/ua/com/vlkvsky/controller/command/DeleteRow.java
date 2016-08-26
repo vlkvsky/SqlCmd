@@ -13,7 +13,7 @@ public class DeleteRow extends Command {
     @Override
     public void process(String input) {
         validationParameters(input);
-        String[] RowToDelete = input.split("\\|");
+        String[] RowToDelete = input.split("\\s+");
 
         String databaseName = RowToDelete[1];
         String id = RowToDelete[2];
@@ -28,7 +28,7 @@ public class DeleteRow extends Command {
 
     @Override
     public String commandFormat() {
-        return "deleteRow|<>|id";
+        return "deleteRow <> id";
     }
 
     @Override

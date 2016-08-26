@@ -13,7 +13,7 @@ public class CreateDB extends Command {
     @Override
     public void process(String input) {
         validationParameters(input);
-        String databaseName = input.split("\\|")[1];
+        String databaseName = input.split("\\s+")[1];
         checkNameStartWithLetter(databaseName);
 
         manager.createDB(databaseName);
@@ -22,7 +22,7 @@ public class CreateDB extends Command {
 
     @Override
     public String commandFormat() {
-        return "createDB|<>";
+        return "createDB <>";
     }
 
     @Override

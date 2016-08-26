@@ -22,20 +22,20 @@ public class DeleteRowTest {
 
     @Test
     public void testCanProcess() throws Exception {
-        boolean canProcess = command.canProcess("deleteRow|table|id");
+        boolean canProcess = command.canProcess("deleteRow table id");
         assertTrue(canProcess);
     }
 
     @Test
     public void testProcessWithWrongCommand() throws Exception {
-        boolean canNotProcess = command.canProcess("deleteRowMistake|table|id");
+        boolean canNotProcess = command.canProcess("deleteRowMistake table id");
         assertFalse(canNotProcess);
     }
 
     @Test
     public void testProcess() throws Exception {
         when(view.read()).thenReturn("y");
-        command.process("deleteRow|table|id");
+        command.process("deleteRow table id");
 
         verify(view).write("Are you sure you want to delete 'id'? Y/N");
         verify(manager).deleteTableRow("table", "id");
@@ -45,7 +45,7 @@ public class DeleteRowTest {
     @Test
     public void testProcessUpperY() throws Exception {
         when(view.read()).thenReturn("Y");
-        command.process("deleteRow|table|id");
+        command.process("deleteRow table id");
 
         verify(view).write("Are you sure you want to delete 'id'? Y/N");
         verify(manager).deleteTableRow("table", "id");
@@ -55,7 +55,7 @@ public class DeleteRowTest {
     @Test
     public void testActionCanceled() throws Exception {
         when(view.read()).thenReturn("N");
-        command.process("deleteRow|table|id");
+        command.process("deleteRow table id");
 
         verify(view).write("Are you sure you want to delete 'id'? Y/N");
         verify(view).write("Action canceled.");
@@ -64,10 +64,10 @@ public class DeleteRowTest {
     @Test
     public void testProcessWrongFormat() throws Exception {
         try {
-            command.process("deleteRow|<>|id|wrong");
+            command.process("deleteRow <> id wrong");
             fail();
         } catch (IllegalArgumentException e) {
-            assertEquals("Format 'deleteRow|<>|id', but expected: deleteRow|<>|id|wrong", e.getMessage());
+            assertEquals("Format 'deleteRow <> id', but expected: deleteRow <> id wrong", e.getMessage());
         }
     }
 
@@ -75,7 +75,7 @@ public class DeleteRowTest {
     public void testDeleteRowWhenConnect() throws Exception {
         when(view.read()).thenReturn("Y");
         when(manager.getDatabaseName()).thenReturn("currentDB");
-        command.process("deleteRow|currentDB|id");
+        command.process("deleteRow currentDB id");
         verify(view).write("Are you sure you want to delete 'id'? Y/N");
         verify(view).write("Row with id 'id' successfully deleted.");
     }

@@ -22,7 +22,7 @@ public class DeleteTable extends Command {
 
     @Override
     public String commandFormat() {
-        return "deleteTable|<>";
+        return "deleteTable <>";
     }
 
     @Override

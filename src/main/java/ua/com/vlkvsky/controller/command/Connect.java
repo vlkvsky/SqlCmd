@@ -12,7 +12,7 @@ public class Connect extends Command {
     @Override
     public void process(String input) {
         validationParameters(input);
-        String[] data = input.split("\\|");
+        String[] data = input.split("\\s+");
         String databaseName = data[1];
         String userName = data[2];
         String password = data[3];
@@ -23,7 +23,7 @@ public class Connect extends Command {
 
     @Override
     public String commandFormat() {
-        return "connect|DB|user|password";
+        return "connect DB user password";
     }
 
     @Override

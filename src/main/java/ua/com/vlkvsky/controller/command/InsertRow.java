@@ -77,7 +77,7 @@ public class InsertRow extends Command {
 
     @Override
     public String commandFormat() {
-        return "insert|<>";
+        return "insert <>";
     }
 
     @Override

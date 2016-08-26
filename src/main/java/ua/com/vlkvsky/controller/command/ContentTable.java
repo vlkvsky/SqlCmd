@@ -32,7 +32,7 @@ public class ContentTable extends Command {
 
     @Override
     public String commandFormat() {
-        return "content|<>";
+        return "content <>";
     }
 
     @Override

@@ -21,13 +21,13 @@ public class InsertRowTest {
 
     @Test
     public void testCanProcess() throws Exception {
-        boolean canProcess = command.canProcess("insert|tableName");
+        boolean canProcess = command.canProcess("insert tableName");
         assertTrue(canProcess);
     }
 
     @Test
     public void testCanProcessWithoutParameters() throws Exception {
-        boolean canProcess = command.canProcess("insert|tableName");
+        boolean canProcess = command.canProcess("insert tableName");
         assertTrue(canProcess);
     }
 
@@ -40,20 +40,20 @@ public class InsertRowTest {
     @Test
     public void testCanProcessFindWithOnlySlash() {
         try {
-            command.process("insert|");
+            command.process("insert ");
             fail();
         } catch (IllegalArgumentException e) {
-            assertEquals("Format 'insert|<>', but expected: insert|", e.getMessage());
+            assertEquals("Format 'insert <>', but expected: insert ", e.getMessage());
         }
     }
 
     @Test
     public void testValidationErrorWhenCountParametersIsMoreThan2() {
         try {
-            command.process("insert|tableName|qwe");
+            command.process("insert tableName qwe");
             fail();
         } catch (IllegalArgumentException e) {
-            assertEquals("Format 'insert|<>', but expected: insert|tableName|qwe", e.getMessage());
+            assertEquals("Format 'insert <>', but expected: insert tableName qwe", e.getMessage());
         }
     }
 
@@ -63,7 +63,7 @@ public class InsertRowTest {
             command.process("insert");
             fail();
         } catch (IllegalArgumentException e) {
-            assertEquals("Format 'insert|<>', but expected: insert", e.getMessage());
+            assertEquals("Format 'insert <>', but expected: insert", e.getMessage());
         }
     }
 }

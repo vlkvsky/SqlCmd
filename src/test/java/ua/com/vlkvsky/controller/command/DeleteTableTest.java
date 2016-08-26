@@ -22,13 +22,13 @@ public class DeleteTableTest {
 
     @Test
     public void testCanProcess() throws Exception {
-        boolean canProcess = command.canProcess("deleteTable|");
+        boolean canProcess = command.canProcess("deleteTable ");
         assertTrue(canProcess);
     }
 
     @Test
     public void testProcessWithWrongCommand() throws Exception {
-        boolean canNotProcess = command.canProcess("deleteTables|");
+        boolean canNotProcess = command.canProcess("deleteTables ");
         assertFalse(canNotProcess);
     }
 
@@ -41,7 +41,7 @@ public class DeleteTableTest {
     @Test
     public void testProcess() throws Exception {
         when(view.read()).thenReturn("y");
-        command.process("deleteTable|nameTable");
+        command.process("deleteTable nameTable");
         verify(view).write("Are you sure you want to delete 'nameTable'? Y/N");
         verify(manager).deleteTable("nameTable");
         verify(view).write("Table 'nameTable' successfully deleted.");
@@ -50,7 +50,7 @@ public class DeleteTableTest {
     @Test
     public void testActionCanceled() throws Exception {
         when(view.read()).thenReturn("n");
-        command.process("deleteTable|nameTable");
+        command.process("deleteTable nameTable");
         verify(view).write("Are you sure you want to delete 'nameTable'? Y/N");
         verify(view).write("Action canceled.");
     }
@@ -58,10 +58,10 @@ public class DeleteTableTest {
     @Test
     public void testProcessWrongFormat() throws Exception {
         try {
-            command.process("createTable|tableName|wrong");
+            command.process("createTable tableName wrong");
             fail();
         } catch (IllegalArgumentException e) {
-            assertEquals("Format 'deleteTable|<>', but expected: createTable|tableName|wrong", e.getMessage());
+            assertEquals("Format 'deleteTable <>', but expected: createTable tableName wrong", e.getMessage());
         }
     }
 }

@@ -60,10 +60,10 @@ public abstract class Command {
     }
 
     String[] splitInput(String input) {
-        return input.split("\\|");
+        return input.split("\\s+");
     }
 
     private int parametersLength(String input) {
-        return input.split("\\|").length;
+        return input.split("\\s+").length;
     }
 }

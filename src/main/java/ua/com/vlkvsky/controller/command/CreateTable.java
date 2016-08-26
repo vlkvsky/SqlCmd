@@ -25,7 +25,7 @@ public class CreateTable extends Command {
             String table = query.split("\\(")[0];
             view.write(String.format("Table %s created.", table));
             Command create = new ContentTable(manager, view);
-            create.process("create|" + table); // красивый вывод новосозданной таблички
+            create.process("create " + table); // красивый вывод новосозданной таблички
         } else {
             view.write(" ");
         }

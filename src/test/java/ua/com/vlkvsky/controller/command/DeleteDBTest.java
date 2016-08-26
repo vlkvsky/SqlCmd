@@ -25,13 +25,13 @@ public class DeleteDBTest {
 
     @Test
     public void testCanProcess() throws Exception {
-        boolean canProcess = command.canProcess("deleteDB|db");
+        boolean canProcess = command.canProcess("deleteDB db");
         assertTrue(canProcess);
     }
 
     @Test
     public void testProcessWithWrongCommand() throws Exception {
-        boolean canNotProcess = command.canProcess("deleteFB|db");
+        boolean canNotProcess = command.canProcess("deleteFB db");
         assertFalse(canNotProcess);
     }
 
@@ -45,7 +45,7 @@ public class DeleteDBTest {
     @Test
     public void testProcess() throws Exception {
         when(view.read()).thenReturn("y");
-        command.process("dropDB|db");
+        command.process("dropDB db");
 
         verify(view).write("Are you sure you want to delete 'db'? Y/N");
         verify(manager).deleteDB("db");
@@ -55,7 +55,7 @@ public class DeleteDBTest {
     @Test
     public void testProcessUpperY() throws Exception {
         when(view.read()).thenReturn("Y");
-        command.process("deleteDB|db");
+        command.process("deleteDB db");
 
         verify(view).write("Are you sure you want to delete 'db'? Y/N");
         verify(manager).deleteDB("db");
@@ -65,7 +65,7 @@ public class DeleteDBTest {
     @Test
     public void testActionCanceled() throws Exception {
         when(view.read()).thenReturn("N");
-        command.process("dropDB|db");
+        command.process("dropDB db");
 
         verify(view).write("Are you sure you want to delete 'db'? Y/N");
         verify(view).write("Action canceled.");
@@ -74,10 +74,10 @@ public class DeleteDBTest {
     @Test
     public void testProcessWrongFormat() throws Exception {
         try {
-            command.process("dropDB|db|wrong");
+            command.process("dropDB db wrong");
             fail();
         } catch (IllegalArgumentException e) {
-            assertEquals("Format 'deleteDB|<>', but expected: dropDB|db|wrong", e.getMessage());
+            assertEquals("Format 'deleteDB <>', but expected: dropDB db wrong", e.getMessage());
         }
     }
 
@@ -85,7 +85,7 @@ public class DeleteDBTest {
     public void testDeleteDBwithoutConnect() throws Exception {
         when(view.read()).thenReturn("Y");
         when(manager.getDatabaseName()).thenReturn("currentDB");
-        command.process("dropDB|currentDB");
+        command.process("dropDB currentDB");
         verify(view).write("Are you sure you want to delete 'currentDB'? Y/N");
         verify(view).write("User is connected to DB. Not allow now!");
         verify(view).write("User is connected to DB. Not allow now!");

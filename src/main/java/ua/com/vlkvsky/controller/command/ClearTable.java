@@ -16,14 +16,14 @@ public class ClearTable extends Command {
 
     @Override
     public boolean canProcess(String command) {
-        return command.startsWith("clear|");
+        return command.startsWith("clear ");
     }
 
     @Override
     public void process(String command) {
-        String[] data = command.split("\\|");
+        String[] data = command.split("\\s+");
         if (data.length != 2) {
-            throw new IllegalArgumentException("Expected format is 'clear|<table>'. But actual '" + command + "'");
+            throw new IllegalArgumentException("Expected format is 'clear <table>'. But actual '" + command + "'");
         }
         manager.clear(data[1]);
         view.write(String.format("Table '%s' cleared", data[1]));
@@ -31,7 +31,7 @@ public class ClearTable extends Command {
 
     @Override
     public String commandFormat() {
-        return "clear|<>";
+        return "clear <>";
     }
 
     @Override

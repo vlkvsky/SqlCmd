@@ -18,10 +18,10 @@ public class IntegrationTest {
     private static final String USER = BeforeTestsChangeNameAndPass.USER;
     private static final String PASSWORD = BeforeTestsChangeNameAndPass.PASSWORD;
     private static DatabaseManager manager;
-    private final String commandConnect = "connect|" + DATABASE + "|" + USER + "|" + PASSWORD;
-    private final String commandDisconnect = "connect|" + "sqlcmd" + "|" + USER + "|" + PASSWORD;
+    private final String commandConnect = "connect " + DATABASE + " " + USER + " " + PASSWORD;
+    private final String commandDisconnect = "connect " + "sqlcmd" + " " + USER + " " + PASSWORD;
     private final String pleaseConnect = "Hello user!\n" +
-            "Enter DB name, login, password in the format: connect|sqlcmd|vlkvsky|0990\n";
+            "Enter DB name, login, password in the format: connect sqlcmd vlkvsky 0990\n";
     private ConfigurableInputStream in;
     private ByteArrayOutputStream out;
 
@@ -55,55 +55,6 @@ public class IntegrationTest {
         assertEquals(pleaseConnect +
                 // help
                 "Command 'help' is not available. You must connect! \n" +
-                "-----------------\n" +
-                "Enter the command:\n" +
-                "See you later!\n", getData());
-    }
-
-    @Ignore // тест проходит, но не билдится проект
-    @Test
-    public void testHelpAfterConnect() {
-        // given
-        in.add(commandConnect);
-        in.add("help");
-        in.add(commandDisconnect);
-        in.add("exit");
-        // when
-        Main.main(new String[0]);
-        // then
-        assertEquals(pleaseConnect +
-                // help
-                "Connection successful. To see the available commands, type <help>\n" +
-                "-----------------\n" +
-                "Enter the command:\n" +
-                "Available commands:\n" +
-                "\t $ help\t\t\t\t\t\t\tGet available commands\n" +
-                "\t------------------------------------------------------------------\n" +
-                "\t $ DBs\t\t\t\t\t\t\tGet all DataBases\n" +
-                "\t------------------------------------------------------------------\n" +
-                "\t $ tables\t\t\t\t\t\tGet all tables of DB\n" +
-                "\t------------------------------------------------------------------\n" +
-                "\t $ createDB|<>\t\t\t\t\tCreate DB\n" +
-                "\t------------------------------------------------------------------\n" +
-                "\t $ create\t\t\t\t\t\tCreate table step-by-step\n" +
-                "\t------------------------------------------------------------------\n" +
-                "\t $ content|<>\t\t\t\t\tGet content of <table>\n" +
-                "\t------------------------------------------------------------------\n" +
-                "\t $ insert|<>\t\t\t\t\tAdd data to <table>\n" +
-                "\t------------------------------------------------------------------\n" +
-                "\t $ deleteRow|<>|id\t\t\t\tDelete row <id> from <table>\n" +
-                "\t------------------------------------------------------------------\n" +
-                "\t $ clear|<>\t\t\t\t\t\tClear data of <table>\n" +
-                "\t------------------------------------------------------------------\n" +
-                "\t $ deleteTable|<>\t\t\t\tDelete <table>\n" +
-                "\t------------------------------------------------------------------\n" +
-                "\t $ deleteDB|<>\t\t\t\t\tDelete <DB>\n" +
-                "\t------------------------------------------------------------------\n" +
-                "\t $ exit\t\t\t\t\t\t\tClose application\n" +
-                "\t------------------------------------------------------------------\n" +
-                "-----------------\n" +
-                "Enter the command:\n" +
-                "Connection successful. To see the available commands, type <help>\n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
                 "See you later!\n", getData());
@@ -162,14 +113,14 @@ public class IntegrationTest {
     @Test
     public void testContentBeforeConnect() {
         // given
-        in.add("content|t1");
+        in.add("content t1");
         in.add("exit");
         // when
         Main.main(new String[0]);
         // then
         assertEquals(pleaseConnect +
-                // find|user
-                "Command 'content|t1' is not available. You must connect! \n" +
+                // find user
+                "Command 'content t1' is not available. You must connect! \n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
                 "See you later!\n", getData());
@@ -179,7 +130,7 @@ public class IntegrationTest {
     public void testContentAfterConnect() {
         // given
         in.add(commandConnect);
-        in.add("content|users");
+        in.add("content users");
         in.add(commandDisconnect);
         in.add("exit");
         // when
@@ -247,13 +198,13 @@ public class IntegrationTest {
     @Test
     public void testConnectWithError() {
         // given
-        in.add("connect|" + DATABASE);
+        in.add("connect " + DATABASE);
         in.add("exit");
         // when
         Main.main(new String[0]);
         // then
         assertEquals(pleaseConnect +
-                "Can't perform the action! Problem: Format 'connect|DB|user|password', but expected: connect|db_for_integration_test\n" +
+                "Can't perform the action! Problem: Format 'connect DB user password', but expected: connect db_for_integration_test\n" +
                 "Repeat one more time.\n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
@@ -289,23 +240,23 @@ public class IntegrationTest {
         // given
         in.add(commandConnect);
 
-        in.add("insert|users");
+        in.add("insert users");
         in.add("1");
         in.add("Vadym");
         in.add("*****");
 
-        in.add("insert|users");
+        in.add("insert users");
         in.add("2");
         in.add("Nastya");
         in.add("+++++");
 
 
-        in.add("deleteRow|users|1");
+        in.add("deleteRow users 1");
         in.add("Y");
-        in.add("deleteRow|users|2");
+        in.add("deleteRow users 2");
         in.add("Y");
 
-        in.add("content|users");
+        in.add("content users");
         in.add(commandDisconnect);
         in.add("exit");
         // when
@@ -363,7 +314,7 @@ public class IntegrationTest {
     public void testClearWithError() {
         // given
         in.add(commandConnect);
-        in.add("clear|sadfasd|fsf|fdsf");
+        in.add("clear sadfasd fsf fdsf");
         in.add(commandDisconnect);
         in.add("exit");
         // when
@@ -375,8 +326,8 @@ public class IntegrationTest {
                 "Connection successful. To see the available commands, type <help>\n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
-                //clear|sadfasd|fsf|fdsf
-                "Can't perform the action! Problem: Expected format is 'clear|<table>'. But actual 'clear|sadfasd|fsf|fdsf'\n" +
+                //clear sadfasd fsf fdsf
+                "Can't perform the action! Problem: Expected format is 'clear <table>'. But actual 'clear sadfasd fsf fdsf'\n" +
                 "Repeat one more time.\n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
@@ -392,7 +343,7 @@ public class IntegrationTest {
     public void testInsertWithErrors() {
         // given
         in.add(commandConnect);
-        in.add("insert|user|error");
+        in.add("insert user error");
         in.add(commandDisconnect);
         in.add("exit");
         // when
@@ -403,8 +354,8 @@ public class IntegrationTest {
                 "Connection successful. To see the available commands, type <help>\n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
-                // insert|user|error
-                "Can't perform the action! Problem: Format 'insert|<>', but expected: insert|user|error\n" +
+                // insert user error
+                "Can't perform the action! Problem: Format 'insert <>', but expected: insert user error\n" +
                 "Repeat one more time.\n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
@@ -426,7 +377,7 @@ public class IntegrationTest {
         in.add("name");
         in.add("password");
         in.add("5");
-        in.add("deleteTable|users5");
+        in.add("deleteTable users5");
         in.add("Y");
         in.add(commandDisconnect);
         in.add("exit");
@@ -551,7 +502,7 @@ public class IntegrationTest {
                 " \n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
-                // "connect|sqlcmd|USER|PASSWORD
+                // "connect sqlcmd USER PASSWORD
                 "Connection successful. To see the available commands, type <help>\n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
@@ -564,11 +515,11 @@ public class IntegrationTest {
     public void testInsertSimple() {
         // given
         in.add(commandConnect);
-        in.add("insert|users2");
+        in.add("insert users2");
         in.add("1");
         in.add("Vadym");
         in.add("*****");
-        in.add("clear|users2");
+        in.add("clear users2");
         in.add(commandDisconnect);
         in.add("ex");
         // when
@@ -579,7 +530,7 @@ public class IntegrationTest {
                 "Connection successful. To see the available commands, type <help>\n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
-                // insert|users2
+                // insert users2
                 "Enter a value in the field 'id' or enter '0' to exit to the main menu .\n" +
                 // 1
                 "Enter a value in the field 'username' or enter '0' to exit to the main menu .\n" +
@@ -594,11 +545,11 @@ public class IntegrationTest {
                 "+--+--------+--------+\n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
-                // clear|users2
+                // clear users2
                 "Table 'users2' cleared\n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
-                // connect|sqlcmd|USER|PASSWORD
+                // connect sqlcmd USER PASSWORD
                 "Connection successful. To see the available commands, type <help>\n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
@@ -610,12 +561,12 @@ public class IntegrationTest {
     public void testInsertToNonExistenTable() {
         // given
         in.add(commandConnect);
-        in.add("insert|NonExistenTable");
-        in.add("insert|users2");
+        in.add("insert NonExistenTable");
+        in.add("insert users2");
         in.add("1");
         in.add("Vadym");
         in.add("*****");
-        in.add("clear|users2");
+        in.add("clear users2");
         in.add(commandDisconnect);
         in.add("ex");
         // when
@@ -629,7 +580,7 @@ public class IntegrationTest {
                 "Table 'NonExistenTable' not found. Try insert to another table.\n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
-                // insert|users2
+                // insert users2
                 "Enter a value in the field 'id' or enter '0' to exit to the main menu .\n" +
                 // 1
                 "Enter a value in the field 'username' or enter '0' to exit to the main menu .\n" +
@@ -644,11 +595,11 @@ public class IntegrationTest {
                 "+--+--------+--------+\n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
-                // clear|users2
+                // clear users2
                 "Table 'users2' cleared\n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
-                // connect|sqlcmd|USER|PASSWORD
+                // connect sqlcmd USER PASSWORD
                 "Connection successful. To see the available commands, type <help>\n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
@@ -660,16 +611,16 @@ public class IntegrationTest {
     public void testInsertSimpleExit() {
         // given
         in.add(commandConnect);
-        in.add("insert|users2");
+        in.add("insert users2");
         in.add("");
         in.add("1");
         in.add("0");
-        in.add("insert|users2");
+        in.add("insert users2");
         in.add("1");
         in.add("");
         in.add("Vadym");
         in.add("0");
-        in.add("insert|users2");
+        in.add("insert users2");
         in.add("1");
         in.add("Vadym");
         in.add("");
@@ -705,35 +656,6 @@ public class IntegrationTest {
                 "Enter name to column of PRIMARY KEY, but not an empty string!\n" +
                 "Enter a value in the field 'password' or enter '0' to exit to the main menu .\n" +
                 "Main menu\n" +
-                "-----------------\n" +
-                "Enter the command:\n" +
-                "Connection successful. To see the available commands, type <help>\n" +
-                "-----------------\n" +
-                "Enter the command:\n" +
-                "See you later!\n", getData());
-    }
-
-    @Ignore  // тест проходит, но не билдится проект
-    @Test
-    public void testDeleteDBException() {
-        // given
-        in.add(commandConnect);
-        in.add("deleteDB|sqlcmd_DONT_EXIT");
-        in.add("y");
-        in.add(commandDisconnect);
-        in.add("exit");
-        // when
-        Main.main(new String[0]);
-        // then
-
-        assertEquals(pleaseConnect +
-                // connect
-                "Connection successful. To see the available commands, type <help>\n" +
-                "-----------------\n" +
-                "Enter the command:\n" +
-                "Are you sure you want to delete 'sqlcmd_DONT_EXIT'? Y/N\n" +
-                "Can't perform the action! Problem: ОШИБКА: база данных \"sqlcmd_dont_exit\" не существует\n" +
-                "Repeat one more time.\n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
                 "Connection successful. To see the available commands, type <help>\n" +
@@ -747,11 +669,11 @@ public class IntegrationTest {
     public void testConnectAfterConnect() {
         // given
         in.add(commandConnect);
-        in.add("createDB|testconnectafterconnect");
-        in.add("connect|testconnectafterconnect|" + USER + "|" + PASSWORD);
+        in.add("createDB testconnectafterconnect");
+        in.add("connect testconnectafterconnect " + USER + " " + PASSWORD);
         in.add("tables");
         in.add(commandDisconnect);
-        in.add("deleteDB|testconnectafterconnect");
+        in.add("deleteDB testconnectafterconnect");
         in.add("Y");
 
         in.add("exit");
@@ -786,8 +708,8 @@ public class IntegrationTest {
     public void testCreateDeleteDatabase() {
         // given
         in.add(commandConnect);
-        in.add("createDB|testCreateDeleteDatabase");
-        in.add("deleteDB|testCreateDeleteDatabase");
+        in.add("createDB testCreateDeleteDatabase");
+        in.add("deleteDB testCreateDeleteDatabase");
         in.add("y");
         in.add(commandDisconnect);
         in.add("exit");
@@ -800,11 +722,11 @@ public class IntegrationTest {
                 "Connection successful. To see the available commands, type <help>\n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
-                // createDB|testCreateDeleteDatabase
+                // createDB testCreateDeleteDatabase
                 "DB 'testCreateDeleteDatabase' created.\n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
-                // deleteDB|testCreateDeleteDatabase
+                // deleteDB testCreateDeleteDatabase
                 "Are you sure you want to delete 'testCreateDeleteDatabase'? Y/N\n" +
                 // y
                 "DB 'testCreateDeleteDatabase' successfully deleted\n" +
@@ -815,6 +737,84 @@ public class IntegrationTest {
                 "-----------------\n" +
                 "Enter the command:\n" +
                 // ex
+                "See you later!\n", getData());
+    }
+
+    @Ignore  // тест проходит, но не билдится проект
+    @Test
+    public void testDeleteDBException() {
+        // given
+        in.add(commandConnect);
+        in.add("deleteDB sqlcmd_DONT_EXIT");
+        in.add("y");
+        in.add(commandDisconnect);
+        in.add("exit");
+        // when
+        Main.main(new String[0]);
+        // then
+
+        assertEquals(pleaseConnect +
+                // connect
+                "Connection successful. To see the available commands, type <help>\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "Are you sure you want to delete 'sqlcmd_DONT_EXIT'? Y/N\n" +
+                "Can't perform the action! Problem: ОШИБКА: база данных \"sqlcmd_dont_exit\" не существует\n" +
+                "Repeat one more time.\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "Connection successful. To see the available commands, type <help>\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "See you later!\n", getData());
+    }
+
+    @Ignore // тест проходит, но не билдится проект
+    @Test
+    public void testHelpAfterConnect() {
+        // given
+        in.add(commandConnect);
+        in.add("help");
+        in.add(commandDisconnect);
+        in.add("exit");
+        // when
+        Main.main(new String[0]);
+        // then
+        assertEquals(pleaseConnect +
+                // help
+                "Connection successful. To see the available commands, type <help>\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "Available commands:\n" +
+                "\t $ help\t\t\t\t\t\t\tGet available commands\n" +
+                "\t------------------------------------------------------------------\n" +
+                "\t $ DBs\t\t\t\t\t\t\tGet all DataBases\n" +
+                "\t------------------------------------------------------------------\n" +
+                "\t $ tables\t\t\t\t\t\tGet all tables of DB\n" +
+                "\t------------------------------------------------------------------\n" +
+                "\t $ createDB <>\t\t\t\t\tCreate DB\n" +
+                "\t------------------------------------------------------------------\n" +
+                "\t $ create\t\t\t\t\t\tCreate table step-by-step\n" +
+                "\t------------------------------------------------------------------\n" +
+                "\t $ content <>\t\t\t\t\tGet content of <table>\n" +
+                "\t------------------------------------------------------------------\n" +
+                "\t $ insert <>\t\t\t\t\tAdd data to <table>\n" +
+                "\t------------------------------------------------------------------\n" +
+                "\t $ deleteRow <> id\t\t\t\tDelete row <id> from <table>\n" +
+                "\t------------------------------------------------------------------\n" +
+                "\t $ clear <>\t\t\t\t\t\tClear data of <table>\n" +
+                "\t------------------------------------------------------------------\n" +
+                "\t $ deleteTable <>\t\t\t\tDelete <table>\n" +
+                "\t------------------------------------------------------------------\n" +
+                "\t $ deleteDB <>\t\t\t\t\tDelete <DB>\n" +
+                "\t------------------------------------------------------------------\n" +
+                "\t $ exit\t\t\t\t\t\t\tClose application\n" +
+                "\t------------------------------------------------------------------\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
+                "Connection successful. To see the available commands, type <help>\n" +
+                "-----------------\n" +
+                "Enter the command:\n" +
                 "See you later!\n", getData());
     }
 

@@ -24,7 +24,7 @@ public class ClearTest {
 
     @Test
     public void testClearTable() {
-        command.process("clear|user");
+        command.process("clear user");
         verify(manager).clear("user");
         verify(view).write("Table 'user' cleared");
     }
@@ -32,19 +32,19 @@ public class ClearTest {
 
     @Test
     public void testCantProcess() {
-        boolean canProcess = command.canProcess("clear|user");
+        boolean canProcess = command.canProcess("clear user");
         assertTrue(canProcess);
     }
 
     @Test
     public void testClearTableWrongCommand() {
-        boolean canNotProcess = command.canProcess("cleardf|user");
+        boolean canNotProcess = command.canProcess("cleardf user");
         assertFalse(canNotProcess);
     }
 
     @Test
     public void testCantProcessClearWithoutParametersString() {
-        boolean canProcess = command.canProcess("clear|");
+        boolean canProcess = command.canProcess("clear ");
         assertTrue(canProcess);
     }
 
@@ -54,17 +54,17 @@ public class ClearTest {
             command.process("clear");
             fail();
         } catch (IllegalArgumentException e) {
-            assertEquals("Expected format is 'clear|<table>'. But actual 'clear'", e.getMessage());
+            assertEquals("Expected format is 'clear <table>'. But actual 'clear'", e.getMessage());
         }
     }
 
     @Test
     public void testValidationErrorWhenCountParametersIsMoreThan2() {
         try {
-            command.process("clear|table|qwe");
+            command.process("clear table qwe");
             fail();
         } catch (IllegalArgumentException e) {
-            assertEquals("Expected format is 'clear|<table>'. But actual 'clear|table|qwe'", e.getMessage());
+            assertEquals("Expected format is 'clear <table>'. But actual 'clear table qwe'", e.getMessage());
         }
     }
 }

@@ -29,7 +29,7 @@ public class DeleteDB extends Command {
 
     @Override
     public String commandFormat() {
-        return "deleteDB|<>";
+        return "deleteDB <>";
     }
 
     @Override

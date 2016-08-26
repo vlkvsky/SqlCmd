@@ -23,13 +23,13 @@ public class CreateDBTest {
 
     @Test
     public void testCanProcess() throws Exception {
-        boolean canProcess = command.canProcess("createDB|databaseName");
+        boolean canProcess = command.canProcess("createDB databaseName");
         assertTrue(canProcess);
     }
 
     @Test
     public void testProcessWithWrongCommand() throws Exception {
-        boolean canProcess = command.canProcess("createDB34|databaseName");
+        boolean canProcess = command.canProcess("createDB34 databaseName");
         assertFalse(canProcess);
     }
 
@@ -41,7 +41,7 @@ public class CreateDBTest {
 
     @Test
     public void testProcess() throws Exception {
-        command.process("createDB|databaseName");
+        command.process("createDB databaseName");
         verify(manager).createDB("databaseName");
         verify(view).write("DB 'databaseName' created.");
     }
@@ -49,17 +49,17 @@ public class CreateDBTest {
     @Test
     public void testProcessWrongFormat() throws Exception {
         try {
-            command.process("createDB|databaseName|wrong");
+            command.process("createDB databaseName wrong");
             fail();
         } catch (IllegalArgumentException e) {
-            assertEquals("Format 'createDB|<>', but expected: createDB|databaseName|wrong", e.getMessage());
+            assertEquals("Format 'createDB <>', but expected: createDB databaseName wrong", e.getMessage());
         }
     }
 
     @Test
     public void testNameStartWithNumber() throws Exception {
         try {
-            command.process("createDB|12databaseName");
+            command.process("createDB 12databaseName");
             fail();
         } catch (IllegalArgumentException e) {
             assertEquals("Name of DB must start with a letter, but expected '1'", e.getMessage());
