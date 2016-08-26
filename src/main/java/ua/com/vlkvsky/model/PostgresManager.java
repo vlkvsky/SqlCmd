@@ -15,9 +15,9 @@ public class PostgresManager implements DatabaseManager {
     private String HOST = configuration.getDbHost();
     private String PORT = configuration.getDbPort();
 
-    private String user = configuration.getUsername();
-    private String password = configuration.getPassword();
-    private String database = configuration.getDbName();
+    private String user;
+    private String password;
+    private String database;
 
     static {
         try {
@@ -30,10 +30,10 @@ public class PostgresManager implements DatabaseManager {
     @Override
     public void connect(String database, String user, String password) {
         if (user != null && password != null) {
-            this.user = configuration.getUsername();
-            this.password = configuration.getPassword();
+            this.user = user;
+            this.password = password;
         }
-        this.database = configuration.getDbName();
+        this.database = database;
 
         closeOpenedConnection();
         getConnection();
