@@ -17,27 +17,27 @@ public class Support {
         try {
             manager.connect(CREATED_DATABASE, USER, PASSWORD);
         } catch (RuntimeException e) {
-            throw new RuntimeException("Для работы тестов измените имя и пароль в 'configuration/sqlcmd.properties'"
+            throw new RuntimeException("First you should enter data to 'configuration/sqlcmd.properties'"
                     + "\n" + e.getCause());
         }
         try {
             manager.createDB(TEST_DB);
         } catch (RuntimeException e) {
-            throw new RuntimeException("Невозможно создать тестовую базу данных."
+            throw new RuntimeException("Can not create Test DB"
                     + "\n" + e.getCause());
         }
         try {
             manager.connect(TEST_DB, USER, PASSWORD);
 
         } catch (RuntimeException e) {
-            throw new RuntimeException("Невозможно подключиться к тестовой базе данных."
+            throw new RuntimeException("Can not connect to Test DB"
                     + "\n" + e.getCause());
         }
         try {
             createTablesWithData(manager);
 
         } catch (RuntimeException e) {
-            throw new RuntimeException("Невозможно редактировать таблицы в тестовой базе данных."
+            throw new RuntimeException("Can not edit tables in Test DB"
                     + "\n" + e.getCause());
         }
 
@@ -61,7 +61,7 @@ public class Support {
         Map<String, Object> dataSet = new LinkedHashMap<>();
         dataSet.put("id", "0");
         dataSet.put("name", "NameFromSetup");
-        dataSet.put("password", "PasswordFromSupport");
+        dataSet.put("password", "PasswordFromSetup");
         manager.insert("users", dataSet);
     }
 }

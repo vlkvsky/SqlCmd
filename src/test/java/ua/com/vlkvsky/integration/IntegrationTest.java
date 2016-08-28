@@ -144,11 +144,11 @@ public class IntegrationTest {
                 "Connection successful. To see the available commands, type <help>\n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
-                "+--+-------------+-------------------+\n" +
-                "|id|name         |password           |\n" +
-                "+--+-------------+-------------------+\n" +
-                "|0 |NameFromSetup|PasswordFromSupport|\n" +
-                "+--+-------------+-------------------+\n" +
+                "+--+-------------+-----------------+\n" +
+                "|id|name         |password         |\n" +
+                "+--+-------------+-----------------+\n" +
+                "|0 |NameFromSetup|PasswordFromSetup|\n" +
+                "+--+-------------+-----------------+\n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
                 "Connection successful. To see the available commands, type <help>\n" +
@@ -301,11 +301,11 @@ public class IntegrationTest {
                 "Row with id '2' successfully deleted.\n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
-                "+--+-------------+-------------------+\n" +
-                "|id|name         |password           |\n" +
-                "+--+-------------+-------------------+\n" +
-                "|0 |NameFromSetup|PasswordFromSupport|\n" +
-                "+--+-------------+-------------------+\n" +
+                "+--+-------------+-----------------+\n" +
+                "|id|name         |password         |\n" +
+                "+--+-------------+-----------------+\n" +
+                "|0 |NameFromSetup|PasswordFromSetup|\n" +
+                "+--+-------------+-----------------+\n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
                 "Connection successful. To see the available commands, type <help>\n" +
@@ -707,7 +707,7 @@ public class IntegrationTest {
                 "See you later!\n", getData());
     }
 
-//    @Ignore // Проходит, но занимает много времени
+    @Ignore // Проходит, но занимает много времени
     @Test
     public void testCreateDeleteDatabase() {
         // given
@@ -744,7 +744,7 @@ public class IntegrationTest {
                 "See you later!\n", getData());
     }
 
-//    @Ignore  // тест проходит, но не билдится проект
+    @Ignore  // тест проходит, но не билдится проект
     @Test
     public void testDeleteDBException() {
         // given
@@ -773,7 +773,7 @@ public class IntegrationTest {
                 "See you later!\n", getData());
     }
 
-//     @Ignore // тест проходит, но не билдится проект
+    @Ignore // тест проходит, но не билдится проект
     @Test
     public void testHelpAfterConnect() {
         // given

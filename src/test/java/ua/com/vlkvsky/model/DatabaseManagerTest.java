@@ -3,7 +3,6 @@ package ua.com.vlkvsky.model;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import ua.com.vlkvsky.Configuration;
 import ua.com.vlkvsky.Support;
 
 import java.util.LinkedHashMap;

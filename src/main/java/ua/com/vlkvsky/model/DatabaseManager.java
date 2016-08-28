@@ -1,11 +1,8 @@
 package ua.com.vlkvsky.model;
 
-import ua.com.vlkvsky.Configuration;
-import ua.com.vlkvsky.controller.command.Connect;
-
-import  java.util.List;
-import  java.util.Map;
-import  java.util.Set;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public interface DatabaseManager {
 

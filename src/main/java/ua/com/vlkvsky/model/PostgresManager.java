@@ -2,8 +2,8 @@ package ua.com.vlkvsky.model;
 
 import ua.com.vlkvsky.Configuration;
 
-import  java.sql.*;
-import  java.util.*;
+import java.sql.*;
+import java.util.*;
 
 public class PostgresManager implements DatabaseManager {
     private Connection connection;
