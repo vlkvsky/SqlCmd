@@ -56,7 +56,7 @@ public class MainController {
         view.write("Hello user!");
 
 
-        view.write("Enter DB name, login, password in the format: connect sqlcmd vlkvsky 0990");
+        view.write("Enter DB name, login, password in the format: connect DATABASE USER PASSWORD");
         while (true) {
             String input = view.read();
             for (Command command : commands) {

@@ -7,13 +7,13 @@ import java.util.Properties;
 
 public class Configuration {
 
-    public static final String CONFIG_SQLCMD_PROPERTIES = "configuration/sqlcmd.properties";
+    public static final String CONFIGURATION_PROPERTIES = "configuration/sqlcmd.properties";
     private Properties properties;
 
     public Configuration() {
         FileInputStream fileInput = null;
         properties = new Properties();
-        File file = new File(CONFIG_SQLCMD_PROPERTIES);
+        File file = new File(CONFIGURATION_PROPERTIES);
         try {
             fileInput = new FileInputStream(file);
             properties.load(fileInput);
@@ -33,20 +33,23 @@ public class Configuration {
 
     public String getDbHost() {
         return properties.getProperty("db.host");
-
-    }    public String getDbPort() {
+    }
+    public String getDbPort() {
         return properties.getProperty("db.port");
-
-    }    public String getDbDriver() {
+    }
+    public String getDbDriver() {
         return properties.getProperty("jdbc.driver");
-
-    }    public String getDbName() {
+    }
+    public String getDbName() {
         return properties.getProperty("db.name");
-
-    }    public String getUsername() {
+    }
+    public String getUsername() {
         return properties.getProperty("db.username");
-
-    }    public String getPassword() {
+    }
+    public String getTestDb() {
+        return properties.getProperty("db.test");
+    }
+    public String getPassword() {
         return properties.getProperty("db.password");
     }
 }

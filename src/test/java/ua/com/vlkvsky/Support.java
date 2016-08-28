@@ -7,25 +7,27 @@ import java.util.Map;
 
 public class Support {
 
-    private static final String DATABASE = BeforeTestsChangeNameAndPass.DATABASE;
-    private static final String USER = BeforeTestsChangeNameAndPass.USER;
-    private static final String PASSWORD = BeforeTestsChangeNameAndPass.PASSWORD;
+    private static Configuration configuration = new Configuration();
+    private static final String TEST_DB = configuration.getTestDb();
+    private static final String CREATED_DATABASE = configuration.getDbName();
+    private static final String USER = configuration.getUsername();
+    private static final String PASSWORD = configuration.getPassword();
 
     public static void setupData(DatabaseManager manager) {
         try {
-            manager.connect("sqlcmd", USER, PASSWORD);
+            manager.connect(CREATED_DATABASE, USER, PASSWORD);
         } catch (RuntimeException e) {
-            throw new RuntimeException("Для работы тестов измените имя и пароль в классе BeforeTestsChangeNameAndPass."
+            throw new RuntimeException("Для работы тестов измените имя и пароль в 'configuration/sqlcmd.properties'"
                     + "\n" + e.getCause());
         }
         try {
-            manager.createDB(DATABASE);
+            manager.createDB(TEST_DB);
         } catch (RuntimeException e) {
             throw new RuntimeException("Невозможно создать тестовую базу данных."
                     + "\n" + e.getCause());
         }
         try {
-            manager.connect(DATABASE, USER, PASSWORD);
+            manager.connect(TEST_DB, USER, PASSWORD);
 
         } catch (RuntimeException e) {
             throw new RuntimeException("Невозможно подключиться к тестовой базе данных."
@@ -43,8 +45,8 @@ public class Support {
 
     public static void deleteData(DatabaseManager manager) {
         try {
-            manager.connect("sqlcmd", USER, PASSWORD);
-            manager.deleteDB(DATABASE);
+            manager.connect(CREATED_DATABASE, USER, PASSWORD);
+            manager.deleteDB(TEST_DB);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

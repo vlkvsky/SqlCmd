@@ -1,7 +1,7 @@
 package ua.com.vlkvsky.integration;
 
 import org.junit.*;
-import ua.com.vlkvsky.BeforeTestsChangeNameAndPass;
+import ua.com.vlkvsky.Configuration;
 import ua.com.vlkvsky.Main;
 import ua.com.vlkvsky.Support;
 import ua.com.vlkvsky.model.DatabaseManager;
@@ -14,14 +14,18 @@ import java.io.UnsupportedEncodingException;
 import static org.junit.Assert.assertEquals;
 
 public class IntegrationTest {
-    private static final String DATABASE = BeforeTestsChangeNameAndPass.DATABASE;
-    private static final String USER = BeforeTestsChangeNameAndPass.USER;
-    private static final String PASSWORD = BeforeTestsChangeNameAndPass.PASSWORD;
+    private static Configuration configuration = new Configuration();
     private static DatabaseManager manager;
-    private final String commandConnect = "connect " + DATABASE + " " + USER + " " + PASSWORD;
-    private final String commandDisconnect = "connect " + "sqlcmd" + " " + USER + " " + PASSWORD;
+
+    private final String TEST_DB = configuration.getTestDb() ;
+    private final String CREATED_DATABASE = configuration.getDbName() ;
+    private final String USER = configuration.getUsername();
+    private final String PASSWORD = configuration.getPassword();
+
+    private final String commandConnect = "connect " + TEST_DB + " " + USER + " " + PASSWORD;
+    private final String commandDisconnect = "connect " + CREATED_DATABASE + " " + USER + " " + PASSWORD;
     private final String pleaseConnect = "Hello user!\n" +
-            "Enter DB name, login, password in the format: connect sqlcmd vlkvsky 0990\n";
+            "Enter DB name, login, password in the format: connect DATABASE USER PASSWORD\n";
     private ConfigurableInputStream in;
     private ByteArrayOutputStream out;
 
@@ -198,13 +202,13 @@ public class IntegrationTest {
     @Test
     public void testConnectWithError() {
         // given
-        in.add("connect " + DATABASE);
+        in.add("connect " + TEST_DB);
         in.add("exit");
         // when
         Main.main(new String[0]);
         // then
         assertEquals(pleaseConnect +
-                "Can't perform the action! Problem: Format 'connect DB user password', but expected: connect db_for_integration_test\n" +
+                "Can't perform the action! Problem: Format 'connect DB user password', but expected: connect dbintegrationtest\n" +
                 "Repeat one more time.\n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
@@ -664,7 +668,7 @@ public class IntegrationTest {
                 "See you later!\n", getData());
     }
 
-    @Ignore // проходит, но занимает много времени
+//    @Ignore // проходит, но занимает много времени
     @Test
     public void testConnectAfterConnect() {
         // given
@@ -703,7 +707,7 @@ public class IntegrationTest {
                 "See you later!\n", getData());
     }
 
-    @Ignore // Проходит, но занимает много времени
+//    @Ignore // Проходит, но занимает много времени
     @Test
     public void testCreateDeleteDatabase() {
         // given
@@ -740,7 +744,7 @@ public class IntegrationTest {
                 "See you later!\n", getData());
     }
 
-    @Ignore  // тест проходит, но не билдится проект
+//    @Ignore  // тест проходит, но не билдится проект
     @Test
     public void testDeleteDBException() {
         // given
@@ -787,6 +791,10 @@ public class IntegrationTest {
                 "Enter the command:\n" +
                 "Available commands:\n" +
                 "\t $ help\t\t\t\t\t\t\tGet available commands\n" +
+                "\t------------------------------------------------------------------\n" +
+                "\t $ default connect\t\t\t\tConnect to default DB. Setting in '/configuration/sqlcmd.properties\n" +
+                "\t------------------------------------------------------------------\n" +
+                "\t $ connect DB user password\t\t\t\tConnect to DB\n" +
                 "\t------------------------------------------------------------------\n" +
                 "\t $ DBs\t\t\t\t\t\t\tGet all DataBases\n" +
                 "\t------------------------------------------------------------------\n" +
