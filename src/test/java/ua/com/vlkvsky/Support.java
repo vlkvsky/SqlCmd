@@ -9,43 +9,46 @@ public class Support {
 
     private static Configuration configuration = new Configuration();
     private static final String TEST_DB = configuration.getTestDb();
-    private static final String CREATED_DATABASE = configuration.getDbName();
+    private static final String EXISTING_DB = configuration.getDbName();
     private static final String USER = configuration.getUsername();
     private static final String PASSWORD = configuration.getPassword();
 
     public static void setupData(DatabaseManager manager) {
         try {
-            manager.connect(CREATED_DATABASE, USER, PASSWORD);
+            manager.connect(EXISTING_DB, USER, PASSWORD);
         } catch (RuntimeException e) {
             throw new RuntimeException("First you should enter data to 'configuration/sqlcmd.properties'"
                     + "\n" + e.getCause());
         }
         try {
+            manager.deleteDB(TEST_DB);
+        } catch (RuntimeException e) {
+//            System.out.println("Test DB does not exist. Creating... ");   // if Test DB does not exist
+        }
+        try {
             manager.createDB(TEST_DB);
         } catch (RuntimeException e) {
-            throw new RuntimeException("Can not create Test DB"
-                    + "\n" + e.getCause());
+            throw new RuntimeException("Can not create Test DB. " + e.getMessage());
         }
+
         try {
             manager.connect(TEST_DB, USER, PASSWORD);
         } catch (RuntimeException e) {
-            throw new RuntimeException("Can not connect to Test DB"
-                    + "\n" + e.getCause());
+            throw new RuntimeException("Can not connect to Test DB. " + e.getMessage());
         }
         try {
             createTablesWithData(manager);
         } catch (RuntimeException e) {
-            throw new RuntimeException("Can not edit tables in Test DB"
-                    + "\n" + e.getCause());
+            throw new RuntimeException("Can not edit tables in Test DB. " + e.getMessage());
         }
     }
 
     public static void deleteData(DatabaseManager manager) {
         try {
-            manager.connect(CREATED_DATABASE, USER, PASSWORD);
+            manager.connect(EXISTING_DB, USER, PASSWORD);
             manager.deleteDB(TEST_DB);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (RuntimeException e) {
+            throw new RuntimeException("AfterClass deleting error: " + e.getCause());
         }
     }
 

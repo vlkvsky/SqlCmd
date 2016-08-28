@@ -9,6 +9,7 @@ import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class ClearTest {
     private DatabaseManager manager;
@@ -24,6 +25,7 @@ public class ClearTest {
 
     @Test
     public void testClearTable() {
+        when(view.read()).thenReturn("y");
         command.process("clear user");
         verify(manager).clear("user");
         verify(view).write("Table 'user' cleared");

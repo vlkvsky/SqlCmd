@@ -11,13 +11,25 @@ public class Connect extends Command {
 
     @Override
     public void process(String input) {
-        validationParameters(input);
-        String[] data = input.split("\\s+");
-        String databaseName = data[1];
-        String userName = data[2];
-        String password = data[3];
+        String databaseName = configuration.getDbName();
+        String userName = configuration.getUsername();
+        String password = configuration.getPassword();
+        if (input.equals("connect")) {
+            try {
+                manager.connect(databaseName, userName, password);
+            } catch (Exception e) {
+                view.write("Can not get connection to default DB. Configuration of 'configuration/SqlCmd.properties' is incorrect.");
+                return;
+            }
 
-        manager.connect(databaseName, userName, password);
+        } else {
+            validationParameters(input);
+            String[] data = input.split("\\s+");
+            databaseName = data[1];
+            userName = data[2];
+            password = data[3];
+            manager.connect(databaseName, userName, password);
+        }
         view.write("Connection successful. To see the available commands, type <help>");
     }
 

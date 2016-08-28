@@ -18,12 +18,12 @@ public class IntegrationTest {
     private static DatabaseManager manager;
 
     private final String TEST_DB = configuration.getTestDb();
-    private final String CREATED_DATABASE = configuration.getDbName();
+    private final String EXISTING_DATABASE = configuration.getDbName();
     private final String USER = configuration.getUsername();
     private final String PASSWORD = configuration.getPassword();
 
     private final String commandConnect = "connect " + TEST_DB + " " + USER + " " + PASSWORD;
-    private final String commandDisconnect = "connect " + CREATED_DATABASE + " " + USER + " " + PASSWORD;
+    private final String commandDisconnect = "connect " + EXISTING_DATABASE + " " + USER + " " + PASSWORD;
     private final String pleaseConnect = "Hello user!\n" +
             "Enter DB name, login, password in the format: connect DATABASE USER PASSWORD\n";
     private ConfigurableInputStream in;
@@ -37,7 +37,8 @@ public class IntegrationTest {
 
     @AfterClass
     public static void DeleteDB() {
-        Support.deleteData(manager);
+            Support.deleteData(manager);
+
     }
 
     @Before
@@ -521,6 +522,7 @@ public class IntegrationTest {
         in.add("Vadym");
         in.add("*****");
         in.add("clear users2");
+        in.add("y");
         in.add(commandDisconnect);
         in.add("ex");
         // when
@@ -547,6 +549,7 @@ public class IntegrationTest {
                 "-----------------\n" +
                 "Enter the command:\n" +
                 // clear users2
+                "Are you sure you want to delete 'users2'? Y/N\n" +
                 "Table 'users2' cleared\n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
@@ -568,6 +571,7 @@ public class IntegrationTest {
         in.add("Vadym");
         in.add("*****");
         in.add("clear users2");
+        in.add("y");
         in.add(commandDisconnect);
         in.add("ex");
         // when
@@ -597,6 +601,7 @@ public class IntegrationTest {
                 "-----------------\n" +
                 "Enter the command:\n" +
                 // clear users2
+                "Are you sure you want to delete 'users2'? Y/N\n"+
                 "Table 'users2' cleared\n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
@@ -665,7 +670,7 @@ public class IntegrationTest {
                 "See you later!\n", getData());
     }
 
-    //    @Ignore // проходит, но занимает много времени
+    @Ignore // проходит, но занимает много времени
     @Test
     public void testConnectAfterConnect() {
         // given
@@ -788,8 +793,6 @@ public class IntegrationTest {
                 "Enter the command:\n" +
                 "Available commands:\n" +
                 "\t $ help\t\t\t\t\t\t\tGet available commands\n" +
-                "\t------------------------------------------------------------------\n" +
-                "\t $ default connect\t\t\t\tConnect to default DB. Setting in '/configuration/sqlcmd.properties\n" +
                 "\t------------------------------------------------------------------\n" +
                 "\t $ connect DB user password\t\t\t\tConnect to DB\n" +
                 "\t------------------------------------------------------------------\n" +

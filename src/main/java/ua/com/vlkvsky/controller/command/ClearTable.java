@@ -5,25 +5,17 @@ import ua.com.vlkvsky.view.View;
 
 public class ClearTable extends Command {
 
-    private final DatabaseManager manager;
-    private final View view;
-
     public ClearTable(DatabaseManager manager, View view) {
-        this.manager = manager;
-        this.view = view;
+        super(manager, view);
     }
 
-    @Override
-    public boolean canProcess(String command) {
-        return command.startsWith("clear ");
-    }
-
-    @Override
+       @Override
     public void process(String command) {
         String[] data = command.split("\\s+");
         if (data.length != 2) {
             throw new IllegalArgumentException("Expected format is 'clear <table>'. But actual '" + command + "'");
         }
+        if (deleteConfirmation(data[1])) return;
         manager.clear(data[1]);
         view.write(String.format("Table '%s' cleared", data[1]));
     }

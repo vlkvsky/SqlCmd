@@ -17,34 +17,24 @@ public class DefaultConnectTest {
     public void setup() {
         DatabaseManager manager = Mockito.mock(DatabaseManager.class);
         view = Mockito.mock(View.class);
-        command = new DefaultConnect(manager, view);
+        command = new Connect(manager, view);
     }
 
     @Test
     public void testCanProcess() throws Exception {
-        boolean canProcess = command.canProcess("default connect");
+        boolean canProcess = command.canProcess("connect");
         assertTrue(canProcess);
     }
 
     @Test
     public void testCanNotProcess() throws Exception {
-        boolean canProcess = command.canProcess("defaulttt ");
+        boolean canProcess = command.canProcess("error");
         assertFalse(canProcess);
     }
 
     @Test
     public void testProcess() throws Exception {
-        command.process("default connect");
-        verify(view).write("Connection to default DB successful. To see the available commands, type <help>");
-    }
-
-    @Test
-    public void testProcessWithWrongParameters() throws Exception {
-        try {
-            command.process("default this mistake");
-            fail("Expected IllegalArgumentException");
-        } catch (IllegalArgumentException e) {
-            assertEquals("Format 'default connect', but expected: default this mistake", e.getMessage());
-        }
+        command.process("connect");
+        verify(view).write("Connection successful. To see the available commands, type <help>");
     }
 }

@@ -49,7 +49,7 @@ public class CreateTable extends Command {
         while (!exit) {
             view.write("Enter the name for a new table:" + fromLetter + orExit);
             String input = view.read();
-
+            input = input.toLowerCase();
             switch (input) {
                 case "0":
                     exit = true;

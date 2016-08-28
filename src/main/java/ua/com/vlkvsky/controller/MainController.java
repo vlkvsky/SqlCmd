@@ -19,7 +19,6 @@ public class MainController {
                 new Exit.ex(view),                   // выход
                 new Exit(view),                      // выход
                 new Connect(manager, view),          // подключение
-                new DefaultConnect(manager, view),                // подключение к дефолтной БД
                 new isConnected(manager, view),      // проверка подключения
 
                 new Help(view),                      // возможные комманды
