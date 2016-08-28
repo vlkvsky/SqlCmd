@@ -16,6 +16,8 @@ public class Help extends Command {
         this.view = view;
         commands = new ArrayList<>(Arrays.asList(
                 this,
+                new DefaultConnect(manager,view),
+                new Connect(manager, view),
                 new DBs(manager, view),
                 new Tables(manager, view),
                 new CreateDB(manager, view),

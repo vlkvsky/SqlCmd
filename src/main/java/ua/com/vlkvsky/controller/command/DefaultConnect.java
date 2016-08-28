@@ -14,7 +14,6 @@ public class DefaultConnect extends Command {
         validationParameters(input);
 
         try{
-            String[] data = input.split("\\s+");
             String databaseName = configuration.getDbName();
             String userName = configuration.getUsername();
             String password = configuration.getPassword();
@@ -27,7 +26,7 @@ public class DefaultConnect extends Command {
 
     @Override
     public String commandFormat() {
-        return "con default";
+        return "default connect";
     }
 
     @Override

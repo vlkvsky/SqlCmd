@@ -44,6 +44,16 @@ public class IntegrationTest {
         System.setOut(new PrintStream(out));
     }
 
+    private String getData() {
+        try {
+            String result = new String(out.toByteArray(), "UTF-8").replaceAll("\r\n", "\n");
+            out.reset();
+            return result;
+        } catch (UnsupportedEncodingException e) {
+            return e.getMessage();
+        }
+    }
+
     @Test
     public void testHelpBeforeConnect() {
         // given
@@ -58,16 +68,6 @@ public class IntegrationTest {
                 "-----------------\n" +
                 "Enter the command:\n" +
                 "See you later!\n", getData());
-    }
-
-    private String getData() {
-        try {
-            String result = new String(out.toByteArray(), "UTF-8").replaceAll("\r\n", "\n");
-            out.reset();
-            return result;
-        } catch (UnsupportedEncodingException e) {
-            return e.getMessage();
-        }
     }
 
     @Test
@@ -769,7 +769,7 @@ public class IntegrationTest {
                 "See you later!\n", getData());
     }
 
-    @Ignore // тест проходит, но не билдится проект
+//     @Ignore // тест проходит, но не билдится проект
     @Test
     public void testHelpAfterConnect() {
         // given
