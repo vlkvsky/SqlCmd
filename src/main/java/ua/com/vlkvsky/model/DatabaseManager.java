@@ -6,8 +6,6 @@ import java.util.Set;
 
 public interface DatabaseManager {
 
-//    void connect(Configuration configuration);
-
     List<Map<String, Object>> getTableData(String tableName);
 
     Set<String> getDatabases();

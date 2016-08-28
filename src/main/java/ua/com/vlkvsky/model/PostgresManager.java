@@ -12,7 +12,7 @@ public class PostgresManager implements DatabaseManager {
         try {
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
-            throw new DriverException("Not installed PostgreSQL JDBC driver.", e);
+            throw new RuntimeException("Not installed PostgreSQL JDBC driver.", e);
         }
     }
 
@@ -43,7 +43,7 @@ public class PostgresManager implements DatabaseManager {
             connection = DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
             connection = null;
-            throw new DatabaseManagerException(
+            throw new RuntimeException(
                     String.format("Cant get connection for model:%s user:%s", database, user), e);
         }
     }
@@ -53,7 +53,7 @@ public class PostgresManager implements DatabaseManager {
             try {
                 connection.close();
             } catch (SQLException e) {
-                throw new DatabaseManagerException(ERROR, e);
+                throw new RuntimeException(ERROR, e);
             }
         }
     }
@@ -227,7 +227,7 @@ public class PostgresManager implements DatabaseManager {
             tableSize.next();
             return tableSize.getInt(1);
         } catch (SQLException e) {
-            throw new DatabaseManagerException(e.getMessage(), e.getCause());
+            throw new RuntimeException(e.getMessage(), e.getCause());
         }
     }
 
