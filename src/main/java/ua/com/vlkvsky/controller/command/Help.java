@@ -11,12 +11,11 @@ public class Help extends Command {
     private final View view;
     private final List<Command> commands;
 
-
     public Help(View view) {
         this.view = view;
         commands = new ArrayList<>(Arrays.asList(
                 this,
-                new DefaultConnect(manager,view),
+                new DefaultConnect(manager, view),
                 new Connect(manager, view),
                 new DBs(manager, view),
                 new Tables(manager, view),

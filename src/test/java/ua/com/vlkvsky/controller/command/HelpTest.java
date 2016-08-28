@@ -37,5 +37,4 @@ public class HelpTest {
         command.process("help");
         verify(view).write("Available commands:");
     }
-
 }

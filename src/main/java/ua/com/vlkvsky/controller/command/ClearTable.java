@@ -3,7 +3,6 @@ package ua.com.vlkvsky.controller.command;
 import ua.com.vlkvsky.model.DatabaseManager;
 import ua.com.vlkvsky.view.View;
 
-
 public class ClearTable extends Command {
 
     private final DatabaseManager manager;

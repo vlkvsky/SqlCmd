@@ -17,8 +17,8 @@ public class IntegrationTest {
     private static Configuration configuration = new Configuration();
     private static DatabaseManager manager;
 
-    private final String TEST_DB = configuration.getTestDb() ;
-    private final String CREATED_DATABASE = configuration.getDbName() ;
+    private final String TEST_DB = configuration.getTestDb();
+    private final String CREATED_DATABASE = configuration.getDbName();
     private final String USER = configuration.getUsername();
     private final String PASSWORD = configuration.getPassword();
 
@@ -254,7 +254,6 @@ public class IntegrationTest {
         in.add("Nastya");
         in.add("+++++");
 
-
         in.add("deleteRow users 1");
         in.add("Y");
         in.add("deleteRow users 2");
@@ -441,7 +440,6 @@ public class IntegrationTest {
         in.add("name");
         in.add("0");
 
-
         in.add(commandDisconnect);
         in.add("exit");
         // when
@@ -512,7 +510,6 @@ public class IntegrationTest {
                 "Enter the command:\n" +
                 // ex
                 "See you later!\n", getData());
-
     }
 
     @Test
@@ -668,7 +665,7 @@ public class IntegrationTest {
                 "See you later!\n", getData());
     }
 
-//    @Ignore // проходит, но занимает много времени
+    //    @Ignore // проходит, но занимает много времени
     @Test
     public void testConnectAfterConnect() {
         // given
@@ -825,5 +822,4 @@ public class IntegrationTest {
                 "Enter the command:\n" +
                 "See you later!\n", getData());
     }
-
 }

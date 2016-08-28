@@ -2,7 +2,6 @@ package ua.com.vlkvsky.controller.command;
 
 import ua.com.vlkvsky.view.View;
 
-
 public class UnsupportedCommand extends Command {
     private final View view;
 

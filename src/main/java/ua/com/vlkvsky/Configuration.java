@@ -34,21 +34,27 @@ public class Configuration {
     public String getDbHost() {
         return properties.getProperty("db.host");
     }
+
     public String getDbPort() {
         return properties.getProperty("db.port");
     }
+
     public String getDbDriver() {
         return properties.getProperty("jdbc.driver");
     }
+
     public String getDbName() {
         return properties.getProperty("db.name");
     }
+
     public String getUsername() {
         return properties.getProperty("db.username");
     }
+
     public String getTestDb() {
         return properties.getProperty("db.test");
     }
+
     public String getPassword() {
         return properties.getProperty("db.password");
     }

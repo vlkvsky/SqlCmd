@@ -39,6 +39,5 @@ public class Exit extends Command {
         public String commandFormat() {
             return "ex";
         }
-
     }
 }

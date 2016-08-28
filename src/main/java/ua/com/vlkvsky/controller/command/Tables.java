@@ -5,7 +5,6 @@ import ua.com.vlkvsky.view.View;
 
 import java.util.Set;
 
-
 public class Tables extends Command {
 
     public Tables(DatabaseManager manager, View view) {

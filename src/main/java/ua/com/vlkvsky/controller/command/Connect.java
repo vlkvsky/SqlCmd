@@ -30,5 +30,4 @@ public class Connect extends Command {
     public String description() {
         return "Connect to DB";
     }
-
 }

@@ -19,7 +19,7 @@ public class MainController {
                 new Exit.ex(view),                   // выход
                 new Exit(view),                      // выход
                 new Connect(manager, view),          // подключение
-                new DefaultConnect(manager,view),                // подключение к дефолтной БД
+                new DefaultConnect(manager, view),                // подключение к дефолтной БД
                 new isConnected(manager, view),      // проверка подключения
 
                 new Help(view),                      // возможные комманды
@@ -41,19 +41,15 @@ public class MainController {
     public void run() {
         try {
             doWork();
-
         } catch (ExitException e) {
             //do nothing
         }
     }
 
-
-
     private void doWork() {
         view.write("Hello user!");
-
-
         view.write("Enter DB name, login, password in the format: connect DATABASE USER PASSWORD");
+
         while (true) {
             String input = view.read();
             for (Command command : commands) {

@@ -29,7 +29,6 @@ public class ClearTest {
         verify(view).write("Table 'user' cleared");
     }
 
-
     @Test
     public void testCantProcess() {
         boolean canProcess = command.canProcess("clear user");

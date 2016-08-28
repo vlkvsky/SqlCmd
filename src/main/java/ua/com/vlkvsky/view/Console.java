@@ -1,6 +1,5 @@
 package ua.com.vlkvsky.view;
 
-
 import java.util.Scanner;
 
 public class Console implements View {

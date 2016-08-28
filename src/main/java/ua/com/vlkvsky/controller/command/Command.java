@@ -25,7 +25,6 @@ public abstract class Command {
 
     public abstract String commandFormat();
 
-
     public abstract String description();
 
     public boolean canProcess(String input) {

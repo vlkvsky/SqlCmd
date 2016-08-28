@@ -7,7 +7,6 @@ import ua.com.vlkvsky.view.View;
 import java.util.Map;
 import java.util.Set;
 
-
 public class ContentTable extends Command {
 
     public ContentTable(DatabaseManager manager, View view) {

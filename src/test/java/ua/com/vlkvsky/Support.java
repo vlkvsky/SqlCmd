@@ -28,19 +28,16 @@ public class Support {
         }
         try {
             manager.connect(TEST_DB, USER, PASSWORD);
-
         } catch (RuntimeException e) {
             throw new RuntimeException("Can not connect to Test DB"
                     + "\n" + e.getCause());
         }
         try {
             createTablesWithData(manager);
-
         } catch (RuntimeException e) {
             throw new RuntimeException("Can not edit tables in Test DB"
                     + "\n" + e.getCause());
         }
-
     }
 
     public static void deleteData(DatabaseManager manager) {

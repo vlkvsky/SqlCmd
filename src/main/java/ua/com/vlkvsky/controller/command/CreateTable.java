@@ -9,6 +9,7 @@ public class CreateTable extends Command {
     private final String fromLetter = "(the name must begin with a letter!)";
     private boolean exitMain;
     private String query = "";
+
     public CreateTable(DatabaseManager manager, View view) {
         super(manager, view);
     }
@@ -29,7 +30,6 @@ public class CreateTable extends Command {
         } else {
             view.write(" ");
         }
-
     }
 
     private void createQuery() {

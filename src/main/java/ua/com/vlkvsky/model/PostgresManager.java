@@ -6,18 +6,7 @@ import java.sql.*;
 import java.util.*;
 
 public class PostgresManager implements DatabaseManager {
-    private Connection connection;
-    Configuration configuration = new Configuration();
-
     private static final String ERROR = "It is impossible because: ";
-
-    private String DbDriver = configuration.getDbDriver();
-    private String HOST = configuration.getDbHost();
-    private String PORT = configuration.getDbPort();
-
-    private String user;
-    private String password;
-    private String database;
 
     static {
         try {
@@ -26,6 +15,15 @@ public class PostgresManager implements DatabaseManager {
             throw new DriverException("Not installed PostgreSQL JDBC driver.", e);
         }
     }
+
+    Configuration configuration = new Configuration();
+    private Connection connection;
+    private String DbDriver = configuration.getDbDriver();
+    private String host = configuration.getDbHost();
+    private String port = configuration.getDbPort();
+    private String user;
+    private String password;
+    private String database;
 
     @Override
     public void connect(String database, String user, String password) {
@@ -41,7 +39,7 @@ public class PostgresManager implements DatabaseManager {
 
     private void getConnection() {
         try {
-            String url = String.format(DbDriver + "%s:%s/%s", HOST, PORT, database);
+            String url = String.format(DbDriver + "%s:%s/%s", host, port, database);
             connection = DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
             connection = null;
@@ -63,7 +61,6 @@ public class PostgresManager implements DatabaseManager {
     @Override
     public List<Map<String, Object>> getTableData(String tableName) {
         List<Map<String, Object>> result = new LinkedList<>();
-        // try-with-resources statement ensures that each resource is closed at the end of the statement
         try (Statement stmt = connection.createStatement();
              ResultSet tableData = stmt.executeQuery("SELECT * FROM public." + tableName)) {
             ResultSetMetaData metaData = tableData.getMetaData();
@@ -115,7 +112,6 @@ public class PostgresManager implements DatabaseManager {
         }
     }
 
-
     @Override
     public void clear(String tableName) throws RuntimeException {
         try (Statement stmt = connection.createStatement()) {
@@ -141,7 +137,6 @@ public class PostgresManager implements DatabaseManager {
     @Override
     public void createTable(String table_name) {
         try (Statement statement = connection.createStatement()) {
-//            statement.executeUpdate("CREATE TABLE IF NOT EXISTS " + table_name);
             statement.executeUpdate("CREATE TABLE " + table_name);
         } catch (SQLException e) {
             throw new RuntimeException(e.getLocalizedMessage());
@@ -151,7 +146,6 @@ public class PostgresManager implements DatabaseManager {
     @Override
     public void deleteTable(String table_name) {
         try (Statement statement = connection.createStatement()) {
-//            statement.executeUpdate("DROP TABLE IF EXISTS " + table_name + " CASCADE");
             statement.executeUpdate("DROP TABLE " + table_name);
         } catch (SQLException e) {
             throw new RuntimeException(e.getLocalizedMessage());

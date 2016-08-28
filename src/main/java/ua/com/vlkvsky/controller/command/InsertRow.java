@@ -10,6 +10,7 @@ public class InsertRow extends Command {
 
     private Set<String> columns;
     private boolean exitMain;
+
     public InsertRow(DatabaseManager manager, View view) {
         super(manager, view);
     }
@@ -31,7 +32,6 @@ public class InsertRow extends Command {
                 view.write(getTableConstructor(command));
             } catch (IndexOutOfBoundsException e) {
                 view.write(String.format("Table '%s' not found. Try insert to another table.", tableName));
-
             }
         }
     }
@@ -84,5 +84,4 @@ public class InsertRow extends Command {
     public String description() {
         return "\tAdd data to <table>";
     }
-
 }

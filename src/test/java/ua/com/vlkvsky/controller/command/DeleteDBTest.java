@@ -41,7 +41,6 @@ public class DeleteDBTest {
         assertTrue(canProcess);
     }
 
-
     @Test
     public void testProcess() throws Exception {
         when(view.read()).thenReturn("y");

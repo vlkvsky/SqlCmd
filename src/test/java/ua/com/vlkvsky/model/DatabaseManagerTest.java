@@ -13,9 +13,6 @@ import java.util.Set;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-//import DatabaseManager;
-//import PostgresManager;
-
 public class DatabaseManagerTest {
 
     private static DatabaseManager manager;
@@ -105,6 +102,7 @@ public class DatabaseManagerTest {
         assertEquals(1, users.size());
 
         Map<String, Object> user = users.get(0);
+
         assertEquals("[id, name, password]", user.keySet().toString());
         assertEquals("[15, Pup, pass2]", user.values().toString());
     }
@@ -156,12 +154,4 @@ public class DatabaseManagerTest {
         assertEquals("[users, users2]", tables.toString());
         manager.createTable("test1(id SERIAL NOT NULL PRIMARY KEY,username varchar(225) NOT NULL UNIQUE, password varchar(225))");
     }
-
-//    @Test
-//    public void getters() {
-//        assertEquals(DATABASE, manager.getDatabaseName());
-//        assertEquals(USER, manager.getUser());
-//        assertEquals(PASSWORD, manager.getPassword());
-//
-//    }          //TODO разобрать
 }

@@ -1,6 +1,5 @@
 package ua.com.vlkvsky.controller.command;
 
-
 import ua.com.vlkvsky.model.DatabaseManager;
 import ua.com.vlkvsky.view.View;
 
@@ -22,8 +21,6 @@ public class DeleteRow extends Command {
 
         manager.deleteTableRow(databaseName, id);
         view.write(String.format("Row with id '%s' successfully deleted.", RowToDelete[2]));
-
-
     }
 
     @Override
