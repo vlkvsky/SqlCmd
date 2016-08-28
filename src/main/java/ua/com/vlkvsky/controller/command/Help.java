@@ -39,7 +39,7 @@ public class Help extends Command {
             columns.addLine("|",command.commandFormat(),"|", command.description(), "|");
             columns.addLine("|","--------------------------", "+", "-----------------------------", "|");
         }
-        columns.print();
+        view.write(columns.print());
     }
 
     @Override

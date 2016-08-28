@@ -746,12 +746,12 @@ public class IntegrationTest {
                 "See you later!\n", getData());
     }
 
-    @Ignore  // тест проходит, но не билдится проект
+//    @Ignore  // тест проходит, но не билдится проект
     @Test
     public void testDeleteDBException() {
         // given
         in.add(commandConnect);
-        in.add("deleteDB sqlcmd_DONT_EXIT");
+        in.add("deleteDB sqlcmd_DONT_EXIST");
         in.add("y");
         in.add(commandDisconnect);
         in.add("exit");
@@ -764,8 +764,8 @@ public class IntegrationTest {
                 "Connection successful. To see the available commands, type <help>\n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
-                "Are you sure you want to delete 'sqlcmd_DONT_EXIT'? Y/N\n" +
-                "Can't perform the action! Problem: ОШИБКА: база данных \"sqlcmd_dont_exit\" не существует\n" +
+                "Are you sure you want to delete 'sqlcmd_DONT_EXIST'? Y/N\n" +
+                "Can't perform the action! Problem: ОШИБКА: база данных \"sqlcmd_dont_exist\" не существует\n" +
                 "Repeat one more time.\n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
@@ -778,7 +778,7 @@ public class IntegrationTest {
 
 
 
-    @Ignore // тест проходит, но не билдится проект
+//    @Ignore // тест проходит, но не билдится проект
     @Test
     public void testHelpAfterConnect() {
         // given
@@ -795,32 +795,34 @@ public class IntegrationTest {
                 "-----------------\n" +
                 "Enter the command:\n" +
                 "Available commands:\n" +
-                "\t $ help\t\t\t\t\t\t\tGet available commands\n" +
-                "\t------------------------------------------------------------------\n" +
-                "\t $ connect DB user password\t\t\t\tConnect to DB\n" +
-                "\t------------------------------------------------------------------\n" +
-                "\t $ DBs\t\t\t\t\t\t\tGet all DataBases\n" +
-                "\t------------------------------------------------------------------\n" +
-                "\t $ tables\t\t\t\t\t\tGet all tables of DB\n" +
-                "\t------------------------------------------------------------------\n" +
-                "\t $ createDB <>\t\t\t\t\tCreate DB\n" +
-                "\t------------------------------------------------------------------\n" +
-                "\t $ create\t\t\t\t\t\tCreate table step-by-step\n" +
-                "\t------------------------------------------------------------------\n" +
-                "\t $ content <>\t\t\t\t\tGet content of <table>\n" +
-                "\t------------------------------------------------------------------\n" +
-                "\t $ insert <>\t\t\t\t\tAdd data to <table>\n" +
-                "\t------------------------------------------------------------------\n" +
-                "\t $ deleteRow <> id\t\t\t\tDelete row <id> from <table>\n" +
-                "\t------------------------------------------------------------------\n" +
-                "\t $ clear <>\t\t\t\t\t\tClear data of <table>\n" +
-                "\t------------------------------------------------------------------\n" +
-                "\t $ deleteTable <>\t\t\t\tDelete <table>\n" +
-                "\t------------------------------------------------------------------\n" +
-                "\t $ deleteDB <>\t\t\t\t\tDelete <DB>\n" +
-                "\t------------------------------------------------------------------\n" +
-                "\t $ exit\t\t\t\t\t\t\tClose application\n" +
-                "\t------------------------------------------------------------------\n" +
+                "+--------------------------+-----------------------------+\n" +
+                "|help                      |Get available commands       |\n" +
+                "|--------------------------+-----------------------------|\n" +
+                "|connect DB user password  |Connect to DB                |\n" +
+                "|--------------------------+-----------------------------|\n" +
+                "|DBs                       |Get all DataBases            |\n" +
+                "|--------------------------+-----------------------------|\n" +
+                "|tables                    |Get all tables of DB         |\n" +
+                "|--------------------------+-----------------------------|\n" +
+                "|createDB <>               |Create <DB>                  |\n" +
+                "|--------------------------+-----------------------------|\n" +
+                "|create                    |Create table step-by-step    |\n" +
+                "|--------------------------+-----------------------------|\n" +
+                "|content <>                |Get content of <table>       |\n" +
+                "|--------------------------+-----------------------------|\n" +
+                "|insert <>                 |Add data to <table>          |\n" +
+                "|--------------------------+-----------------------------|\n" +
+                "|deleteRow <> <>           |Delete row <table> from <id> |\n" +
+                "|--------------------------+-----------------------------|\n" +
+                "|clear <>                  |Clear data of <table>        |\n" +
+                "|--------------------------+-----------------------------|\n" +
+                "|deleteTable <>            |Delete <table>               |\n" +
+                "|--------------------------+-----------------------------|\n" +
+                "|deleteDB <>               |Delete <DB>                  |\n" +
+                "|--------------------------+-----------------------------|\n" +
+                "|exit                      |Close application            |\n" +
+                "|--------------------------+-----------------------------|\n" +
+                "\n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
                 "Connection successful. To see the available commands, type <help>\n" +

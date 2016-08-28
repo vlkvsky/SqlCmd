@@ -67,7 +67,7 @@ public class DeleteRowTest {
             command.process("deleteRow <> id wrong");
             fail();
         } catch (IllegalArgumentException e) {
-            assertEquals("Format 'deleteRow <> id', but expected: deleteRow <> id wrong", e.getMessage());
+            assertEquals("Format 'deleteRow <> <>', but expected: deleteRow <> id wrong", e.getMessage());
         }
     }
 

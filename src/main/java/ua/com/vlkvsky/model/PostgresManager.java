@@ -231,7 +231,7 @@ public class PostgresManager implements DatabaseManager {
         }
     }
 
-    @Override // TODO заготовка, может как-нибудь реализовать в userInerface, а может и нет :) тест написан
+    @Override //
     public void update(String tableName, int id, Map<String, Object> newValue) {
         String tableNames = getNameFormatted(newValue, "%s = ?,");
         String updateTable = "UPDATE public." + tableName + " SET " + tableNames + " WHERE id = ?";
