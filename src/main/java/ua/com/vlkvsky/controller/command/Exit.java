@@ -21,7 +21,7 @@ public class Exit extends Command {
 
     @Override
     public String description() {
-        return "\t\t\tClose application";
+        return "Close application";
     }
 
     public static class ex extends Exit {

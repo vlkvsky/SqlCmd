@@ -26,6 +26,6 @@ public class CreateDB extends Command {
 
     @Override
     public String description() {
-        return "\tCreate DB";
+        return "Create <DB>";
     }
 }

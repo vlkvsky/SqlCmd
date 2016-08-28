@@ -139,6 +139,6 @@ public class CreateTable extends Command {
 
     @Override
     public String description() {
-        return "\t\tCreate table step-by-step";
+        return "Create table step-by-step";
     }
 }

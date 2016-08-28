@@ -33,6 +33,6 @@ public class DeleteDB extends Command {
 
     @Override
     public String description() {
-        return "\tDelete <DB>";
+        return "Delete <DB>";
     }
 }

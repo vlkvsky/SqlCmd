@@ -27,7 +27,7 @@ public class ClearTable extends Command {
 
     @Override
     public String description() {
-        return "\t\tClear data of <table>";
+        return "Clear data of <table>";
     }
 }
 

@@ -32,12 +32,14 @@ public class Help extends Command {
 
     @Override
     public void process(String input) {
-        view.write("Available commands:");
-
+        view.write("Available commands:\n" +
+                "+--------------------------" + "+" + "-----------------------------+");
+        Columns columns = new Columns();
         for (Command command : commands) {
-            view.write("\t $ " + command.commandFormat() + "\t\t\t\t" + command.description() +
-                    "\n\t------------------------------------------------------------------");
+            columns.addLine("|",command.commandFormat(),"|", command.description(), "|");
+            columns.addLine("|","--------------------------", "+", "-----------------------------", "|");
         }
+        columns.print();
     }
 
     @Override
@@ -47,6 +49,6 @@ public class Help extends Command {
 
     @Override
     public String description() {
-        return "\t\t\tGet available commands";
+        return "Get available commands";
     }
 }

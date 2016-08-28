@@ -25,11 +25,11 @@ public class DeleteRow extends Command {
 
     @Override
     public String commandFormat() {
-        return "deleteRow <> id";
+        return "deleteRow <> <>";
     }
 
     @Override
     public String description() {
-        return "Delete row <id> from <table>";
+        return "Delete row <table> from <id>";
     }
 }

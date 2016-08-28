@@ -82,6 +82,6 @@ public class InsertRow extends Command {
 
     @Override
     public String description() {
-        return "\tAdd data to <table>";
+        return "Add data to <table>";
     }
 }

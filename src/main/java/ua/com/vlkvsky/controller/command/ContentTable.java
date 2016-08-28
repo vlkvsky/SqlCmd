@@ -36,6 +36,6 @@ public class ContentTable extends Command {
 
     @Override
     public String description() {
-        return "\tGet content of <table>";
+        return "Get content of <table>";
     }
 }
