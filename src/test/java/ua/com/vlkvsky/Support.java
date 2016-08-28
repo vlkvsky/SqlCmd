@@ -1,5 +1,6 @@
 package ua.com.vlkvsky;
 
+import ua.com.vlkvsky.controller.MainController;
 import ua.com.vlkvsky.model.DatabaseManager;
 
 import java.util.LinkedHashMap;
@@ -7,7 +8,7 @@ import java.util.Map;
 
 public class Support {
 
-    private static Configuration configuration = new Configuration();
+    private static MainController.Configuration configuration = new MainController.Configuration();
     private static final String TEST_DB = configuration.getTestDb();
     private static final String EXISTING_DB = configuration.getDbName();
     private static final String USER = configuration.getUsername();

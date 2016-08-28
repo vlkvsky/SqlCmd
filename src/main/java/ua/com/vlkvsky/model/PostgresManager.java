@@ -1,6 +1,6 @@
 package ua.com.vlkvsky.model;
 
-import ua.com.vlkvsky.Configuration;
+import ua.com.vlkvsky.controller.MainController;
 
 import java.sql.*;
 import java.util.*;
@@ -16,7 +16,7 @@ public class PostgresManager implements DatabaseManager {
         }
     }
 
-    Configuration configuration = new Configuration();
+    MainController.Configuration configuration = new MainController.Configuration();
     private Connection connection;
     private String DbDriver = configuration.getDbDriver();
     private String host = configuration.getDbHost();

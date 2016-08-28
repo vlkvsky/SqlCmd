@@ -4,9 +4,13 @@ import ua.com.vlkvsky.controller.command.*;
 import ua.com.vlkvsky.model.DatabaseManager;
 import ua.com.vlkvsky.view.View;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 
 public class MainController {
 
@@ -46,7 +50,7 @@ public class MainController {
     }
 
     private void doWork() {
-        view.write("Hello user!");
+        view.write("Welcome " + System.getProperty("user.name") + "!");
         view.write("Enter DB name, login, password in the format: connect DATABASE USER PASSWORD");
 
         while (true) {
@@ -77,6 +81,61 @@ public class MainController {
         }
         view.write("Can't perform the action! Problem: " + message);
         view.write("Repeat one more time.");
+    }
+
+    public static class Configuration {
+
+        public static final String CONFIGURATION_PROPERTIES = "configuration/sqlcmd.properties";
+        private Properties properties;
+
+        public Configuration() {
+            FileInputStream fileInput = null;
+            properties = new Properties();
+            File file = new File(CONFIGURATION_PROPERTIES);
+            try {
+                fileInput = new FileInputStream(file);
+                properties.load(fileInput);
+            } catch (Exception e) {
+                System.out.println("Error loading config " + file.getAbsolutePath());
+                e.printStackTrace();
+            } finally {
+                if (fileInput != null) {
+                    try {
+                        fileInput.close();
+                    } catch (IOException e) {
+                        // do nothing;
+                    }
+                }
+            }
+        }
+
+        public String getDbHost() {
+            return properties.getProperty("db.host");
+        }
+
+        public String getDbPort() {
+            return properties.getProperty("db.port");
+        }
+
+        public String getDbDriver() {
+            return properties.getProperty("jdbc.driver");
+        }
+
+        public String getDbName() {
+            return properties.getProperty("db.name");
+        }
+
+        public String getUsername() {
+            return properties.getProperty("db.username");
+        }
+
+        public String getTestDb() {
+            return properties.getProperty("db.test");
+        }
+
+        public String getPassword() {
+            return properties.getProperty("db.password");
+        }
     }
 }
 

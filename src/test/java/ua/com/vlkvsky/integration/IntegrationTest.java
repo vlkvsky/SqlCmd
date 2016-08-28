@@ -1,9 +1,9 @@
 package ua.com.vlkvsky.integration;
 
 import org.junit.*;
-import ua.com.vlkvsky.Configuration;
 import ua.com.vlkvsky.Main;
 import ua.com.vlkvsky.Support;
+import ua.com.vlkvsky.controller.MainController;
 import ua.com.vlkvsky.model.DatabaseManager;
 import ua.com.vlkvsky.model.PostgresManager;
 
@@ -14,7 +14,7 @@ import java.io.UnsupportedEncodingException;
 import static org.junit.Assert.assertEquals;
 
 public class IntegrationTest {
-    private static Configuration configuration = new Configuration();
+    private static MainController.Configuration configuration = new MainController.Configuration();
     private static DatabaseManager manager;
 
     private final String TEST_DB = configuration.getTestDb();
@@ -24,7 +24,7 @@ public class IntegrationTest {
 
     private final String commandConnect = "connect " + TEST_DB + " " + USER + " " + PASSWORD;
     private final String commandDisconnect = "connect " + EXISTING_DATABASE + " " + USER + " " + PASSWORD;
-    private final String pleaseConnect = "Hello user!\n" +
+    private final String pleaseConnect = "Welcome " + System.getProperty("user.name") + "!\n" +
             "Enter DB name, login, password in the format: connect DATABASE USER PASSWORD\n";
     private ConfigurableInputStream in;
     private ByteArrayOutputStream out;
@@ -774,6 +774,9 @@ public class IntegrationTest {
                 "Enter the command:\n" +
                 "See you later!\n", getData());
     }
+
+
+
 
     @Ignore // тест проходит, но не билдится проект
     @Test

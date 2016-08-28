@@ -1,11 +1,11 @@
 package ua.com.vlkvsky.controller.command;
 
-import ua.com.vlkvsky.Configuration;
+import ua.com.vlkvsky.controller.MainController;
 import ua.com.vlkvsky.model.DatabaseManager;
 import ua.com.vlkvsky.view.View;
 
 public abstract class Command {
-    Configuration configuration = new Configuration();
+    MainController.Configuration configuration = new MainController.Configuration();
     DatabaseManager manager;
     View view;
 
