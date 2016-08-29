@@ -1,5 +1,6 @@
 package ua.com.vlkvsky.controller.command;
 
+import ua.com.vlkvsky.model.TableConstructor.Columns;
 import ua.com.vlkvsky.view.View;
 
 import java.util.ArrayList;
@@ -35,9 +36,10 @@ public class Help extends Command {
         view.write("Available commands:\n" +
                 "+--------------------------" + "+" + "-----------------------------+");
         Columns columns = new Columns();
-        for (Command command : commands) {
-            columns.addLine("|",command.commandFormat(),"|", command.description(), "|");
-            columns.addLine("|","--------------------------", "+", "-----------------------------", "|");
+        for (int i = 0; i < commands.size(); i++) {
+            Command command = commands.get(i);
+            columns.addLine("|", command.commandFormat(), "|", command.description(), "|");
+            columns.addLine("|", "--------------------------", "+", "-----------------------------", "|");
         }
         view.write(columns.print());
     }
