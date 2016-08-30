@@ -14,7 +14,7 @@ public class Connect extends Command {
         String databaseName = configuration.getDbName();
         String userName = configuration.getUsername();
         String password = configuration.getPassword();
-        if (input.equals("connect")) {
+        if (input.toLowerCase().equals("connect")) {
             try {
                 manager.connect(databaseName, userName, password);
             } catch (Exception e) {
