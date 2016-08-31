@@ -9,7 +9,7 @@ public class ClearTable extends Command {
         super(manager, view);
     }
 
-       @Override
+    @Override
     public void process(String command) {
         String[] data = command.split("\\s+");
         if (data.length != 2) {

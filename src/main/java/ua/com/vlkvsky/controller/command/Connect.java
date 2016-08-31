@@ -21,7 +21,6 @@ public class Connect extends Command {
                 view.write("Can not get connection to default DB. Configuration of 'configuration/SqlCmd.properties' is incorrect.");
                 return;
             }
-
         } else {
             validationParameters(input);
             String[] data = input.split("\\s+");

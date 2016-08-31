@@ -37,8 +37,7 @@ public class IntegrationTest {
 
     @AfterClass
     public static void DeleteDB() {
-            Support.deleteData(manager);
-
+        Support.deleteData(manager);
     }
 
     @Before
@@ -601,7 +600,7 @@ public class IntegrationTest {
                 "-----------------\n" +
                 "Enter the command:\n" +
                 // clear users2
-                "Are you sure you want to delete 'users2'? Y/N\n"+
+                "Are you sure you want to delete 'users2'? Y/N\n" +
                 "Table 'users2' cleared\n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
@@ -746,7 +745,7 @@ public class IntegrationTest {
                 "See you later!\n", getData());
     }
 
-//    @Ignore  // тест проходит, но не билдится проект
+    //    @Ignore  // тест проходит, но не билдится проект
     @Test
     public void testDeleteDBException() {
         // given
@@ -775,10 +774,7 @@ public class IntegrationTest {
                 "See you later!\n", getData());
     }
 
-
-
-
-//    @Ignore // тест проходит, но не билдится проект
+    //    @Ignore // тест проходит, но не билдится проект
     @Test
     public void testHelpAfterConnect() {
         // given
