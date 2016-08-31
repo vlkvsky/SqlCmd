@@ -90,7 +90,6 @@ public class PostgresManager implements DatabaseManager {
     @Override
     public void deleteDB(String databaseName) {
         try (Statement statement = connection.createStatement()) {
-//            statement.executeUpdate("DROP DATABASE IF EXISTS " + databaseName + " CASCADE");
             statement.executeUpdate("DROP DATABASE " + databaseName);
         } catch (SQLException e) {
             throw new RuntimeException(e.getLocalizedMessage());
@@ -231,7 +230,7 @@ public class PostgresManager implements DatabaseManager {
         }
     }
 
-    @Override //
+    @Override
     public void update(String tableName, int id, Map<String, Object> newValue) {
         String tableNames = getNameFormatted(newValue, "%s = ?,");
         String updateTable = "UPDATE public." + tableName + " SET " + tableNames + " WHERE id = ?";
