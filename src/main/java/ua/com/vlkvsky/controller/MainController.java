@@ -1,5 +1,7 @@
 package ua.com.vlkvsky.controller;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import ua.com.vlkvsky.controller.command.*;
 import ua.com.vlkvsky.model.DatabaseManager;
 import ua.com.vlkvsky.view.View;
@@ -19,6 +21,7 @@ public class MainController {
 
     public MainController(View view, DatabaseManager manager) {
         this.view = view;
+        Logger.getRootLogger().setLevel(Level.OFF); //Disable log4j from text table formatter
         this.commands = new ArrayList<>(Arrays.asList(
                 new Exit.ex(view),                   // выход
                 new Exit(view),                      // выход

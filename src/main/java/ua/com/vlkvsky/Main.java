@@ -11,7 +11,6 @@ import ua.com.vlkvsky.view.View;
 public class Main {
     public static void main(String[] args) {
 
-        Logger.getRootLogger().setLevel(Level.OFF); //Disable log4j from text table formatter
         View view = new Console();
         DatabaseManager manager = new PostgresManager();
 
