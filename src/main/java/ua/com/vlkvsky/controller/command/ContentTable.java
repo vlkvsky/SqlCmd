@@ -4,6 +4,7 @@ import ua.com.vlkvsky.model.DatabaseManager;
 import ua.com.vlkvsky.model.TableConstructor;
 import ua.com.vlkvsky.view.View;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -21,7 +22,7 @@ public class ContentTable extends Command {
         Set<String> tableColumns = manager.getTableColumns(tableName);
 
         if (tableColumns.size() > 0) {
-            java.util.List<Map<String, Object>> tableData = manager.getTableData(tableName);
+            List<Map<String, Object>> tableData = manager.getTableData(tableName);
             TableConstructor constructor = new TableConstructor(tableColumns, tableData);
             view.write(constructor.getTableString());
         } else {

@@ -30,6 +30,6 @@ public class DeleteRow extends Command {
 
     @Override
     public String description() {
-        return "Delete row <table> from <id>";
+        return "Delete row from <table> with <id>";
     }
 }

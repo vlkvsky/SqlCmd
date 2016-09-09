@@ -44,7 +44,7 @@ public class ConnectTest {
             command.process("connect databaseName userName");
             fail("Expected IllegalArgumentException");
         } catch (IllegalArgumentException e) {
-            assertEquals("Format 'connect DB user password', but expected: connect databaseName userName", e.getMessage());
+            assertEquals("Format 'connect <> <> <>', but expected: connect databaseName userName", e.getMessage());
         }
     }
 }

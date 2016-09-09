@@ -1,6 +1,10 @@
 package ua.com.vlkvsky.controller.command;
 
-import ua.com.vlkvsky.model.TableConstructor.Columns;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+import org.nocrala.tools.texttablefmt.BorderStyle;
+import org.nocrala.tools.texttablefmt.ShownBorders;
+import org.nocrala.tools.texttablefmt.Table;
 import ua.com.vlkvsky.view.View;
 
 import java.util.ArrayList;
@@ -11,9 +15,12 @@ public class Help extends Command {
 
     private final View view;
     private final List<Command> commands;
+    private final Table table;
 
     public Help(View view) {
         this.view = view;
+        table = new Table(2, BorderStyle.CLASSIC, ShownBorders.SURROUND_HEADER_AND_COLUMNS);
+        Logger.getRootLogger().setLevel(Level.OFF); //Disable log4j from text table formatter
         commands = new ArrayList<>(Arrays.asList(
                 this,
                 new Connect(manager, view),
@@ -33,15 +40,22 @@ public class Help extends Command {
 
     @Override
     public void process(String input) {
-        view.write("Available commands:\n" +
-                "+--------------------------" + "+" + "-----------------------------+");
-        Columns columns = new Columns();
-        for (int i = 0; i < commands.size(); i++) {
-            Command command = commands.get(i);
-            columns.addLine("|", command.commandFormat(), "|", command.description(), "|");
-            columns.addLine("|", "--------------------------", "+", "-----------------------------", "|");
+        buildHeader();
+        buildRows();
+        view.write(table.render());
+    }
+
+    private void buildHeader() {
+        view.write("Available commands:");
+        table.addCell("Command");
+        table.addCell("Description");
+    }
+
+    private void buildRows() {
+        for (Command command : commands) {
+            table.addCell(command.commandFormat());
+            table.addCell(command.description());
         }
-        view.write(columns.print());
     }
 
     @Override

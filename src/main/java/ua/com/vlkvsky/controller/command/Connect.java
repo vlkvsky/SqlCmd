@@ -34,11 +34,11 @@ public class Connect extends Command {
 
     @Override
     public String commandFormat() {
-        return "connect DB user password";
+        return "connect <> <> <>";
     }
 
     @Override
     public String description() {
-        return "Connect to DB";
+        return "Connect to <DB> <User> <Password>";
     }
 }

@@ -4,7 +4,9 @@ import org.nocrala.tools.texttablefmt.BorderStyle;
 import org.nocrala.tools.texttablefmt.ShownBorders;
 import org.nocrala.tools.texttablefmt.Table;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class TableConstructor {
 
@@ -41,48 +43,6 @@ public class TableConstructor {
                     table.addCell("");
                 }
             }
-        }
-    }
-
-    public static class Columns {
-
-        private List<List<String>> row = new ArrayList<>();
-        private List<Integer> maxLengths = new ArrayList<>();
-        private int numColumns = -1;
-
-        public Columns addLine(String... line) {
-            if (numColumns == -1) {
-                numColumns = line.length;
-                for (int i = 0; i < numColumns; i++) {
-                    maxLengths.add(0);
-                }
-            }
-            if (numColumns != line.length) {
-                throw new IllegalArgumentException();
-            }
-            for (int i = 0; i < numColumns; i++) {
-                maxLengths.set(i, Math.max(maxLengths.get(i), line[i].length()));
-            }
-            row.add(Arrays.asList(line));
-            return this;
-        }
-
-        public String print() {
-            String result = "";
-            for (List<String> line : row) {
-                for (int i = 0; i < numColumns; i++) {
-                    result += pad(line.get(i), maxLengths.get(i));
-                }
-                result += System.lineSeparator();
-            }
-            return result;
-        }
-
-        private String pad(String word, int newLength) {
-            while (word.length() < newLength) {
-                word += " ";
-            }
-            return word;
         }
     }
 }

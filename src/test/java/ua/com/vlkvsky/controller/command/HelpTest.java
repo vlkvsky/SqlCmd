@@ -18,6 +18,7 @@ public class HelpTest {
     public void setup() {
         view = Mockito.mock(View.class);
         command = new Help(view);
+
     }
 
     @Test
@@ -35,7 +36,6 @@ public class HelpTest {
     @Test
     public void testProcess() throws Exception {
         command.process("help");
-        verify(view).write("Available commands:\n" +
-                "+--------------------------+-----------------------------+");
+        verify(view).write("Available commands:");
     }
 }
