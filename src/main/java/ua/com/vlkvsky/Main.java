@@ -1,7 +1,5 @@
 package ua.com.vlkvsky;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
 import ua.com.vlkvsky.controller.MainController;
 import ua.com.vlkvsky.model.DatabaseManager;
 import ua.com.vlkvsky.model.PostgresManager;

@@ -30,12 +30,6 @@ public class Exit extends Command {
         }
 
         @Override
-        public void process(String command) {
-            view.write("See you later!");
-            throw new ExitException();
-        }
-
-        @Override
         public String commandFormat() {
             return "ex";
         }

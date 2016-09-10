@@ -88,7 +88,7 @@ public class MainController {
 
     public static class Configuration {
 
-        public static final String CONFIGURATION_PROPERTIES = "configuration/sqlcmd.properties";
+        private static final String CONFIGURATION_PROPERTIES = "configuration/sqlcmd.properties";
         private Properties properties;
 
         public Configuration() {
