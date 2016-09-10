@@ -87,7 +87,9 @@ public class MainController {
     }
 
     public static class Configuration {
-
+        // from IDEA
+//        private static final String CONFIGURATION_PROPERTIES = "src/resources/configuration/sqlcmd.properties";
+        // from built maven
         private static final String CONFIGURATION_PROPERTIES = "configuration/sqlcmd.properties";
         private Properties properties;
 

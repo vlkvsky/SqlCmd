@@ -15,11 +15,10 @@ public class Help extends Command {
 
     private final View view;
     private final List<Command> commands;
-    private final Table table;
+    private Table table;
 
     public Help(View view) {
         this.view = view;
-        table = new Table(2, BorderStyle.CLASSIC, ShownBorders.SURROUND_HEADER_AND_COLUMNS);
         Logger.getRootLogger().setLevel(Level.OFF); //Disable log4j from text table formatter
         commands = new ArrayList<>(Arrays.asList(
                 this,
@@ -40,13 +39,15 @@ public class Help extends Command {
 
     @Override
     public void process(String input) {
-        buildHeader();
-        buildRows();
-        view.write(table.render());
+        if (table == null) {
+            buildHeader();
+            buildRows();
+        }
+        view.write("Available commands:\n" + table.render());
     }
 
     private void buildHeader() {
-        view.write("Available commands:");
+        table = new Table(2, BorderStyle.CLASSIC, ShownBorders.SURROUND_HEADER_AND_COLUMNS);
         table.addCell("Command");
         table.addCell("Description");
     }

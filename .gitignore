@@ -1,5 +1,4 @@
-
-.idea/
 sqlcmd.iml
 target/
 dependency-reduced-pom.xml 
+/.idea/

@@ -73,7 +73,7 @@
                             <transformers>
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>ua.com.vlkvsky.Main</mainClass>
+                                    <mainClass>ua/com/vlkvsky/Main</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>

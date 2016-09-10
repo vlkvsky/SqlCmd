@@ -36,6 +36,24 @@ public class HelpTest {
     @Test
     public void testProcess() throws Exception {
         command.process("help");
-        verify(view).write("Available commands:");
+        verify(view).write(
+                "Available commands:\n" +
+                "+----------------+---------------------------------+\n" +
+                "|Command         |Description                      |\n" +
+                "+----------------+---------------------------------+\n" +
+                "|help            |Get available commands           |\n" +
+                "|connect <> <> <>|Connect to <DB> <User> <Password>|\n" +
+                "|DBs             |Get all DataBases                |\n" +
+                "|tables          |Get all tables of DB             |\n" +
+                "|createDB <>     |Create <DB>                      |\n" +
+                "|create          |Create table step-by-step        |\n" +
+                "|content <>      |Get content of <table>           |\n" +
+                "|insert <>       |Add data to <table>              |\n" +
+                "|deleteRow <> <> |Delete row from <table> with <id>|\n" +
+                "|clear <>        |Clear data of <table>            |\n" +
+                "|deleteTable <>  |Delete <table>                   |\n" +
+                "|deleteDB <>     |Delete <DB>                      |\n" +
+                "|exit            |Close application                |\n" +
+                "+----------------+---------------------------------+");
     }
 }
