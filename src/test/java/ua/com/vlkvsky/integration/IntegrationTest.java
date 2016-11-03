@@ -687,7 +687,7 @@ public class IntegrationTest {
                 "-----------------\n" +
                 "Enter the command:\n" +
                 "Are you sure you want to delete 'sqlcmd_DONT_EXIST'? Y/N\n" +
-                "Can't perform the action! Problem: ОШИБКА: база данных \"sqlcmd_dont_exist\" не существует\n" +
+                "Can't perform the action! Problem: ERROR: database \"sqlcmd_dont_exist\" does not exist\n" +
                 "Repeat one more time.\n" +
                 "-----------------\n" +
                 "Enter the command:\n" +
